@@ -31,8 +31,16 @@ def update_an_expense():
 
 @expense_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
-def delete_an_expense():
-    pass
+def delete_an_expense(id):
+    expense = Expense.query.get(id)
+    if not expense:
+        return {'errors': "Expense could not be found"}, 404
+
+    if current_user.id == expense.paid_by:
+        db.session.delete(expense)
+        db.session.commit()
+        return { "message": "Expense successfully deleted"}, 200
+    return {'errors': ['Unauthorized']}
 
 @expense_routes.route('/', methods=["GET"])
 @login_required
