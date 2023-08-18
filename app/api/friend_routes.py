@@ -51,23 +51,23 @@ def accept_friend(targetId):
     db.session.commit()
     return {"message": "Request accepted"}
 
-@friend_routes.route("/reject/<int:targetId>", methods=["DELETE"])
-@login_required
-def reject_friend(targetId):
-    """
-    A logged-in user can reject a friend request.
-    """
-    request = Friend.query.filter_by(sender_id=targetId,
-                                     receiver_id=current_user.id,
-                                     status="pending").first()
+# @friend_routes.route("/reject/<int:targetId>", methods=["DELETE"])
+# @login_required
+# def reject_friend(targetId):
+#     """
+#     A logged-in user can reject a friend request.
+#     """
+#     request = Friend.query.filter_by(sender_id=targetId,
+#                                      receiver_id=current_user.id,
+#                                      status="pending").first()
 
-    # Check if the friendship request exists
-    if not request:
-        return {'errors': "Friend request could not be found"}, 404
+#     # Check if the friendship request exists
+#     if not request:
+#         return {'errors': "Friend request could not be found"}, 404
 
-    db.session.delete(request)
-    db.session.commit()
-    return {"message": "Request rejected"}
+#     db.session.delete(request)
+#     db.session.commit()
+#     return {"message": "Request rejected"}
 
 @friend_routes.route("/remove/<int:targetId>", methods=["DELETE"])
 @login_required
@@ -86,4 +86,4 @@ def delete_friend(targetId):
 
     db.session.delete(friendship)
     db.session.commit()
-    return {"message": "Friend removed"}
+    return {"message": "Friend/friend request removed"}

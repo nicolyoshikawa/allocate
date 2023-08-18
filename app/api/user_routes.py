@@ -36,11 +36,11 @@ def get_current_user_friend_list():
     friends_info = []
     for friend_request in receiver_list:
             userDict = friend_request.user.to_dict()
-            userDict["status"] = friend_request.status
+            userDict["friend"] = friend_request.to_dict()
             friends_info.append(userDict)
     for friend_request in sender_list:
             userDict = friend_request.friend.to_dict()
-            userDict["status"] = friend_request.status
+            userDict["friend"] = friend_request.to_dict()
             friends_info.append(userDict)
 
     return jsonify(friends_info)
