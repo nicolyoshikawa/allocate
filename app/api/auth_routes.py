@@ -62,10 +62,17 @@ def sign_up():
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        user_img_url = form.data["user_img_url"]
+        if not user_img_url:
+            user_img_url = "https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-blue44-50px.png"
+
         user = User(
-            username=form.data['username'],
+            first_name=form.data["first_name"],
+            last_name=form.data["last_name"],
             email=form.data['email'],
-            password=form.data['password']
+            username=form.data['username'],
+            password=form.data['password'],
+            user_img_url=user_img_url
         )
         db.session.add(user)
         db.session.commit()
