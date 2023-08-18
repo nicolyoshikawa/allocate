@@ -28,7 +28,7 @@ def user(id):
 @login_required
 def get_current_user_friend_list():
     """
-    A logged in user can view pending friend request to accept/reject and existing friends.
+    A logged in user can view pending friend requests and existing friends.
     """
     receiver_list = Friend.query.filter(Friend.receiver_id == current_user.id).all()
     sender_list = Friend.query.filter(Friend.sender_id == current_user.id).all()
