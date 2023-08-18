@@ -30,16 +30,16 @@ def get_current_user_friend_list():
     """
     A logged in user can view pending friend request to accept/reject and existing friends.
     """
-    friends_list = Friend.query.filter(Friend.receiver_id == current_user.id).all()
+    receiver_list = Friend.query.filter(Friend.receiver_id == current_user.id).all()
+    sender_list = Friend.query.filter(Friend.sender_id == current_user.id).all()
 
     friends_info = []
-    for friend_request in friends_list:
-        if friend_request.sender_id != current_user.id:
+    for friend_request in receiver_list:
             userDict = friend_request.user.to_dict()
             userDict["status"] = friend_request.status
             friends_info.append(userDict)
-        elif friend_request.friend_id != current_user.id:
-            userDict = friend_request.user.to_dict()
+    for friend_request in sender_list:
+            userDict = friend_request.friend.to_dict()
             userDict["status"] = friend_request.status
             friends_info.append(userDict)
 
