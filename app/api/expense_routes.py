@@ -66,7 +66,7 @@ def update_an_expense(id):
             expense.expense_date = expense_date
             expense.description = form.data["description"]
             expense.price = form.data["price"]
-            expense.receipt_img_url = form.data["receipt_img_url"]
+            expense.receipt_img_url = receipt_img_url
             db.session.commit()
             return expense.to_dict()
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
