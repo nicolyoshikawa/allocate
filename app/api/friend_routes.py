@@ -11,18 +11,18 @@ def add_friend(targetId):
     A logged-in user can add a friend.
     """
     if current_user.id == targetId:
-        return {'errors': "Cannot add yourself as a friend"}, 400
+        return {'errors': ["Cannot add yourself as a friend"]}, 400
 
     target_user = User.query.get(targetId)
     if not target_user:
-        return {'errors': "Friend could not be found"}, 404
+        return {'errors': ["Friend could not be found"]}, 404
 
     request_exists = Friend.query.filter_by(receiver_id=targetId,
                                      sender_id=current_user.id).first()
     request_exists_otherway = Friend.query.filter_by(sender_id=targetId,
                                      receiver_id=current_user.id).first()
     if request_exists or request_exists_otherway:
-        return {'errors': "Friend request already exists/already friends"}, 400
+        return {'errors': ["Friend request already exists/already friends"]}, 400
 
     new_request = Friend(
         user=current_user,
@@ -45,7 +45,7 @@ def accept_friend(targetId):
 
     # Check if the friendship request exists
     if not request:
-        return {'errors': "Friend request could not be found"}, 404
+        return {'errors': ["Friend request could not be found"]}, 404
 
     new_group = ExpenseGroup()
     add_friend_to_group = ExpenseGroupUser(
@@ -78,7 +78,7 @@ def accept_friend(targetId):
 
 #     # Check if the friendship request exists
 #     if not request:
-#         return {'errors': "Friend request could not be found"}, 404
+#         return {'errors': ["Friend request could not be found"]}, 404
 
 #     db.session.delete(request)
 #     db.session.commit()
@@ -97,7 +97,7 @@ def delete_friend(targetId):
 
     # Check if the friendship exists
     if not friendship:
-        return {'errors': "Friend could not be found"}, 404
+        return {'errors': ["Friend could not be found"]}, 404
 
     db.session.delete(friendship)
     db.session.commit()

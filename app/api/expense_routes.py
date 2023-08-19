@@ -29,20 +29,60 @@ def get_a_specific_expense(id):
 
 @expense_routes.route('/<int:id>', methods=["PUT"])
 @login_required
-def update_an_expense():
-    pass
+def update_an_expense(id):
+    expense = Expense.query.get(id)
+    if not expense:
+        return {'errors': ["Expense could not be found"]}, 404
+
+    owner = expense.paid_by
+    if current_user.id == owner:
+        form = ExpenseForm()
+
+        form['csrf_token'].data = request.cookies['csrf_token']
+        if form.validate_on_submit():
+
+            friend_id = form.data["friend_id"]
+            if friend_id == current_user.id:
+                return {'errors': ["You cannot create an expense to split with yourself"]}, 403
+
+            receipt_img_url = form.data["receipt_img_url"]
+            if not receipt_img_url:
+                receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+
+            expense_date = form.data["expense_date"]
+            if not expense_date:
+                expense_date = date.today()
+
+            users_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
+            friends_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == friend_id).all()
+            user_friend_expense_groups= set(users_groups).intersection(friends_groups)
+            user_friend_expense_group_id = [id[0] for id in user_friend_expense_groups]
+            if not user_friend_expense_group_id:
+                return {'errors': ["You do not have a group with this friend"]}, 403
+
+            group_id = user_friend_expense_group_id[0]
+
+            expense.group_id = group_id
+            expense.expense_date = expense_date
+            expense.description = form.data["description"]
+            expense.price = form.data["price"]
+            expense.receipt_img_url = form.data["receipt_img_url"]
+            db.session.commit()
+            return expense.to_dict()
+        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return {'errors': ['Unauthorized']}
 
 @expense_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def delete_an_expense(id):
     expense = Expense.query.get(id)
     if not expense:
-        return {'errors': "Expense could not be found"}, 404
+        return {'errors': ["Expense could not be found"]}, 404
 
     if current_user.id == expense.paid_by:
         db.session.delete(expense)
         db.session.commit()
-        return { "message": "Expense successfully deleted"}, 200
+        return { "message": ["Expense successfully deleted"]}, 200
     return {'errors': ['Unauthorized']}
 
 @expense_routes.route('/', methods=["GET"])
@@ -72,23 +112,26 @@ def add_an_expense():
 
         # expense_group_exists = ExpenseGroup.query.filter(ExpenseGroup.id == form.data["group_id"]).all()
         # if not expense_group_exists:
-        #     return {'errors': "Group does not exist"}, 404
+        #     return {'errors': ["Group does not exist"]}, 404
 
         # user_in_expense_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.group_id== form.data["group_id"], current_user.id == ExpenseGroupUser.user_id).all()
         # if not user_in_expense_group:
-        #     return {'errors': "You are not part of this group"}, 403
+        #     return {'errors': ["You are not part of this group"]}, 403
 
         # user_friend_expense_group_id = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == current_user.id, ExpenseGroupUser.user_id == form.data["friend_id"]).all()
         # if not user_friend_expense_group_id:
-        #     return {'errors': "You do not have a group with this friend"}, 403
+        #     return {'errors': ["You do not have a group with this friend"]}, 403
 
         friend_id = form.data["friend_id"]
+        if friend_id == current_user.id:
+            return {'errors': ["You cannot create an expense to split with yourself"]}, 403
+
         users_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
         friends_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == friend_id).all()
         user_friend_expense_groups= set(users_groups).intersection(friends_groups)
         user_friend_expense_group_id = [id[0] for id in user_friend_expense_groups]
         if not user_friend_expense_group_id:
-            return {'errors': "You do not have a group with this friend"}, 403
+            return {'errors': ["You do not have a group with this friend"]}, 403
 
         group_id = user_friend_expense_group_id[0]
 
