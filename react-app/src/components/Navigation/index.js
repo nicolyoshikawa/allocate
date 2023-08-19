@@ -1,23 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
-
+	const [showMenu, setShowMenu] = useState(true);
+    const closeMenu = () => setShowMenu(false);
 	return (
-		<ul>
-			<li>
+		<div>
+			<div>
 				<NavLink exact to="/">Home</NavLink>
-			</li>
-			{isLoaded && (
-				<li>
-					<ProfileButton user={sessionUser} />
-				</li>
+			</div>
+			{isLoaded && !sessionUser && showMenu &&(
+				<div>
+					<div>
+						<OpenModalButton
+							buttonText="Log In"
+							onItemClick={closeMenu}
+							modalComponent={<LoginFormModal />}
+						/>
+					</div>
+					<div>
+						<OpenModalButton
+							buttonText="Sign Up"
+							onItemClick={closeMenu}
+							modalComponent={<SignupFormModal />}
+						/>
+					</div>
+				</div>
 			)}
-		</ul>
+			{isLoaded && sessionUser && (
+				<div>
+					<ProfileButton user={sessionUser} />
+				</div>
+			)}
+		</div>
 	);
 }
 
