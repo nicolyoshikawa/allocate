@@ -16,14 +16,14 @@ def seed_friends():
 
     # User1 (Demo User Seed) #######
     friend1 = Friend(user=user1, friend=user2, status='friends')
-    friend2 = Friend(user=user1, friend=user3, status='pending')
+    friend2 = Friend(user=user1, friend=user3, status='friends')
     friend3 = Friend(user=user1, friend=user6, status='pending')
-    friend4 = Friend(user=user1, friend=user10, status='pending')
+    friend4 = Friend(user=user1, friend=user10, status='friends')
 
     friend5 = Friend(user=user2, friend=user3, status='pending')
     friend6 = Friend(user=user2, friend=user4, status='friends')
     friend7 = Friend(user=user2, friend=user6, status='friends')
-    friend8 = Friend(user=user2, friend=user9, status='pending')
+    friend8 = Friend(user=user2, friend=user9, status='friends')
 
     friend9 = Friend(user=user3, friend=user4, status='pending')
     friend10 = Friend(user=user3, friend=user7, status='friends')
@@ -34,8 +34,8 @@ def seed_friends():
 
     friend13 = Friend(user=user6, friend=user7, status='friends')
 
-    friend14 = Friend(user=user8, friend=user9, status='pending')
-    friend15 = Friend(user=user8, friend=user10, status='friends')
+    friend14 = Friend(user=user8, friend=user9, status='friends')
+    friend15 = Friend(user=user8, friend=user10, status='pending')
 
     friend16 = Friend(user=user9, friend=user10, status='pending')
 
