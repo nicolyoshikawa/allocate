@@ -53,14 +53,24 @@ def update_an_expense(id):
             if not expense_date:
                 expense_date = date.today()
 
-            users_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
-            friends_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == friend_id).all()
-            user_friend_expense_groups= set(users_groups).intersection(friends_groups)
-            user_friend_expense_group_id = [id[0] for id in user_friend_expense_groups]
-            if not user_friend_expense_group_id:
-                return {'errors': ["You do not have a group with this friend"]}, 403
+            if not form.data["group_id"]:
+                users_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
+                friends_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == friend_id).all()
+                user_friend_expense_groups= set(users_groups).intersection(friends_groups)
+                user_friend_expense_group_id = [id[0] for id in user_friend_expense_groups]
+                if not user_friend_expense_group_id:
+                    return {'errors': ["You do not have a group with this friend"]}, 403
 
-            group_id = user_friend_expense_group_id[0]
+                group_id = user_friend_expense_group_id[0]
+            else:
+                group_id = form.data["group_id"]
+                expense_group_exists = ExpenseGroup.query.filter(ExpenseGroup.id == group_id).all()
+                if not expense_group_exists:
+                    return {'errors': ["Group does not exist"]}, 404
+                users_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == current_user.id, ExpenseGroupUser.group_id == group_id).all()
+                friends_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == friend_id, ExpenseGroupUser.group_id == group_id).all()
+                if not users_group or not friends_group:
+                    return {'errors': ["You or your friend are not part of this group"]}, 403
 
             expense.group_id = group_id
             expense.expense_date = expense_date
@@ -110,18 +120,6 @@ def add_an_expense():
         if not expense_date:
             expense_date = date.today()
 
-        # expense_group_exists = ExpenseGroup.query.filter(ExpenseGroup.id == form.data["group_id"]).all()
-        # if not expense_group_exists:
-        #     return {'errors': ["Group does not exist"]}, 404
-
-        # user_in_expense_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.group_id== form.data["group_id"], current_user.id == ExpenseGroupUser.user_id).all()
-        # if not user_in_expense_group:
-        #     return {'errors': ["You are not part of this group"]}, 403
-
-        # user_friend_expense_group_id = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == current_user.id, ExpenseGroupUser.user_id == form.data["friend_id"]).all()
-        # if not user_friend_expense_group_id:
-        #     return {'errors': ["You do not have a group with this friend"]}, 403
-
         friend_id = form.data["friend_id"]
         if friend_id == current_user.id:
             return {'errors': ["You cannot create an expense to split with yourself"]}, 403
@@ -137,6 +135,9 @@ def add_an_expense():
             group_id = user_friend_expense_group_id[0]
         else:
             group_id = form.data["group_id"]
+            expense_group_exists = ExpenseGroup.query.filter(ExpenseGroup.id == group_id).all()
+            if not expense_group_exists:
+                return {'errors': ["Group does not exist"]}, 404
             users_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == current_user.id, ExpenseGroupUser.group_id == group_id).all()
             friends_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == friend_id, ExpenseGroupUser.group_id == group_id).all()
             if not users_group or not friends_group:
