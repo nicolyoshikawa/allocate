@@ -27,8 +27,8 @@ class User(db.Model, UserMixin):
     user_comments = db.relationship('Comment', back_populates='user')
     user_paid_expense = db.relationship('Expense', back_populates='expense_paid_by')
     # Many-to-Many relationship with Friend model
-    friends = db.relationship('Friend', foreign_keys=[Friend.user_id], back_populates='user')
-    friend_of = db.relationship('Friend', foreign_keys=[Friend.friend_id], back_populates='friend')
+    friends = db.relationship('Friend', foreign_keys=[Friend.sender_id], back_populates='user')
+    friend_of = db.relationship('Friend', foreign_keys=[Friend.receiver_id], back_populates='friend')
 
     @property
     def password(self):

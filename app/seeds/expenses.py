@@ -1,5 +1,6 @@
 from app.models import db, environment, SCHEMA, Expense
 from sqlalchemy.sql import text
+from datetime import date
 
 def seed_expenses():
     bill1 = Expense(
@@ -7,6 +8,7 @@ def seed_expenses():
         paid_by = 1,
         description = "dog food",
         price = 10.0,
+        expense_date = date(2023, 8, 1),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill2 = Expense(
@@ -14,6 +16,7 @@ def seed_expenses():
         paid_by = 1,
         description = "dog toy",
         price = 5.0,
+        expense_date = date(2023, 8, 1),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill3 = Expense(
@@ -21,6 +24,7 @@ def seed_expenses():
         paid_by = 3,
         description = "cat food",
         price = 10.0,
+        expense_date = date(2023, 2, 5),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill4 = Expense(
@@ -28,6 +32,7 @@ def seed_expenses():
         paid_by = 3,
         description = "cat toy",
         price = 20.0,
+        expense_date = date(2023, 3, 9),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill5 = Expense(
@@ -35,6 +40,7 @@ def seed_expenses():
         paid_by = 4,
         description = "toilet paper",
         price = 15.0,
+        expense_date = date(2023, 7, 2),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill6 = Expense(
@@ -42,6 +48,7 @@ def seed_expenses():
         paid_by = 4,
         description = "paper towels",
         price = 20.0,
+        expense_date = date(2023, 7, 2),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill7 = Expense(
@@ -49,6 +56,7 @@ def seed_expenses():
         paid_by = 6,
         description = "groceries",
         price = 100.0,
+        expense_date = date(2023, 3, 5),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill8 = Expense(
@@ -56,6 +64,7 @@ def seed_expenses():
         paid_by = 6,
         description = "take-out",
         price = 30.5,
+        expense_date = date(2023, 8, 10),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill9 = Expense(
@@ -63,6 +72,7 @@ def seed_expenses():
         paid_by = 8,
         description = "wine",
         price = 40.0,
+        expense_date = date(2023, 11, 7),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill10 = Expense(
@@ -70,6 +80,7 @@ def seed_expenses():
         paid_by = 8,
         description = "beer",
         price = 6.80,
+        expense_date = date(2023, 2, 5),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill11 = Expense(
@@ -77,6 +88,7 @@ def seed_expenses():
         paid_by = 10,
         description = "rent",
         price = 1820.0,
+        expense_date = date(2023, 7, 9),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill12 = Expense(
@@ -84,6 +96,7 @@ def seed_expenses():
         paid_by = 10,
         description = "utilities",
         price = 75.0,
+        expense_date = date(2023, 10, 11),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill13 = Expense(
@@ -91,6 +104,7 @@ def seed_expenses():
         paid_by = 2,
         description = "uber",
         price = 22.0,
+        expense_date = date(2023, 12, 12),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill14 = Expense(
@@ -98,6 +112,7 @@ def seed_expenses():
         paid_by = 2,
         description = "dinner",
         price = 70.0,
+        expense_date = date(2023, 12, 12),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
     bill15 = Expense(
@@ -105,6 +120,7 @@ def seed_expenses():
         paid_by = 2,
         description = "flowers",
         price = 44.5,
+        expense_date = date(2023, 12, 12),
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
 

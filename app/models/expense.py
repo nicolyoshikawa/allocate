@@ -13,6 +13,7 @@ class Expense(db.Model):
     description = db.Column(db.String(255), nullable=False)
     price = db.Column(db.Float(), nullable=False)
     receipt_img_url = db.Column(db.String(500))
+    expense_date = db.Column(db.Date())
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = db.Column(db.DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
 
@@ -27,6 +28,7 @@ class Expense(db.Model):
             'paid_by': self.paid_by,
             'description': self.description,
             'price': self.price,
+            'expense_date': self.expense_date.isoformat(),
             'receipt_img_url': self.receipt_img_url,
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat()

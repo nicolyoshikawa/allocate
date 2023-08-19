@@ -7,16 +7,16 @@ class Friend(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True)
-    friend_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True)
+    receiver_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True)
     status = db.Column(db.String(20), nullable=False, default='pending')
 
-    user = db.relationship('User', foreign_keys=[user_id], back_populates='friends')
-    friend = db.relationship('User', foreign_keys=[friend_id], back_populates='friend_of')
+    user = db.relationship('User', foreign_keys=[sender_id], back_populates='friends')
+    friend = db.relationship('User', foreign_keys=[receiver_id], back_populates='friend_of')
 
     def to_dict(self):
         return {
-            'user_id': self.user_id,
-            'friend_id': self.friend_id,
+            'sender_id': self.sender_id,
+            'receiver_id': self.receiver_id,
             'status': self.status
         }
