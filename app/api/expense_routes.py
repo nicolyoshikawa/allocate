@@ -1,6 +1,9 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db, Expense, ExpenseGroupUser
+from app.models import User, db, Expense, ExpenseGroupUser, ExpenseGroup
+from app.forms import ExpenseForm
 from flask_login import current_user, login_required
+from .auth_routes import validation_errors_to_error_messages
+from datetime import date
 
 expense_routes = Blueprint('expenses', __name__)
 
@@ -55,4 +58,37 @@ def get_all_expenses():
 @expense_routes.route('/', methods=["POST"])
 @login_required
 def add_an_expense():
-    pass
+    form = ExpenseForm()
+
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        receipt_img_url = form.data["receipt_img_url"]
+        if not receipt_img_url:
+            receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+
+        expense_date = form.data["expense_date"]
+        if not expense_date:
+            expense_date = date.today()
+
+        expense_group_exists = ExpenseGroup.query.filter(ExpenseGroup.id == form.data["group_id"]).all()
+        if not expense_group_exists:
+            return {'errors': "Group does not exist"}, 404
+
+        user_in_expense_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.group_id== form.data["group_id"], current_user.id == ExpenseGroupUser.user_id).all()
+        if not user_in_expense_group:
+            return {'errors': "You are not part of this group"}, 403
+
+
+        new_expense = Expense(
+            group_id=form.data["group_id"],
+            paid_by=current_user.id,
+            description=form.data["description"],
+            price=form.data["price"],
+            receipt_img_url=receipt_img_url,
+            expense_date=expense_date
+        )
+
+        db.session.add(new_expense)
+        db.session.commit()
+        return new_expense.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401

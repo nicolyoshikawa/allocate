@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_login import login_required, current_user
-from app.models import Friend, db, User
+from app.models import Friend, db, User, ExpenseGroup, ExpenseGroupUser
 
 friend_routes = Blueprint("friends", __name__)
 
@@ -47,7 +47,22 @@ def accept_friend(targetId):
     if not request:
         return {'errors': "Friend request could not be found"}, 404
 
+    new_group = ExpenseGroup()
+    add_friend_to_group = ExpenseGroupUser(
+        user_id = current_user.id,
+        group_id = new_group.id,
+        paid_status = "unpaid"
+    )
+    add_user_to_group = ExpenseGroupUser(
+        user_id = targetId,
+        group_id = new_group.id,
+        paid_status = "unpaid"
+    )
+
     request.status = "friends"
+    db.session.add(new_group)
+    db.session.add(add_friend_to_group)
+    db.session.add(add_user_to_group)
     db.session.commit()
     return {"message": "Request accepted"}
 
