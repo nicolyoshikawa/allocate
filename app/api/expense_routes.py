@@ -126,14 +126,21 @@ def add_an_expense():
         if friend_id == current_user.id:
             return {'errors': ["You cannot create an expense to split with yourself"]}, 403
 
-        users_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
-        friends_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == friend_id).all()
-        user_friend_expense_groups= set(users_groups).intersection(friends_groups)
-        user_friend_expense_group_id = [id[0] for id in user_friend_expense_groups]
-        if not user_friend_expense_group_id:
-            return {'errors': ["You do not have a group with this friend"]}, 403
+        if not form.data["group_id"]:
+            users_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
+            friends_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == friend_id).all()
+            user_friend_expense_groups= set(users_groups).intersection(friends_groups)
+            user_friend_expense_group_id = [id[0] for id in user_friend_expense_groups]
+            if not user_friend_expense_group_id:
+                return {'errors': ["You do not have a group with this friend"]}, 403
 
-        group_id = user_friend_expense_group_id[0]
+            group_id = user_friend_expense_group_id[0]
+        else:
+            group_id = form.data["group_id"]
+            users_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == current_user.id, ExpenseGroupUser.group_id == group_id)
+            friends_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == friend_id, ExpenseGroupUser.group_id == group_id)
+            if not users_group or not friends_group:
+                return {'errors': ["You or your friend are not part of this group"]}, 403
 
         new_expense = Expense(
             group_id=group_id,
