@@ -137,8 +137,8 @@ def add_an_expense():
             group_id = user_friend_expense_group_id[0]
         else:
             group_id = form.data["group_id"]
-            users_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == current_user.id, ExpenseGroupUser.group_id == group_id)
-            friends_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == friend_id, ExpenseGroupUser.group_id == group_id)
+            users_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == current_user.id, ExpenseGroupUser.group_id == group_id).all()
+            friends_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == friend_id, ExpenseGroupUser.group_id == group_id).all()
             if not users_group or not friends_group:
                 return {'errors': ["You or your friend are not part of this group"]}, 403
 
