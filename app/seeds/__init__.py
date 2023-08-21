@@ -31,31 +31,39 @@ def seed():
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
         # Add a truncate command here for every table that will be seeded.
         db.session.execute(f"TRUNCATE table {SCHEMA}.expenseGroups RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.friends RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.expenseGroupUsers RESTART IDENTITY CASCADE;")
         db.session.execute(f"TRUNCATE table {SCHEMA}.expenses RESTART IDENTITY CASCADE;")
         # db.session.execute(f"TRUNCATE table {SCHEMA}.comments RESTART IDENTITY CASCADE;")
-        db.session.execute(f"TRUNCATE table {SCHEMA}.friends RESTART IDENTITY CASCADE;")
+        # db.session.execute(f"TRUNCATE table {SCHEMA}.friends RESTART IDENTITY CASCADE;")
         # db.session.execute(f"TRUNCATE table {SCHEMA}.expenseGroups RESTART IDENTITY CASCADE;")
-        db.session.execute(f"TRUNCATE table {SCHEMA}.expenseGroupUsers RESTART IDENTITY CASCADE;")
+        # db.session.execute(f"TRUNCATE table {SCHEMA}.expenseGroupUsers RESTART IDENTITY CASCADE;")
 
         db.session.commit()
     seed_users()
     seed_groups()
+    seed_friends()
+    seed_group_users()
     # Add other seed functions here
     seed_expenses()
     # seed_comments()
-    seed_friends()
+    # seed_friends()
     # seed_groups()
-    seed_group_users()
+    # seed_group_users()
 
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
-    undo_users()
-    undo_groups()
-    # Add other undo functions here
     undo_expenses()
-    # undo_comments()
-    undo_friends()
-    # undo_groups()
     undo_group_users()
+    undo_friends()
+    undo_groups()
+    undo_users()
+    # undo_groups()
+    # Add other undo functions here
+    # undo_expenses()
+    # undo_comments()
+    # undo_friends()
+    # undo_groups()
+    # undo_group_users()
