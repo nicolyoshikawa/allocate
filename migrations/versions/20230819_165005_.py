@@ -96,8 +96,8 @@ def upgrade():
     if environment == "production":
         # op.execute(f"ALTER TABLE expenseGroups SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE expenseGroups SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE expenseGroupUsers SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE \"expenseGroups\" SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE \"expenseGroupUsers\" SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE expenses SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE friends SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE comments SET SCHEMA {SCHEMA};")
