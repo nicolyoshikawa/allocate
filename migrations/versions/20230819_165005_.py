@@ -109,8 +109,8 @@ def downgrade():
     op.drop_table('comments')
     op.drop_table('friends')
     op.drop_table('expenses')
-    op.drop_table('expenseGroupUsers')
-    op.drop_table('expenseGroups')
+    op.drop_table('\"expenseGroupUsers\"')
+    op.drop_table('\"expenseGroups\"')
     op.drop_table('users')
     # op.drop_table('expenseGroups')
     # ### end Alembic commands ###
