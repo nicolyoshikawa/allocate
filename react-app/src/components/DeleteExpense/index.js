@@ -27,7 +27,6 @@ function DeleteExpense({expense}) {
 
     if (expenseDeleted) {
         history.push("/");
-        console.log("after the push history")
         closeModal()
     };
   }
