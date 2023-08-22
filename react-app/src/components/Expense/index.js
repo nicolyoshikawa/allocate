@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from 'react';
-// import { NavLink } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseTile from '../ExpenseTile';
 import * as expenseActions from "../../store/expenses";
 
-function AllExpenses(){
+function Expense(){
+    const { id } = useParams();
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
-    const allExpenses = useSelector(state => Object.values(state.expenses));
+    const expenseObj = useSelector(state => state.expenses);
+    const expense = expenseObj[id];
 
     useEffect(()=> {
-        dispatch(expenseActions.loadAllUserExpenses())
+        dispatch(expenseActions.loadExpenseById(id))
         .then(()=>setIsLoaded(true))
-    },[dispatch]);
+    },[dispatch, id]);
 	return (
         <>
             {isLoaded && (
                 <div>
                         <div>
-                            <h2>All Expenses</h2>
-                            {allExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true}/>))}
+                            <h2>Expense</h2>
+                            <ExpenseTile clickable={false} expense={expense}/>
+
                         </div>
                 </div>
             )}
@@ -27,4 +30,4 @@ function AllExpenses(){
 	);
 }
 
-export default AllExpenses;
+export default Expense;

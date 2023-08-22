@@ -1,5 +1,5 @@
 const LOAD_EXPENSES = "expenses/LOAD_EXPENSES";
-// const DRINK_BY_ID = "drinks/DRINK_BY_ID";
+const EXPENSE_BY_ID = "expenses/EXPENSE_BY_ID";
 // const CREATE_A_DRINK = "drinks/CREATE_A_DRINK";
 // const UPDATE_A_DRINK = "drinks/UPDATE_A_DRINK";
 // const DELETE_A_DRINK = "drinks/DELETE_A_DRINK";
@@ -9,10 +9,10 @@ export const loadExpenses = (expenses) => ({
     expenses
 });
 
-// export const drinkById = (drink) => ({
-//   type: DRINK_BY_ID,
-//   drink
-// });
+export const expenseById = (expense) => ({
+  type: EXPENSE_BY_ID,
+  expense
+});
 
 // export const createADrink = (drink) => ({
 //   type: CREATE_A_DRINK,
@@ -38,17 +38,16 @@ export const loadAllUserExpenses = () => async (dispatch) => {
   return response;
 };
 
-// export const loadDrinkById = (id) => async (dispatch) => {
-//   const response = await fetch(`/api/drinks/${id}`, {
-//     method: "GET"
-//   });
-
-//   if (response.ok) {
-//     const res = await response.json();
-//     dispatch(drinkById(res));
-//     return res;
-//   }
-// };
+export const loadExpenseById = (id) => async (dispatch) => {
+  const response = await fetch(`/api/expenses/${id}`, {
+    method: "GET"
+  });
+  const data = await response.json();
+  if (response.ok) {
+    dispatch(expenseById(data));
+  }
+  return data
+};
 
 // export const createNewDrink = (drink) => async (dispatch) => {
 //   const response = await fetch('/api/drinks/', {
@@ -99,9 +98,9 @@ const expensesReducer = (state = initialState, action) => {
             newState[expense.id] = expense;
         });
         return newState;
-    // case DRINK_BY_ID:
-    //   newState[action.drink.id] = action.drink;
-    //   return newState;
+    case EXPENSE_BY_ID:
+      newState[action.expense.id] = action.expense;
+      return newState;
     // case CREATE_A_DRINK:
     //   newState[action.drink.id] = action.drink;
     //   return newState;

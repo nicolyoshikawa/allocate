@@ -26,12 +26,12 @@ def get_a_specific_expense(id):
     if not expense_exists:
         return {'errors': ["Expense could not be found"]}, 404
 
-    expense = Expense.query.join(ExpenseGroupUser, Expense.group_id == ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id, Expense.id == id).all()
+    expense = Expense.query.join(ExpenseGroupUser, Expense.group_id == ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id, Expense.id == id).first()
     if not expense:
         return {'errors': ["You do not have access to this expense"]}, 403
 
     exp_dict = add_group_user_dict(expense)
-    return {"expenses": exp_dict}
+    return exp_dict
 
 @expense_routes.route('/<int:id>', methods=["PUT"])
 @login_required

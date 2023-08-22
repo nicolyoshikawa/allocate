@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 
-const ExpenseTile = ({expense, clickable, sessionUser}) => {
+const ExpenseTile = ({expense, clickable}) => {
+    console.log(expense)
     const amount_split = Number(expense.price/2).toFixed(2);
+    const date = new Date(expense.expense_date)
+    const dateFormat = date.toLocaleDateString()
     let paid_by;
     let user_owes;
 
@@ -16,7 +19,11 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
     }
     return (
         <div>
-            <div>{expense.expense_date}</div>
+            <div>{dateFormat}</div>
+            <div>{expense.receipt_img_url ?
+                    <img src={expense.receipt_img_url} alt="receipt_img"/>
+                    : <div></div>}
+            </div>
             {clickable ? (
                 <div><Link to={`/expenses/${expense.id}`}> {expense.description}</Link></div>
                 ) : <div>{expense.description}</div>
