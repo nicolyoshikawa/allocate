@@ -2,7 +2,7 @@ const LOAD_EXPENSES = "expenses/LOAD_EXPENSES";
 const EXPENSE_BY_ID = "expenses/EXPENSE_BY_ID";
 // const CREATE_A_DRINK = "drinks/CREATE_A_DRINK";
 // const UPDATE_A_DRINK = "drinks/UPDATE_A_DRINK";
-// const DELETE_A_DRINK = "drinks/DELETE_A_DRINK";
+const DELETE_AN_EXPENSE = "expenses/DELETE_AN_EXPENSE";
 
 export const loadExpenses = (expenses) => ({
     type: LOAD_EXPENSES,
@@ -24,10 +24,10 @@ export const expenseById = (expense) => ({
 //   drink,
 // });
 
-// export const deleteADrink = (drinkId) => ({
-//   type: DELETE_A_DRINK,
-//   drinkId
-// });
+export const deleteAnExpense = (expenseId) => ({
+  type: DELETE_AN_EXPENSE,
+  expenseId
+});
 
 export const loadAllUserExpenses = () => async (dispatch) => {
   const response = await fetch("/api/expenses/", {
@@ -76,17 +76,17 @@ export const loadExpenseById = (id) => async (dispatch) => {
 //   return data
 // };
 
-// export const deleteDrink = (drinkId) => async (dispatch) => {
-//   const response = await fetch(`/api/drinks/${drinkId}`, {
-//     method: 'DELETE'
-//   });
+export const deleteExpense = (expenseId) => async (dispatch) => {
+  const response = await fetch(`/api/expense/${expenseId}`, {
+    method: 'DELETE'
+  });
 
-//   if (response.ok) {
-//     const res = await response.json();
-//     dispatch(deleteADrink(drinkId));
-//     return res;
-//   }
-// };
+  if (response.ok) {
+    const res = await response.json();
+    dispatch(deleteAnExpense(expenseId));
+    return res;
+  }
+};
 
 const initialState = {};
 
@@ -107,9 +107,9 @@ const expensesReducer = (state = initialState, action) => {
     // case UPDATE_A_DRINK:
     //   newState[action.drink.id] = action.drink;
     //   return newState;
-    // case DELETE_A_DRINK:
-    //   delete newState[action.drinkId];
-    //   return newState;
+    case DELETE_AN_EXPENSE:
+      delete newState[action.expenseId];
+      return newState;
     default:
       return newState;
   }

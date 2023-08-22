@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseTile from '../ExpenseTile';
 import * as expenseActions from "../../store/expenses";
+import ManageExpenses from '../ManageExpenses';
 
 function Expense(){
     const { id } = useParams();
@@ -22,7 +23,7 @@ function Expense(){
                         <div>
                             <h2>Expense</h2>
                             <ExpenseTile clickable={false} expense={expense}/>
-
+                            <ManageExpenses expense={expense}/>
                         </div>
                 </div>
             )}
