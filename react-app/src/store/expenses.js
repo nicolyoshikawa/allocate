@@ -1,7 +1,7 @@
 const LOAD_EXPENSES = "expenses/LOAD_EXPENSES";
 const EXPENSE_BY_ID = "expenses/EXPENSE_BY_ID";
 const CREATE_AN_EXPENSE = "expenses/CREATE_AN_EXPENSE";
-// const UPDATE_AN_EXPENSE = "expenses/UPDATE_AN_EXPENSE";
+const UPDATE_AN_EXPENSE = "expenses/UPDATE_AN_EXPENSE";
 const DELETE_AN_EXPENSE = "expenses/DELETE_AN_EXPENSE";
 
 export const loadExpenses = (expenses) => ({
@@ -19,10 +19,10 @@ export const createAnExpense = (expense) => ({
   expense
 });
 
-// export const editADrink = (drink) => ({
-//   type: UPDATE_A_DRINK,
-//   drink,
-// });
+export const editAnExpense = (expense) => ({
+  type: UPDATE_AN_EXPENSE,
+  expense,
+});
 
 export const deleteAnExpense = (expenseId) => ({
   type: DELETE_AN_EXPENSE,
@@ -63,18 +63,18 @@ export const createANewExpense = (expense) => async (dispatch) => {
   return data;
 };
 
-// export const updateADrink = (drink) => async dispatch => {
-//   const response = await fetch(`/api/expenses/${drink.id}`, {
-//     method: 'PUT',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify(drink)
-//   });
-//   const data = await response.json();
-//   if (response.ok) {
-//     dispatch(editADrink(data));
-//   }
-//   return data
-// };
+export const updateAnExpense = (expense) => async dispatch => {
+  const response = await fetch(`/api/expenses/${expense.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(expense)
+  });
+  const data = await response.json();
+  if (response.ok) {
+    dispatch(editAnExpense(data));
+  }
+  return data
+};
 
 export const deleteExpense = (id) => async (dispatch) => {
   const response = await fetch(`/api/expenses/${id}`, {
@@ -104,9 +104,9 @@ const expensesReducer = (state = initialState, action) => {
     case CREATE_AN_EXPENSE:
       newState[action.expense.id] = action.expense;
       return newState;
-    // case UPDATE_A_DRINK:
-    //   newState[action.drink.id] = action.drink;
-    //   return newState;
+    case UPDATE_AN_EXPENSE:
+      newState[action.expense.id] = action.expense;
+      return newState;
     case DELETE_AN_EXPENSE:
       delete newState[action.expenseId];
       return newState;
