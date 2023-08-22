@@ -9,21 +9,27 @@ expense_routes = Blueprint('expenses', __name__)
 
 def add_group_user_dict(exp):
     exp_group_users = ExpenseGroupUser.query.filter(exp.group_id == ExpenseGroupUser.group_id).all()
-
-    user_list = []
+    exp_dict = exp.to_dict()
+    group_user_list = []
     for exp_group_user in exp_group_users:
         user = User.query.get(exp_group_user.user_id)
         user_dict = user.to_dict()
-        user_list.append(user_dict)
+        group_user_list.append(user_dict)
 
-    exp_dict = exp.to_dict()
-    exp_dict["expense_group_users"] = user_list
+    exp_dict["expense_group_users"] = group_user_list
     return exp_dict
 
 @expense_routes.route('/<int:id>', methods=["GET"])
 @login_required
 def get_a_specific_expense(id):
-    expense = Expense.query.get(id)
+    expense_exists = Expense.query.get(id)
+    if not expense_exists:
+        return {'errors': ["Expense could not be found"]}, 404
+
+    expense = Expense.query.join(ExpenseGroupUser, Expense.group_id == ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id, Expense.id == id).all()
+    if not expense:
+        return {'errors': ["You do not have access to this expense"]}, 403
+
     exp_dict = add_group_user_dict(expense)
     return {"expenses": exp_dict}
 
@@ -98,7 +104,7 @@ def delete_an_expense(id):
 @expense_routes.route('/', methods=["GET"])
 @login_required
 def get_all_expenses():
-    all_expenses = Expense.query.all()
+    all_expenses = Expense.query.join(ExpenseGroupUser, Expense.group_id == ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
     expense_list = []
     for expense in all_expenses:
         exp_dict = add_group_user_dict(expense)

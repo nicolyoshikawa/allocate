@@ -4,6 +4,7 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
     const amount_split = Number(expense.price/2).toFixed(2);
     let paid_by;
     let user_owes;
+
     for(let i = 0; i < expense.expense_group_users.length; i++){
         let group_user = expense.expense_group_users[i]
         if(group_user.id === expense.paid_by){
