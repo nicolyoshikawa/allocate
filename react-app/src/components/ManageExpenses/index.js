@@ -2,7 +2,8 @@ import OpenModalButton from "../OpenModalButton";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import DeleteExpense from "../DeleteExpense";
-import UpdateExpense from "../UpdateExpense";
+// import UpdateExpense from "../UpdateExpense";
+import AddExpense from "../CreateExpense";
 
 const ManageExpenses = ({expense}) => {
     const [showMenu, setShowMenu] = useState(true);
@@ -21,9 +22,9 @@ const ManageExpenses = ({expense}) => {
                 <div className="review-edit">
                     <div className="review-edit-button">
                         <OpenModalButton
-                            buttonText="Edit"
+                            buttonText="Edit expense"
                             onItemClick={closeMenu}
-                            modalComponent={<UpdateExpense expense={expense}/>}
+                            modalComponent={<AddExpense expense={expense}/>}
                         />
                     </div>
                     <div className="review-edit-button">
