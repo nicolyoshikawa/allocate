@@ -1,7 +1,7 @@
 const LOAD_EXPENSES = "expenses/LOAD_EXPENSES";
 const EXPENSE_BY_ID = "expenses/EXPENSE_BY_ID";
-// const CREATE_A_DRINK = "drinks/CREATE_A_DRINK";
-// const UPDATE_A_DRINK = "drinks/UPDATE_A_DRINK";
+const CREATE_AN_EXPENSE = "expenses/CREATE_AN_EXPENSE";
+// const UPDATE_AN_EXPENSE = "expenses/UPDATE_AN_EXPENSE";
 const DELETE_AN_EXPENSE = "expenses/DELETE_AN_EXPENSE";
 
 export const loadExpenses = (expenses) => ({
@@ -14,10 +14,10 @@ export const expenseById = (expense) => ({
   expense
 });
 
-// export const createADrink = (drink) => ({
-//   type: CREATE_A_DRINK,
-//   drink
-// });
+export const createAnExpense = (expense) => ({
+  type: CREATE_AN_EXPENSE,
+  expense
+});
 
 // export const editADrink = (drink) => ({
 //   type: UPDATE_A_DRINK,
@@ -49,22 +49,22 @@ export const loadExpenseById = (id) => async (dispatch) => {
   return data
 };
 
-// export const createNewDrink = (drink) => async (dispatch) => {
-//   const response = await fetch('/api/drinks/', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json'},
-//     body: JSON.stringify(drink)
-//   });
+export const createANewExpense = (expense) => async (dispatch) => {
+  const response = await fetch('/api/expenses/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify(expense)
+  });
 
-//   const data = await response.json();
-//   if (response.ok) {
-//     dispatch(createADrink(data));
-//   }
-//   return data;
-// };
+  const data = await response.json();
+  if (response.ok) {
+    dispatch(createAnExpense(data));
+  }
+  return data;
+};
 
 // export const updateADrink = (drink) => async dispatch => {
-//   const response = await fetch(`/api/drinks/${drink.id}`, {
+//   const response = await fetch(`/api/expenses/${drink.id}`, {
 //     method: 'PUT',
 //     headers: { 'Content-Type': 'application/json' },
 //     body: JSON.stringify(drink)
@@ -101,9 +101,9 @@ const expensesReducer = (state = initialState, action) => {
     case EXPENSE_BY_ID:
       newState[action.expense.id] = action.expense;
       return newState;
-    // case CREATE_A_DRINK:
-    //   newState[action.drink.id] = action.drink;
-    //   return newState;
+    case CREATE_AN_EXPENSE:
+      newState[action.expense.id] = action.expense;
+      return newState;
     // case UPDATE_A_DRINK:
     //   newState[action.drink.id] = action.drink;
     //   return newState;
