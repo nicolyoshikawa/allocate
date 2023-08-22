@@ -23,16 +23,11 @@ function DeleteExpense({expense}) {
   }, [user.id, expense.paid_by]);
 
   const deleteClickHandler = async () => {
-    const expenseDeleted = await dispatch(expenseActions.deleteExpense(expense.id))
-    .catch(async (res) => {
-        const data = await res.json();
-          if (data && data.message) {
-              setErrors(data.message);
-          };
-    });
+    const expenseDeleted = await dispatch(expenseActions.deleteExpense(expense.id));
 
     if (expenseDeleted) {
         history.push("/");
+        console.log("after the push history")
         closeModal()
     };
   }

@@ -76,14 +76,14 @@ export const loadExpenseById = (id) => async (dispatch) => {
 //   return data
 // };
 
-export const deleteExpense = (expenseId) => async (dispatch) => {
-  const response = await fetch(`/api/expense/${expenseId}`, {
+export const deleteExpense = (id) => async (dispatch) => {
+  const response = await fetch(`/api/expenses/${id}`, {
     method: 'DELETE'
   });
 
   if (response.ok) {
     const res = await response.json();
-    dispatch(deleteAnExpense(expenseId));
+    dispatch(deleteAnExpense(id));
     return res;
   }
 };
