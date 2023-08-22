@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 const ExpenseTile = ({expense, clickable}) => {
-    console.log(expense)
     const amount_split = Number(expense.price/2).toFixed(2);
     const date = new Date(expense.expense_date)
     const dateFormat = date.toLocaleDateString()
