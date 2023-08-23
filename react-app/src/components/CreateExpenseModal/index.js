@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import OpenModalButton from "../OpenModalButton";
-import AddExpense from ".";
+import AddExpense from "../AddExpense";
 
 function CreateExpenseModal() {
     const [showMenu, setShowMenu] = useState(true);

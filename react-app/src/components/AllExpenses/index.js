@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseTile from '../ExpenseTile';
 import * as expenseActions from "../../store/expenses";
-import CreateExpenseModal from '../CreateExpense/CreateExpenseModal';
+import CreateExpenseModal from '../CreateExpenseModal';
 
 function AllExpenses(){
     const dispatch = useDispatch();

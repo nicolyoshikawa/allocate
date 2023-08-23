@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import DeleteExpense from "../DeleteExpense";
 // import UpdateExpense from "../UpdateExpense";
-import AddExpense from "../CreateExpense";
+import AddExpense from "../AddExpense";
 
 const ManageExpenses = ({expense}) => {
     const [showMenu, setShowMenu] = useState(true);
