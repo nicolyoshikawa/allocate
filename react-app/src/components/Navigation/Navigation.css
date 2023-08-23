@@ -1,7 +1,27 @@
 .profile-dropdown {
   position: absolute;
+  list-style-type: none;
+  background-color: white;
+  border: 1px solid black;
+  white-space: nowrap;
+  padding: 5px;
+  top: 60%;
+  right: 0;
+}
+.profile-button {
+  position: relative;
+  margin-right: 20px;
+  padding: 5px;
 }
 
 .hidden {
   display: none;
+}
+.navbar-container {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background-color: white;
+  align-items: center;
 }

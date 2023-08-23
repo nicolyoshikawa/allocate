@@ -12,7 +12,7 @@ function Navigation({ isLoaded }){
 	const [showMenu, setShowMenu] = useState(true);
     const closeMenu = () => setShowMenu(false);
 	return (
-		<div>
+		<div className="navbar-container">
 			<div>
 				<NavLink exact to="/">Home</NavLink>
 			</div>

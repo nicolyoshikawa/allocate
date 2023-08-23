@@ -7,6 +7,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import AllExpenses from "./components/AllExpenses";
 import Expense from "./components/Expense";
+import LandingPage from "./components/LandingPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,8 +30,11 @@ function App() {
           <Route exact path="/expenses/:id">
             <Expense/>
           </Route>
-          <Route exact path="/">
+          <Route exact path="/home">
             <AllExpenses/>
+          </Route>
+          <Route exact path="/">
+            <LandingPage/>
           </Route>
           <Route>
             <h1>Page Not Found</h1>

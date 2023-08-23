@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { useModal } from "../../context/Modal";
 import './LoginForm.css';
 
 function LoginFormPage() {
@@ -10,8 +11,9 @@ function LoginFormPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const { closeModal } = useModal();
 
-  if (sessionUser) return <Redirect to="/" />;
+  if (sessionUser) return <Redirect to="/home" />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +22,16 @@ function LoginFormPage() {
       setErrors(data);
     }
   };
+
+  const demoLogin = async (e) => {
+    e.preventDefault();
+    const data =  await dispatch(login("demo@aa.io", "password"));
+    if (data) {
+      setErrors(data);
+    } else {
+        closeModal()
+    }
+  }
 
   return (
     <>
@@ -49,6 +61,7 @@ function LoginFormPage() {
           />
         </label>
         <button type="submit">Log In</button>
+        <button onClick={demoLogin}>DEMO LOGIN</button>
       </form>
     </>
   );

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { login } from "../../store/session";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -20,6 +22,18 @@ function LoginFormModal() {
         closeModal()
     }
   };
+
+  if (sessionUser) return <Redirect to="/home" />;
+
+  const demoLogin = async (e) => {
+    e.preventDefault();
+    const data =  await dispatch(login("demo@aa.io", "password"));
+    if (data) {
+      setErrors(data);
+    } else {
+        closeModal()
+    }
+  }
 
   return (
     <>
@@ -49,6 +63,7 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit">Log In</button>
+        <button onClick={demoLogin}>DEMO LOGIN</button>
       </form>
     </>
   );

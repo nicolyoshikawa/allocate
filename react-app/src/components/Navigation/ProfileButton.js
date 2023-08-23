@@ -35,22 +35,25 @@ function ProfileButton({ user }) {
   // const closeMenu = () => setShowMenu(false);
 
   return (
-    <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
-      <ul className={ulClassName} ref={ulRef}>
-        {user && (
-          <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
+    <div className="profile-button">
+      {user && (
+        <>
+          <button onClick={openMenu}>
+            <i className="fas fa-user-circle" />{" "}
+            {user.first_name} {user.last_name}
+          </button>
+          <ul className={ulClassName} ref={ulRef}>
+              <>
+                <li>{user.username}</li>
+                <li>{user.email}</li>
+                <li>
+                  <button onClick={handleLogout}>Log Out</button>
+                </li>
+              </>
+          </ul>
           </>
-        )}
-      </ul>
-    </>
+      )}
+    </div>
   );
 }
 

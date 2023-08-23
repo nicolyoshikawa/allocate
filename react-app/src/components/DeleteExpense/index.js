@@ -26,7 +26,7 @@ function DeleteExpense({expense}) {
     const expenseDeleted = await dispatch(expenseActions.deleteExpense(expense.id));
 
     if (expenseDeleted) {
-        history.push("/");
+        history.push("/home");
         closeModal()
     };
   }
