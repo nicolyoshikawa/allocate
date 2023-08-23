@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as expenseActions from "../../store/expenses";
-
+import * as friendActions from "../../store/friends";
 
 function AddExpense({expense}) {
     const dispatch = useDispatch();
@@ -25,7 +25,16 @@ function AddExpense({expense}) {
     const [hasSubmitted, setHasSubmitted] = useState(false);
 
     const user = useSelector(state => state.session.user);
-
+    const friendsListArr = useSelector(state => state.friends.friends);
+    const acceptedFriendsArr = friendsListArr.filter(el=> el.friend.status === "friends");
+    // let friends_to_select_from = [];
+    // let obj = {}
+    // acceptedFriendsArr.forEach((el, i) => {
+        // let arr = `${el.first_name} ${el.last_name}, ${el.group_id[0]}`
+    //     let arr = [el.first_name, el.last_name, el.group_id[0]]
+    //     friends_to_select_from.push(arr);
+    // })
+    console.log(acceptedFriendsArr)
     let expLength = 0;
     if(expense){
         expLength = Object.keys(expense).length
@@ -33,7 +42,11 @@ function AddExpense({expense}) {
 
     const user_id = user.id
 
+
+
+
     useEffect(()=> {
+        dispatch(friendActions.getUserFriends())
         dispatch(expenseActions.loadExpenseById(expense?.id))
         .then((expObj)=>{
             if(expObj){
