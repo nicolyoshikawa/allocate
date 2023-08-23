@@ -20,11 +20,16 @@ function Expense(){
         <>
             {isLoaded && (
                 <div>
-                        <div>
+                    { expense ?
+                        (<div>
                             <h2>Expense</h2>
                             <ExpenseTile clickable={false} expense={expense}/>
                             <ManageExpenses expense={expense}/>
                         </div>
+                        ) : (
+                            <h1>Expense Not Found</h1>
+                        )
+                    }
                 </div>
             )}
         </>

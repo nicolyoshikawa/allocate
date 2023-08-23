@@ -10,8 +10,11 @@ function AddExpense({expense}) {
     const history = useHistory();
     const { closeModal } = useModal();
     const today = new Date();
-    const dateFormat = today.toLocaleDateString();
-    // console.log(dateFormat)
+    const year = today.toLocaleString("default", { year: "numeric" });
+    const month = today.toLocaleString("default", { month: "2-digit" });
+    const day = today.toLocaleString("default", { day: "2-digit" });
+    const dateFormat = year + "-" + month + "-" + day;
+
     const [receipt_img_url, setReceipt_img_url] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
@@ -43,7 +46,7 @@ function AddExpense({expense}) {
                 setFriend_id(friendArr[0].id)
             }
         })
-    },[dispatch, expense?.id, expense?.receipt_img_url, expense?.description, expense?.price, expense?.group_id, expense?.expense_date]);
+    },[dispatch, expense?.id, expense?.receipt_img_url, expense?.description, expense?.price, expense?.group_id, expense?.expense_date, user_id]);
 
     useEffect(() => {
         const errors = [];
@@ -68,7 +71,7 @@ function AddExpense({expense}) {
 
     if(Object.values(errors).length === 0){
         setErrors([]);
-        // console.log(expense_date)
+
         if(expLength === 0){
             const createExpense = await dispatch(expenseActions.createANewExpense(newExpense));
             if(createExpense.errors){

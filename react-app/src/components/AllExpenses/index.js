@@ -9,11 +9,13 @@ function AllExpenses(){
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
     const allExpenses = useSelector(state => Object.values(state.expenses));
+    const sortedExpenses = allExpenses.sort((a,b) => new Date(b.expense_date) - new Date(a.expense_date))
 
     useEffect(()=> {
         dispatch(expenseActions.loadAllUserExpenses())
         .then(()=>setIsLoaded(true))
     },[dispatch]);
+
 	return (
         <>
             {isLoaded && (
@@ -23,7 +25,7 @@ function AllExpenses(){
                             <div>
                                 <CreateExpenseModal/>
                             </div>
-                            {allExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true}/>))}
+                            {sortedExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true}/>))}
                         </div>
                 </div>
             )}

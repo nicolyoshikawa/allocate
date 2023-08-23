@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const ExpenseTile = ({expense, clickable}) => {
     const amount_split = Number(expense?.price/2).toFixed(2);
-    const date = new Date(expense?.expense_date)
-    const dateFormat = date.toLocaleDateString()
+    const dateFormat = (expense?.expense_date)
+    const date_values = dateFormat ? dateFormat?.split("-") : "";
+    const year = dateFormat ? date_values[0] : "";
+    const month = dateFormat ? date_values[1] : "";
+    const day = dateFormat ? date_values[2] : "";
+    const date = new Date(year, month - 1, day);
+    const monthName = date.toLocaleString('default', { month: 'short' });
+
     let paid_by;
     let user_owes;
 
@@ -21,7 +27,8 @@ const ExpenseTile = ({expense, clickable}) => {
     return (
         <>
             <div>
-                <div>{dateFormat}</div>
+                <div>{monthName}-{year}</div>
+                <div>{day}</div>
                 <div>{expense?.receipt_img_url ?
                         <img src={expense?.receipt_img_url} alt="receipt_img"/>
                         : <div></div>}
