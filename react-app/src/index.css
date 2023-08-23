@@ -3,3 +3,16 @@ img {
     height: 100px;
     width: 100px;
 }
+button:hover {
+    background-color: rgb(128, 128, 128, .8);
+}
+
+button {
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: 5px;
+    background-color: black;
+    color: white
+}

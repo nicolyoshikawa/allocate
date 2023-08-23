@@ -36,36 +36,52 @@ function LoginFormModal() {
   }
 
   return (
-    <>
+    <div>
+      <div className="login-form-container">
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Log In</button>
-        <button onClick={demoLogin}>DEMO LOGIN</button>
-      </form>
-    </>
+        {errors.length > 0 && (
+          <div className="login-form-container-errors">
+            <ul>
+              {errors.map((error, idx) => (
+                <li key={idx}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <form onSubmit={handleSubmit}>
+          <div className="login-form-input-container">
+            <i className="fa-solid fa-user" style={{ color: "#c7c7c7" }}></i>
+            <input
+              type="text"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="login-form-input-container">
+            <i className="fa-solid fa-lock" style={{ color: "#c7c7c7" }}></i>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="login-button">
+            Sign In
+          </button>
+          <button
+            type="button"
+            className="demo-login-button"
+            onClick={demoLogin}
+          >
+            Demo Login
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 

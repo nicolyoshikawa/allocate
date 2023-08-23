@@ -116,7 +116,7 @@ function AddExpense({expense}) {
     <>
         <div>
         <div>
-            {expLength > 0 ? <div>Edit Expense</div> : <div>Add An Expense</div>}
+            {expLength > 0 ? <h1>Edit Expense</h1> : <h1>Add An Expense</h1>}
             {hasSubmitted && errors.length > 0 && (
             <div>
                 <ul>
