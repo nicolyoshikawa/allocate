@@ -11,6 +11,7 @@ function AddExpense({expense}) {
     const { closeModal } = useModal();
     const today = new Date();
     const dateFormat = today.toLocaleDateString();
+    // console.log(dateFormat)
     const [receipt_img_url, setReceipt_img_url] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
@@ -22,7 +23,7 @@ function AddExpense({expense}) {
 
     const user = useSelector(state => state.session.user);
 
-    let expLength;
+    let expLength = 0;
     if(expense){
         expLength = Object.keys(expense).length
     }
@@ -67,6 +68,7 @@ function AddExpense({expense}) {
 
     if(Object.values(errors).length === 0){
         setErrors([]);
+        // console.log(expense_date)
         if(expLength === 0){
             const createExpense = await dispatch(expenseActions.createANewExpense(newExpense));
             if(createExpense.errors){
