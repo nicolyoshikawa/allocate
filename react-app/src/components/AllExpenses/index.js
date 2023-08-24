@@ -29,9 +29,9 @@ function AllExpenses(){
             {isLoaded && sessionUser && (
                 <div>
                         <div>
-                            <h2>All Expenses</h2>
-                            <div>
-                                <CreateExpenseModal/>
+                            <div className='expense-bar-container'>
+                                <h2 className='expense-bar'>All Expenses</h2>
+                                <div className='expense-bar'><CreateExpenseModal/></div>
                             </div>
                             {sortedExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true}/>))}
                         </div>

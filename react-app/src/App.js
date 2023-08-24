@@ -9,6 +9,8 @@ import Home from "./components/HomePage";
 import Expense from "./components/Expense";
 import LandingPage from "./components/LandingPage";
 import ViewFriends from "./components/Friends";
+import NavSideBar from "./components/NavSideBar";
+import Balance from "./components/Balance";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,10 +27,7 @@ function App() {
         <>
           <div className="container">
             <div className="sections">
-                <div className="sidebar">
-                    <div><NavLink exact to="/home">All Expenses</NavLink></div>
-                    <div><NavLink exact to="/friends">Friends</NavLink></div>
-                </div>
+                <NavSideBar/>
                 <Switch>
                   <Route exact path="/expenses/:id">
                     <Expense/>
@@ -46,9 +45,7 @@ function App() {
                     <h1>Page Not Found</h1>
                   </Route>
                 </Switch>
-                <div className="sidebar">
-                    <div>Balance</div>
-                </div>
+                <Balance/>
             </div>
           </div>
         </>

@@ -17,7 +17,7 @@ function Navigation({ isLoaded }){
 				<NavLink exact to="/">Home</NavLink>
 			</div>
 			{isLoaded && !sessionUser && showMenu &&(
-				<div>
+				<div className="navbar">
 					<div>
 						<OpenModalButton
 							buttonText="Log In"

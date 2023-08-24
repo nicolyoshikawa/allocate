@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import * as friendActions from "../../store/friends";
-import ManageExpenses from '../ManageExpenses';
 
-function ViewFriends(){
+function Balance(){
     const dispatch = useDispatch();
     const history = useHistory();
     const [isLoaded, setIsLoaded] = useState(false);
-    const friendsArr = useSelector(state => state.friends);
     const sessionUser = useSelector(state => state.session.user);
 
     if (!sessionUser) {
@@ -24,9 +22,10 @@ function ViewFriends(){
 	return (
         <>
             {isLoaded && sessionUser && (
-                <div className="middle">
-                    <div className='expense-bar-container'>
-                        <h2 className='expense-bar'>Friends</h2>
+                <div className="sidebar">
+                    <div className='side-bar-table'>Balance</div>
+                    <div className="table-list">
+                        Coming soon...
                     </div>
                 </div>
             )}
@@ -34,4 +33,4 @@ function ViewFriends(){
 	);
 }
 
-export default ViewFriends;
+export default Balance;

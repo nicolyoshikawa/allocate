@@ -26,7 +26,7 @@ function AddExpense({expense}) {
 
     const user = useSelector(state => state.session.user);
     const friendsListArr = useSelector(state => state.friends.friends);
-    const acceptedFriendsArr = friendsListArr.filter(el=> el.friend.status === "friends");
+    // const acceptedFriendsArr = friendsListArr.filter(el=> el.friend.status === "friends");
     // let friends_to_select_from = [];
     // let obj = {}
     // acceptedFriendsArr.forEach((el, i) => {

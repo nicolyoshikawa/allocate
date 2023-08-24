@@ -9,12 +9,15 @@ button:hover {
 
 button {
     cursor: pointer;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 4px;
     font-weight: bold;
     padding: 5px;
-    background-color: black;
-    color: white
+    /* background-color: black;
+    color: white */
+    background-color: #5bc5a7;
+    color: #fff;
+    border: rgba(0, 0, 0, 0.8);
 }
 .container {
     display: flex;
@@ -45,4 +48,26 @@ button {
     /* border-radius: 15px; */
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+.expense-bar{
+    display: inline-flex;
+    justify-content: space-between;
+}
+.expense-bar-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #cccccc;
+}
+.side-bar-list {
+    padding: 5px;
+}
+
+.side-bar-table {
+    background-color: #cccccc;
+    padding: 5px;
+}
+
+.table-list {
+    padding: 5px
 }
