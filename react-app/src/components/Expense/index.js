@@ -27,7 +27,7 @@ function Expense(){
 	return (
         <>
             {isLoaded && sessionUser && (
-                <div>
+                <div className="middle">
                     { expense ?
                         (<div>
                             <h2>Expense</h2>

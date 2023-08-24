@@ -24,7 +24,7 @@ function ViewFriends(){
 	return (
         <>
             {isLoaded && sessionUser && (
-                <div>
+                <div className="middle">
                     Friends
                     {/* {friendsArr.map(el => {
                         <div>{el}</div>

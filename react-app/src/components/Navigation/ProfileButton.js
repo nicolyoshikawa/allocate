@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
-import ViewFriends from "../Friends";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -47,7 +46,6 @@ function ProfileButton({ user }) {
               <>
                 <li>{user.username}</li>
                 <li>{user.email}</li>
-                <ViewFriends/>
                 <li>
                   <button onClick={handleLogout}>Log Out</button>
                 </li>

@@ -16,3 +16,33 @@ button {
     background-color: black;
     color: white
 }
+.container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    /* padding: 20px; */
+    gap: 10px;
+}
+.sections {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+}
+.sidebar {
+    width: 50%;
+    box-sizing: border-box;
+    /* background-color: white;
+    border-radius: 15px; */
+    padding: 20px;
+    list-style: none;
+}
+
+.middle{
+    width: 100%;
+    margin-top: 0px;
+    background-color: white;
+    /* border-radius: 15px; */
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
