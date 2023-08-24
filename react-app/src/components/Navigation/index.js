@@ -14,7 +14,7 @@ function Navigation({ isLoaded }){
 	return (
 		<div className="navbar-container">
 			<div>
-				<NavLink exact to="/">Home</NavLink>
+				<NavLink exact to="/" className="home-button">Home</NavLink>
 			</div>
 			{isLoaded && !sessionUser && showMenu &&(
 				<div className="navbar">

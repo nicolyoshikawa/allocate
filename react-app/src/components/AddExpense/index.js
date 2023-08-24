@@ -25,7 +25,7 @@ function AddExpense({expense}) {
     const [hasSubmitted, setHasSubmitted] = useState(false);
 
     const user = useSelector(state => state.session.user);
-    const friendsListArr = useSelector(state => state.friends.friends);
+    // const friendsListArr = useSelector(state => state.friends.friends);
     // const acceptedFriendsArr = friendsListArr.filter(el=> el.friend.status === "friends");
     // let friends_to_select_from = [];
     // let obj = {}
@@ -34,16 +34,13 @@ function AddExpense({expense}) {
     //     let arr = [el.first_name, el.last_name, el.group_id[0]]
     //     friends_to_select_from.push(arr);
     // })
-    // console.log(acceptedFriendsArr)
+
     let expLength = 0;
     if(expense){
         expLength = Object.keys(expense).length
     }
 
     const user_id = user.id
-
-
-
 
     useEffect(()=> {
         dispatch(friendActions.getUserFriends())
@@ -128,7 +125,6 @@ function AddExpense({expense}) {
   return (
     <>
         <div>
-        <div>
             {expLength > 0 ? <h1>Edit Expense</h1> : <h1>Add An Expense</h1>}
             {hasSubmitted && errors.length > 0 && (
             <div>
@@ -201,11 +197,8 @@ function AddExpense({expense}) {
                 <button type="submit">Confirm</button>
             </form>
         </div>
-        </div>
     </>
   );
 }
-
-
 
 export default AddExpense;

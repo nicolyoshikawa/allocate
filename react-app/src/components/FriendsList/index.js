@@ -25,9 +25,9 @@ function FriendsList(){
             {isLoaded && sessionUser && (
                 <div>
                     <div className='side-bar-table'>Friends List</div>
-                        {friendsArr.map((friend) => {
+                        {friendsArr.map((friend, i) => {
                             return (
-                                <div className="table-list" key={friend.id}>
+                                <div className="table-list" key={friend[i]}>
                                     <NavLink to="/friends" activeClassName="selected" activeStyle={{ color: "#5bc5a7", fontWeight: "bold" }}>
                                         {friend}
                                     </NavLink>
