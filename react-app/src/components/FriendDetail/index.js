@@ -29,7 +29,7 @@ function FriendDetail(){
     },[dispatch, sessionUser]);
 
     let friend_status;
-    if(friendObj?.friend.status == "friends"){
+    if(friendObj?.friend.status === "friends"){
         friend_status = ""
     } else {
         friend_status = "invite pending"
