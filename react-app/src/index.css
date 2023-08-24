@@ -46,6 +46,8 @@ button {
     margin-top: 0px;
     background-color: white;
     /* border-radius: 15px; */
+    /* height: max-content;
+    height: 100%; */
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
@@ -69,7 +71,14 @@ button {
 }
 
 .table-list {
-    padding: 5px
+    padding: 5px;
+}
+.table-list:hover {
+    text-decoration: none;
+    background-color: rgb(128, 128, 128, .8);
+}
+.table-list a {
+    text-decoration: none;
 }
 body {
     padding-left: 20px;

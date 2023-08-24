@@ -31,10 +31,10 @@ function AddExpense({expense}) {
 
     let expLength = 0;
     if(expense){
-        expLength = Object.keys(expense).length
+        expLength = Object.keys(expense).length;
     }
 
-    const user_id = user.id
+    const user_id = user.id;
 
     useEffect(()=> {
         dispatch(friendActions.getUserFriends())
@@ -69,7 +69,6 @@ function AddExpense({expense}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
-    console.log(friend_id)
     const newExpense = {description, price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
     const updateExpense = {id: expense?.id, description, price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
 
