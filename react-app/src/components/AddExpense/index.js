@@ -17,23 +17,17 @@ function AddExpense({expense}) {
 
     const [receipt_img_url, setReceipt_img_url] = useState("");
     const [description, setDescription] = useState("");
-    const [price, setPrice] = useState(0);
-    const [friend_id, setFriend_id] = useState(0);
+    const [price, setPrice] = useState("");
+    const [friend_id, setFriend_id] = useState("");
     const [group_id, setGroup_id] = useState("");
     const [expense_date, setExpense_date] = useState(dateFormat);
     const [errors, setErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
 
     const user = useSelector(state => state.session.user);
-    // const friendsListArr = useSelector(state => state.friends.friends);
-    // const acceptedFriendsArr = friendsListArr.filter(el=> el.friend.status === "friends");
-    // let friends_to_select_from = [];
-    // let obj = {}
-    // acceptedFriendsArr.forEach((el, i) => {
-        // let arr = `${el.first_name} ${el.last_name}, ${el.group_id[0]}`
-    //     let arr = [el.first_name, el.last_name, el.group_id[0]]
-    //     friends_to_select_from.push(arr);
-    // })
+    const friendsListArr = useSelector(state => state.friends.friends);
+    const acceptedFriendsArr = friendsListArr.filter(el=> el.friend.status === "friends");
+    const sortedFriends = acceptedFriendsArr.sort((a,b) => (a.id) - (b.id))
 
     let expLength = 0;
     if(expense){
@@ -75,7 +69,7 @@ function AddExpense({expense}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
-
+    console.log(friend_id)
     const newExpense = {description, price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
     const updateExpense = {id: expense?.id, description, price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
 
@@ -114,8 +108,8 @@ function AddExpense({expense}) {
   const reset = () => {
     setReceipt_img_url("")
     setDescription("");
-    setPrice(0);
-    setFriend_id(0);
+    setPrice("");
+    setFriend_id("");
     setGroup_id(0);
     setExpense_date(dateFormat);
     setErrors([]);
@@ -137,17 +131,23 @@ function AddExpense({expense}) {
             )}
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Friend</label>
-                    <input
-                        type='text'
-                        onChange={(e) => setFriend_id(e.target.value)}
-                        value={friend_id}
-                        placeholder='Friend'
-                        name='friend_id'
-                        required
-                    />
+                    <label>Split with: </label>
+                    <select name="friends" id="friend-select" onChange={(e) => setFriend_id(e.target.value)}>
+                        <option value="">--Please choose a friend--</option>
+                        {sortedFriends.map((friendObj) => {
+                            return(
+                                <option
+                                    value={friendObj.id}
+                                    key={friendObj.id}
+                                    required
+                                >
+                                {friendObj.first_name} {friendObj.last_name}
+                                </option>
+                            )
+                        })}
+                    </select>
                 </div>
-                <div>
+                {/* <div>
                     <label>Group</label>
                     <input
                         type='text'
@@ -156,7 +156,7 @@ function AddExpense({expense}) {
                         placeholder='Group'
                         name='group_id'
                     />
-                </div>
+                </div> */}
                 <div>
                     <input
                         type='text'
@@ -187,7 +187,7 @@ function AddExpense({expense}) {
                     />
                 </div>
                 <div>
-                    <label>Expense date</label>
+                    <label>Expense date: </label>
                     <input
                         type="date"
                         value={expense_date}
