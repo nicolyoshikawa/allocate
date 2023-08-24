@@ -1,5 +1,6 @@
 import { NavLink} from "react-router-dom";
 import FriendsList from "../FriendsList";
+import InviteFriend from "../InviteFriend";
 
 function NavSideBar() {
   return (
@@ -10,6 +11,7 @@ function NavSideBar() {
         </NavLink>
       </div>
       <FriendsList/>
+      <InviteFriend/>
     </div>
   );
 }

@@ -14,7 +14,8 @@ function FriendDetail(){
     const sessionUser = useSelector(state => state.session.user);
     const friendsListArr = useSelector(state => state.friends.friends);
     const friendArr = friendsListArr?.filter(el=> el.id === param_id);
-    const friendObj = friendArr[0]
+    let friendObj;
+    if(friendArr) friendObj = friendArr[0]
 
     if (!sessionUser) {
         history.push("/")
@@ -28,7 +29,7 @@ function FriendDetail(){
     },[dispatch, sessionUser]);
 
     let friend_status;
-    if(friendObj.friend.status == "friends"){
+    if(friendObj?.friend.status == "friends"){
         friend_status = ""
     } else {
         friend_status = "invite pending"
@@ -36,13 +37,13 @@ function FriendDetail(){
 
 	return (
         <>
-            {isLoaded && sessionUser && (
+            {isLoaded && sessionUser && friendObj &&(
                 <>
                     <div className="middle">
                         <div className='expense-bar-container'>
                             <h2 className='expense-bar'>{friendObj.first_name} {friendObj.last_name}</h2>
                             <div>{friend_status}</div>
-                            {!friend_status ? (<div className='expense-bar'><CreateExpenseModal/></div>) : <div></div>}
+                            {!friend_status ? (<div className='expense-bar'><CreateExpenseModal param_id={param_id}/></div>) : <div></div>}
                         </div>
                     </div>
                 </>
