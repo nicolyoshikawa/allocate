@@ -27,6 +27,8 @@
   justify-content: space-between;
   background-color: #5bc5a7;
   color: #fff;
+  padding-left: 20px;
+  padding-right: 20px;
   align-items: center;
   font-weight: bold
 }
