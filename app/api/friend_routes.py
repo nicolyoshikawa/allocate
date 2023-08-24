@@ -48,6 +48,9 @@ def accept_friend(targetId):
         return {'errors': ["Friend request could not be found"]}, 404
 
     new_group = ExpenseGroup()
+    db.session.add(new_group)
+    db.session.commit()
+
     add_friend_to_group = ExpenseGroupUser(
         user_id = current_user.id,
         group_id = new_group.id,
@@ -60,7 +63,7 @@ def accept_friend(targetId):
     )
 
     request.status = "friends"
-    db.session.add(new_group)
+
     db.session.add(add_friend_to_group)
     db.session.add(add_user_to_group)
     db.session.commit()

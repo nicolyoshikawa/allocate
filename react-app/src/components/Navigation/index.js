@@ -12,12 +12,12 @@ function Navigation({ isLoaded }){
 	const [showMenu, setShowMenu] = useState(true);
     const closeMenu = () => setShowMenu(false);
 	return (
-		<div>
+		<div className="navbar-container">
 			<div>
-				<NavLink exact to="/">Home</NavLink>
+				<NavLink exact to="/" className="home-button">Home</NavLink>
 			</div>
 			{isLoaded && !sessionUser && showMenu &&(
-				<div>
+				<div className="navbar">
 					<div>
 						<OpenModalButton
 							buttonText="Log In"

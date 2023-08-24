@@ -1,0 +1,88 @@
+.login-form-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form-container-errors {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid red;
+    width: 80%;
+    margin: 10px auto;
+}
+
+.login-form-container-errors ul {
+    list-style: none;
+    padding: 0px;
+    font-size: 14px;
+}
+
+.login-form-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form-input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.login-form-input-container i {
+    margin: 0px 8px;
+}
+
+.login-form-input-container input {
+    border: none;
+    border-left: 1px solid #cccccc;
+    padding: 0px 8px;
+    font-size: 16px;
+    margin: 6px 0px;
+    width: 100%;
+}
+
+.login-form-input-container input:focus {
+    outline: none;
+}
+
+.login-form-container button {
+    background-color: black;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.login-form-container button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.login-form-container button.demo-login-button {
+    margin: 10px 0;
+    background-color: grey;
+}
+
+.login-form-container button.demo-login-button:hover {
+    background-color: rgba(128, 128, 128, 0.8);
+}
+
+.login-form-input-container textarea {
+    border: none;
+    border-left: 1px solid #cccccc;
+    padding: 0px 8px;
+    font-size: 16px;
+    margin: 6px 0px;
+    width: 100%;
+    font-family: Open-Sans, sans-serif;
+}

@@ -1,7 +1,40 @@
 .profile-dropdown {
   position: absolute;
+  list-style-type: none;
+  background-color: white;
+  border: 1px solid black;
+  white-space: nowrap;
+  padding: 10px;
+  top: 60%;
+  right: 0;
+  color: black
+}
+.profile-dropdown li {
+  padding: 3px;
+}
+.profile-button {
+  position: relative;
+  margin-right: 20px;
+  padding: 5px;
 }
 
 .hidden {
   display: none;
+}
+.navbar-container {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  background-color: #5bc5a7;
+  color: #fff;
+  align-items: center;
+  font-weight: bold
+}
+
+.navbar {
+  display: inline-flex
+}
+.home-button {
+  margin-left: 20px;
+  padding: 5px;
 }

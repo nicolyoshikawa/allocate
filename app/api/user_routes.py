@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
-from app.models import User, Friend
+from app.models import User, Friend, ExpenseGroupUser
 
 user_routes = Blueprint('users', __name__)
 
@@ -32,15 +32,30 @@ def get_current_user_friend_list():
     """
     receiver_list = Friend.query.filter(Friend.receiver_id == current_user.id).all()
     sender_list = Friend.query.filter(Friend.sender_id == current_user.id).all()
+    # expense = Friend.query.join(ExpenseGroupUser, Friend.sender_id == current_user.id).filter(ExpenseGroupUser.user_id == current_user.id).all()
 
     friends_info = []
     for friend_request in receiver_list:
             userDict = friend_request.user.to_dict()
+
+            users_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
+            friends_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == friend_request.user.id).all()
+            user_friend_expense_groups= set(users_groups).intersection(friends_groups)
+            group_id = [id[0] for id in user_friend_expense_groups]
+
             userDict["friend"] = friend_request.to_dict()
+            userDict["group_id"] = group_id
             friends_info.append(userDict)
     for friend_request in sender_list:
             userDict = friend_request.friend.to_dict()
+
+            users_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
+            friends_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == friend_request.friend.id).all()
+            user_friend_expense_groups= set(users_groups).intersection(friends_groups)
+            group_id = [id[0] for id in user_friend_expense_groups]
+
             userDict["friend"] = friend_request.to_dict()
+            userDict["group_id"] = group_id
             friends_info.append(userDict)
 
     return jsonify(friends_info)
