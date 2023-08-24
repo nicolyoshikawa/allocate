@@ -5,7 +5,6 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
-// import AllExpenses from "./components/AllExpenses";
 import Home from "./components/HomePage";
 import Expense from "./components/Expense";
 import LandingPage from "./components/LandingPage";

@@ -34,7 +34,7 @@ function AddExpense({expense}) {
     //     let arr = [el.first_name, el.last_name, el.group_id[0]]
     //     friends_to_select_from.push(arr);
     // })
-    console.log(acceptedFriendsArr)
+    // console.log(acceptedFriendsArr)
     let expLength = 0;
     if(expense){
         expLength = Object.keys(expense).length

@@ -2,7 +2,6 @@ import OpenModalButton from "../OpenModalButton";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import DeleteExpense from "../DeleteExpense";
-// import UpdateExpense from "../UpdateExpense";
 import AddExpense from "../AddExpense";
 
 const ManageExpenses = ({expense}) => {
