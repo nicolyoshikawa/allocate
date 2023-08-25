@@ -120,7 +120,7 @@ function AddExpense({expense, param_id}) {
         <div>
             {expLength > 0 ? <h1>Edit Expense</h1> : <h1>Add An Expense</h1>}
             {hasSubmitted && errors.length > 0 && (
-            <div>
+            <div className="login-form-container-errors">
                 <ul>
                 {errors.map((error, idx) => (
                     <li key={idx}>{error}</li>

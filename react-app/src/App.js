@@ -8,7 +8,7 @@ import Navigation from "./components/Navigation";
 import Home from "./components/HomePage";
 import Expense from "./components/Expense";
 import LandingPage from "./components/LandingPage";
-import ViewFriends from "./components/Friends";
+// import ViewFriends from "./components/Friends";
 import NavSideBar from "./components/NavSideBar";
 import Balance from "./components/Balance";
 import FriendDetail from "./components/FriendDetail";
@@ -68,9 +68,9 @@ function App() {
           <Route exact path="/home">
             <Home/>
           </Route>
-          <Route exact path="/friends">
+          {/* <Route exact path="/friends">
             <ViewFriends/>
-          </Route>
+          </Route> */}
           <Route exact path="/">
             <LandingPage/>
           </Route>

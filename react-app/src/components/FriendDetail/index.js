@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import CreateExpenseModal from '../CreateExpenseModal';
 import ExpenseTile from '../ExpenseTile';
 import * as expenseActions from "../../store/expenses";
+import ManageFriend from '../ManageFriend';
 
 function FriendDetail(){
     const { id } = useParams();
@@ -65,6 +66,7 @@ function FriendDetail(){
                                 </>
                             ) : <div></div>}
                         </div>
+                        <div><ManageFriend friendObj={friendObj} sessionUser={sessionUser}/></div>
                         {!friend_status ? (
                             friendExpenses.length > 0 ? (
                                 friendExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true}/>))
@@ -72,7 +74,10 @@ function FriendDetail(){
                                     <div>You and {friendObj.first_name} {friendObj.last_name} are all settled up.</div>
                             )
                         ) : (
-                            <div>You aren't friends yet. Remind your friend to accept their request!</div>
+                            <>
+                                {/* <div>You aren't friends yet. Remind your friend to accept their request!</div> */}
+
+                            </>
                         )}
                     </div>
                 </>

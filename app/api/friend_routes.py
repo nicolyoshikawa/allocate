@@ -4,12 +4,19 @@ from app.models import Friend, db, User, ExpenseGroup, ExpenseGroupUser
 
 friend_routes = Blueprint("friends", __name__)
 
-@friend_routes.route("/request/<int:targetId>", methods=["POST"])
+@friend_routes.route("/request/<targetEmail>", methods=["POST"])
 @login_required
-def add_friend(targetId):
+def add_friend(targetEmail):
     """
     A logged-in user can add a friend.
     """
+    user = User.query.filter_by(email = targetEmail).first()
+    if not user:
+        return {'errors': ["Friend could not be found"]}, 404
+
+    user_dict = user.to_dict()
+    targetId = user_dict["id"]
+
     if current_user.id == targetId:
         return {'errors': ["Cannot add yourself as a friend"]}, 400
 
