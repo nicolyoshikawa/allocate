@@ -71,6 +71,9 @@ function App() {
           {/* <Route exact path="/friends">
             <ViewFriends/>
           </Route> */}
+          <Route exact path="/friends/:id">
+            <FriendDetail/>
+          </Route>
           <Route exact path="/">
             <LandingPage/>
           </Route>

@@ -11,7 +11,6 @@ const ManageFriend = ({friendObj, sessionUser}) => {
   const history = useHistory();
   // const sessionUser = useSelector(state => state.session.user);
   // const friends = useSelector(state => (state.friends.friends));
-  // console.log(friendObj)
   // Redirect to landing page if user not logged in
   if (!sessionUser) {
       history.push("/")
