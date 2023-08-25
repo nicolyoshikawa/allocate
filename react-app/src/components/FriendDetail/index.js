@@ -27,7 +27,8 @@ function FriendDetail(){
         friendGroupArr = friendArr[0].group_id
     }
 
-    const friendExpenses = sortedExpenses.filter(el=> el.group_id === friendGroupArr[0]);
+    let friendExpenses;
+    if(friendGroupArr) friendExpenses = sortedExpenses.filter(el=> el.group_id === friendGroupArr[0]);
 
     if (!sessionUser) {
         history.push("/")
