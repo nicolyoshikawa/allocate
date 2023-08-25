@@ -13,15 +13,15 @@ function Balance(){
         history.push("/")
     }
 
-    useEffect(()=> {
-        if(sessionUser){
-            dispatch(friendActions.getUserFriends())
-            .then(()=>setIsLoaded(true))
-        }
-    },[dispatch, sessionUser]);
+    // useEffect(()=> {
+    //     if(sessionUser){
+    //         dispatch(friendActions.getUserFriends())
+    //         .then(()=>setIsLoaded(true))
+    //     }
+    // },[dispatch, sessionUser]);
 	return (
         <>
-            {isLoaded && sessionUser && (
+            {sessionUser && (
                 <div className="sidebar">
                     <div className='side-bar-table'>Balance</div>
                     <div className="table-list">

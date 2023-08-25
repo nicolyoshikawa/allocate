@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import * as friendActions from "../../store/friends";
+// import * as friendActions from "../../store/friends";
 import CreateExpenseModal from '../CreateExpenseModal';
+import ExpenseTile from '../ExpenseTile';
+import * as expenseActions from "../../store/expenses";
 
 function FriendDetail(){
     const { id } = useParams();
@@ -14,8 +16,18 @@ function FriendDetail(){
     const sessionUser = useSelector(state => state.session.user);
     const friendsListArr = useSelector(state => state.friends.friends);
     const friendArr = friendsListArr?.filter(el=> el.id === param_id);
+
+    const allExpenses = useSelector(state => Object.values(state.expenses));
+    const sortedExpenses = allExpenses.sort((a,b) => new Date(b.expense_date) - new Date(a.expense_date))
+
     let friendObj;
-    if(friendArr) friendObj = friendArr[0]
+    let friendGroupArr;
+    if(friendArr) {
+        friendObj = friendArr[0];
+        friendGroupArr = friendArr[0].group_id
+    }
+
+    const friendExpenses = sortedExpenses.filter(el=> el.group_id === friendGroupArr[0]);
 
     if (!sessionUser) {
         history.push("/")
@@ -23,9 +35,12 @@ function FriendDetail(){
 
     useEffect(()=> {
         if(sessionUser){
-            dispatch(friendActions.getUserFriends())
+            // dispatch(friendActions.getUserFriends())
+            // .then(()=>setIsLoaded(true))
+            dispatch(expenseActions.loadAllUserExpenses())
             .then(()=>setIsLoaded(true))
         }
+
     },[dispatch, sessionUser]);
 
     let friend_status;
@@ -43,8 +58,21 @@ function FriendDetail(){
                         <div className='expense-bar-container'>
                             <h2 className='expense-bar'>{friendObj.first_name} {friendObj.last_name}</h2>
                             <div>{friend_status}</div>
-                            {!friend_status ? (<div className='expense-bar'><CreateExpenseModal param_id={param_id}/></div>) : <div></div>}
+                            {!friend_status ? (
+                                <>
+                                    <div className='expense-bar'><CreateExpenseModal param_id={param_id}/></div>
+                                </>
+                            ) : <div></div>}
                         </div>
+                        {!friend_status ? (
+                            friendExpenses.length > 0 ? (
+                                friendExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true}/>))
+                                ) : (
+                                    <div>You and {friendObj.first_name} {friendObj.last_name} are all settled up.</div>
+                            )
+                        ) : (
+                            <div>You aren't friends yet. Remind your friend to accept their request!</div>
+                        )}
                     </div>
                 </>
             )}
