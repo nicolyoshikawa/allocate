@@ -97,7 +97,7 @@ function AddExpense({expense, param_id}) {
             } else {
                 reset();
                 history.push(`/expenses/${updatedExpense.id}`);
-                dispatch(expenseActions.loadExpenseById(updatedExpense.id))
+                dispatch(expenseActions.loadExpenseById(updatedExpense.id));
                 closeModal();
             }
         }

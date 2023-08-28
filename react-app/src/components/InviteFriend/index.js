@@ -14,6 +14,7 @@ function InviteFriend(){
         setHasSubmitted(true);
 
         if(Object.values(errors).length === 0){
+            setErrors([]);
             const res = await dispatch(friendActions.requestFriendRequest(friend_request));
             if(res.errors){
                 const errors = [];
@@ -30,6 +31,10 @@ function InviteFriend(){
         setFriend_request("")
         setHasSubmitted(false);
     };
+    useEffect(() => {
+        const errors = [];
+        setErrors(errors);
+    }, [friend_request, hasSubmitted]);
 
 	return (
         <>
