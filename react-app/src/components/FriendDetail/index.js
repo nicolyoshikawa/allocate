@@ -25,7 +25,7 @@ function FriendDetail(){
     let friendGroupArr;
     if(friendArr) {
         friendObj = friendArr[0];
-        friendGroupArr = friendArr[0].group_id
+        friendGroupArr = friendArr[0]?.group_id
     }
 
     let friendExpenses;
@@ -54,7 +54,7 @@ function FriendDetail(){
 
 	return (
         <>
-            {isLoaded && sessionUser && friendObj &&(
+            {isLoaded && sessionUser && friendObj ? (
                 <>
                     <div className="middle">
                         <div className='expense-bar-container'>
@@ -79,6 +79,14 @@ function FriendDetail(){
 
                             </>
                         )}
+                    </div>
+                </>
+            ):(
+                <>
+                    <div className="middle">
+                        {/* <div className='expense-bar-container'> */}
+                            <h1>Friend Not Found</h1>
+                        {/* </div> */}
                     </div>
                 </>
             )}

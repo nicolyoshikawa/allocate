@@ -35,10 +35,8 @@ const ManageFriend = ({friendObj, sessionUser}) => {
       Manage Friend
       <div className="friends-container">
         <div className="friends-card">
-          {/* <h2>Pending Friend Requests ({pendings?.length})</h2> */}
           <ul className="friends-list">
-            {/* {pendings?.map((pending) => ( */}
-            { friendObj.friend.status === "pending" ? (
+            { (friendObj.friend.status === "pending") && (friendObj.friend.sender_id !== sessionUser.id) ? (
               <li key={friendObj.id}>
                 <div className="friend-info">
                   {/* <img
@@ -63,15 +61,18 @@ const ManageFriend = ({friendObj, sessionUser}) => {
                 </div>
               </li>
 
+            ) : (friendObj.friend.status === "pending") && (friendObj.friend.sender_id === sessionUser.id) ? (
+              <>
+                <div>You are not friends yet. Please remind your friend to accept your friend request.</div>
+                <button onClick={(e) => handleDelete(e, friendObj.id)}>Remove Request</button>
+              </>
             ) : (
               <></>
             )}
           </ul>
         </div>
         <div className="friends-card">
-          {/* <h2>Current Friends ({friends?.length})</h2> */}
           <ul className="friends-list">
-            {/* {friends?.map((friend) => ( */}
             { friendObj.friend.status === "friends" ? (
               <li key={friendObj.id}>
                 <div className="friend-info">
