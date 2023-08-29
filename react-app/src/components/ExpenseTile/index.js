@@ -26,7 +26,7 @@ const ExpenseTile = ({expense, clickable}) => {
 
     return (
         <>
-            <div>
+            <div className="tile-bar-container">
                 <div>{monthName}-{year}</div>
                 <div>{day}</div>
                 <div>{expense?.receipt_img_url ?

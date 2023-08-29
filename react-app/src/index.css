@@ -35,8 +35,8 @@ button {
 .sidebar {
     width: 50%;
     box-sizing: border-box;
-    /* background-color: white;
-    border-radius: 15px; */
+    background-color: rgb(245, 244, 244);
+    /* border-radius: 15px; */
     padding: 20px;
     list-style: none;
 }
@@ -69,6 +69,7 @@ button {
 .side-bar-table {
     background-color: #cccccc;
     padding: 5px;
+    border-radius: 4px;
 }
 
 .table-list {
@@ -104,7 +105,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: .5px solid #cccccc;
 }
 .manage-friend-bar-container ul {
     list-style-type: none;
+}
+.tile-bar-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: .5px solid #cccccc;
 }

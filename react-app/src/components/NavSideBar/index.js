@@ -10,8 +10,8 @@ function NavSideBar() {
           All Expenses
         </NavLink>
       </div>
-      <FriendsList/>
-      <InviteFriend/>
+        <FriendsList/>
+        <InviteFriend/>
     </div>
   );
 }
