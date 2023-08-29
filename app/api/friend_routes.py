@@ -121,6 +121,8 @@ def delete_friend(targetId):
         # expense = Expense.query.filter(Expense.group_id == group_id).all()
         # db.session.delete(expense)
         Expense.query.filter(Expense.group_id == group_id).delete()
+        ExpenseGroupUser.query.filter(ExpenseGroupUser.group_id == group_id).delete()
+        ExpenseGroup.query.filter(ExpenseGroup.id == group_id).delete()
 
     db.session.commit()
 

@@ -18,7 +18,7 @@ class Expense(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
 
     expense_paid_by = db.relationship('User', back_populates='user_paid_expense')
-    expense_groups = db.relationship('ExpenseGroup', back_populates='expenses', cascade="all, delete-orphan", single_parent=True)
+    expense_groups = db.relationship('ExpenseGroup', back_populates='expenses')
     expense_comments = db.relationship('Comment', back_populates='expense', cascade="all, delete-orphan")
 
     def to_dict(self):
