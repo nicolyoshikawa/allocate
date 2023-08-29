@@ -1,8 +1,13 @@
+const RESET_EXPENSES = "expenses/RESET_EXPENSES";
 const LOAD_EXPENSES = "expenses/LOAD_EXPENSES";
 const EXPENSE_BY_ID = "expenses/EXPENSE_BY_ID";
 const CREATE_AN_EXPENSE = "expenses/CREATE_AN_EXPENSE";
 const UPDATE_AN_EXPENSE = "expenses/UPDATE_AN_EXPENSE";
 const DELETE_AN_EXPENSE = "expenses/DELETE_AN_EXPENSE";
+
+export const RESET_ACTION = () => ({
+  type: RESET_EXPENSES
+})
 
 export const loadExpenses = (expenses) => ({
     type: LOAD_EXPENSES,
@@ -95,7 +100,7 @@ const expensesReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_EXPENSES:
         action.expenses.forEach((expense) => {
-            newState[expense.id] = expense;
+          newState[expense.id] = expense;
         });
         return newState;
     case EXPENSE_BY_ID:
@@ -110,6 +115,8 @@ const expensesReducer = (state = initialState, action) => {
     case DELETE_AN_EXPENSE:
       delete newState[action.expenseId];
       return newState;
+    case RESET_EXPENSES:
+      return initialState;
     default:
       return newState;
   }

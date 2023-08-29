@@ -7,9 +7,11 @@ function FriendsList(){
     const dispatch = useDispatch();
     const history = useHistory();
     const [isLoaded, setIsLoaded] = useState(false);
-    // const friendsArr = useSelector(state => state.friends);
+    const friendsState = useSelector(state => (state.friends));
+    const friendsArr = friendsState.friends;
+    const sortedFriends = friendsArr?.sort((a,b) => (a.id) - (b.id))
     const sessionUser = useSelector(state => state.session.user);
-    const friendsArr = ["friend1", "friend2", "friend3"]
+
     if (!sessionUser) {
         history.push("/")
     }
@@ -25,15 +27,19 @@ function FriendsList(){
             {isLoaded && sessionUser && (
                 <div>
                     <div className='side-bar-table'>Friends List</div>
-                        {friendsArr.map((friend, i) => {
-                            return (
-                                <div className="table-list" key={friend[i]}>
-                                    <NavLink to="/friends" activeClassName="selected" activeStyle={{ color: "#5bc5a7", fontWeight: "bold" }}>
-                                        {friend}
-                                    </NavLink>
-                                </div>
-                            )
-                        })}
+                    {sortedFriends.map((friendObj) => {
+                        return (
+                            <div className="table-list" key={friendObj.id}>
+                                <NavLink
+                                    to={`/friends/${friendObj.id}`}
+                                    activeClassName="selected"
+                                    activeStyle={{ color: "#5bc5a7", fontWeight: "bold"}}
+                                >
+                                    {friendObj.first_name} {friendObj.last_name}
+                                </NavLink>
+                            </div>
+                        )
+                    })}
                 </div>
             )}
         </>

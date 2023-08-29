@@ -1,15 +1,22 @@
 from flask import Blueprint
 from flask_login import login_required, current_user
-from app.models import Friend, db, User, ExpenseGroup, ExpenseGroupUser
+from app.models import Friend, db, User, ExpenseGroup, ExpenseGroupUser, Expense
 
 friend_routes = Blueprint("friends", __name__)
 
-@friend_routes.route("/request/<int:targetId>", methods=["POST"])
+@friend_routes.route("/request/<targetEmail>", methods=["POST"])
 @login_required
-def add_friend(targetId):
+def add_friend(targetEmail):
     """
     A logged-in user can add a friend.
     """
+    user = User.query.filter_by(email = targetEmail).first()
+    if not user:
+        return {'errors': ["Friend could not be found"]}, 404
+
+    user_dict = user.to_dict()
+    targetId = user_dict["id"]
+
     if current_user.id == targetId:
         return {'errors': ["Cannot add yourself as a friend"]}, 400
 
@@ -102,6 +109,21 @@ def delete_friend(targetId):
     if not friendship:
         return {'errors': ["Friend could not be found"]}, 404
 
+    #returns array of dicts
+    users_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
+    friends_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == targetId).all()
+    user_friend_expense_groups= set(users_groups).intersection(friends_groups)
+    group_ids = [id[0] for id in user_friend_expense_groups]
+
     db.session.delete(friendship)
+
+    for group_id in group_ids:
+        # expense = Expense.query.filter(Expense.group_id == group_id).all()
+        # db.session.delete(expense)
+        Expense.query.filter(Expense.group_id == group_id).delete()
+        ExpenseGroupUser.query.filter(ExpenseGroupUser.group_id == group_id).delete()
+        ExpenseGroup.query.filter(ExpenseGroup.id == group_id).delete()
+
     db.session.commit()
+
     return {"message": "Friend/friend request removed"}

@@ -8,9 +8,11 @@ import Navigation from "./components/Navigation";
 import Home from "./components/HomePage";
 import Expense from "./components/Expense";
 import LandingPage from "./components/LandingPage";
-import ViewFriends from "./components/Friends";
+// import ViewFriends from "./components/Friends";
 import NavSideBar from "./components/NavSideBar";
 import Balance from "./components/Balance";
+import FriendDetail from "./components/FriendDetail";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,14 +37,17 @@ function App() {
                   <Route exact path="/home">
                     <Home/>
                   </Route>
-                  <Route exact path="/friends">
+                  {/* <Route exact path="/friends">
                     <ViewFriends/>
+                  </Route> */}
+                  <Route exact path="/friends/:id">
+                    <FriendDetail/>
                   </Route>
                   <Route exact path="/">
                     <LandingPage/>
                   </Route>
                   <Route>
-                    <h1>Page Not Found</h1>
+                    <PageNotFound/>
                   </Route>
                 </Switch>
                 <Balance/>
@@ -64,14 +69,17 @@ function App() {
           <Route exact path="/home">
             <Home/>
           </Route>
-          <Route exact path="/friends">
+          {/* <Route exact path="/friends">
             <ViewFriends/>
+          </Route> */}
+          <Route exact path="/friends/:id">
+            <FriendDetail/>
           </Route>
           <Route exact path="/">
             <LandingPage/>
           </Route>
           <Route>
-            <h1>Page Not Found</h1>
+            <PageNotFound/>
           </Route>
         </Switch>
       )}

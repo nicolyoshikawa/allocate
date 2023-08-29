@@ -1,5 +1,6 @@
 import AllExpenses from "../AllExpenses";
 
+
 export default function Home() {
 
     return (

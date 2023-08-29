@@ -5,6 +5,7 @@ import ProfileButton from './ProfileButton';
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+// import piechart from "../../assets/piechart.png";
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
@@ -14,7 +15,11 @@ function Navigation({ isLoaded }){
 	return (
 		<div className="navbar-container">
 			<div>
-				<NavLink exact to="/" className="home-button">Home</NavLink>
+				<NavLink exact to="/" className="home-button">
+					{/* <img className="nav-logo" src={piechart} alt="Allocate" /> */}
+					Allocate
+				</NavLink>
+
 			</div>
 			{isLoaded && !sessionUser && showMenu &&(
 				<div className="navbar">

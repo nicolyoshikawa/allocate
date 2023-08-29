@@ -13,7 +13,7 @@ class ExpenseGroup(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
 
     expenses = db.relationship('Expense', back_populates='expense_groups')
-    expense_group_users = db.relationship('ExpenseGroupUser', back_populates='expense_group')
+    expense_group_users = db.relationship('ExpenseGroupUser', back_populates='expense_group', cascade="all, delete-orphan")
 
     def to_dict(self):
         return {
