@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import "./LandingPage.css"
 
 function LandingPage(){
     const history = useHistory();
@@ -9,9 +10,9 @@ function LandingPage(){
     if (sessionUser) history.push("/home")
 
 	return (
-        <>
-            <h1> No Session user</h1>
-        </>
+        <div className='landingPage'>
+            <h1>Less stress when sharing expenses</h1>
+        </div>
     )
 }
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { NavLink} from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
 import "./SignupForm.css";
@@ -7,6 +8,8 @@ import "./SignupForm.css";
 function SignupFormModal() {
 	const dispatch = useDispatch();
 	const [email, setEmail] = useState("");
+	const [first_name, setFirstName] = useState("");
+	const [last_name, setLastName] = useState("");
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -16,7 +19,7 @@ function SignupFormModal() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (password === confirmPassword) {
-			const data = await dispatch(signUp(username, email, password));
+			const data = await dispatch(signUp(username, email, password, first_name, last_name));
 			if (data) {
 				setErrors(data);
 			} else {
@@ -30,53 +33,92 @@ function SignupFormModal() {
 	};
 
 	return (
-		<>
-			<h1>Sign Up</h1>
-			<form onSubmit={handleSubmit}>
+		<div className="signup-page-container">
+			<div className="signup-form-container">
+      		<h1>Sign Up</h1>
+			{errors.length > 0 && (
+				<div className="signup-form-container-errors">
 				<ul>
 					{errors.map((error, idx) => (
-						<li key={idx}>{error}</li>
+					<li key={idx}>{error}</li>
 					))}
 				</ul>
-				<label>
-					Email
+				</div>
+			)}
+		  <form onSubmit={handleSubmit}>
+			<p className="signup-form-required-text">
+			  All fields below are required unless specified
+			</p>
+			<div className="signup-form-input-group-names">
+				<input
+					type="text"
+					placeholder="First Name"
+					value={first_name}
+					onChange={(e) => setFirstName(e.target.value)}
+					required
+				/>
+				<input
+					type="text"
+					placeholder="Last Name"
+					value={last_name}
+					onChange={(e) => setLastName(e.target.value)}
+					required
+				/>
+			</div>
+			<div className="signup-form-input-group">
+				<div className="signup-form-input-container">
+					<i className="fa-solid fa-user" style={{ color: "#c7c7c7" }}></i>
 					<input
-						type="text"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-						required
+					type="text"
+					placeholder="Username"
+					value={username}
+					onChange={(e) => setUsername(e.target.value)}
+					required
 					/>
-				</label>
-				<label>
-					Username
+				</div>
+				<div className="signup-form-input-container">
+					<i className="fa-solid fa-envelope" style={{ color: "#c7c7c7" }}></i>
 					<input
-						type="text"
-						value={username}
-						onChange={(e) => setUsername(e.target.value)}
-						required
+					type="email"
+					placeholder="Email"
+					value={email}
+					onChange={(e) => setEmail(e.target.value)}
+					required
 					/>
-				</label>
-				<label>
-					Password
+				</div>
+			</div>
+			{/* <p className="signup-form-password-text"> */}
+			{/* <p> */}
+			  {/* Avoid using common words and include a mix of letters and numbers. */}
+			{/* </p> */}
+			<div className="signup-form-input-group">
+				<div className="signup-form-input-container">
+					<i className="fa-solid fa-lock" style={{ color: "#c7c7c7" }}></i>
 					<input
-						type="password"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-						required
+					type="password"
+					placeholder="Password"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+					required
 					/>
-				</label>
-				<label>
-					Confirm Password
+				</div>
+				<div className="signup-form-input-container">
+					<i className="fa-solid fa-lock" style={{ color: "#c7c7c7" }}></i>
 					<input
-						type="password"
-						value={confirmPassword}
-						onChange={(e) => setConfirmPassword(e.target.value)}
-						required
+					type="password"
+					placeholder="Confirm Password"
+					value={confirmPassword}
+					onChange={(e) => setConfirmPassword(e.target.value)}
+					required
 					/>
-				</label>
-				<button type="submit">Sign Up</button>
-			</form>
-		</>
+				</div>
+			</div>
+			<button type="submit" className="signup-button">
+			  Create Account
+			</button>
+		  </form>
+		</div>
+	  </div>
 	);
 }
 

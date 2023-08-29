@@ -33,6 +33,9 @@ function AddExpense({expense, param_id}) {
     if(expense){
         expLength = Object.keys(expense).length;
     }
+    if(friend_id === "" && param_id){
+        setFriend_id(param_id)
+    }
 
     const user_id = user.id;
 
@@ -64,7 +67,7 @@ function AddExpense({expense, param_id}) {
             errors.push("Image URL needs to be under 255 characters");
         }
         setErrors(errors);
-    }, [receipt_img_url, description, price, hasSubmitted]);
+    }, [receipt_img_url, description, price, hasSubmitted, friend_id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
