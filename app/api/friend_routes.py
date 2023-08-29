@@ -109,6 +109,14 @@ def delete_friend(targetId):
     if not friendship:
         return {'errors': ["Friend could not be found"]}, 404
 
+    # users_groups = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == targetId).all()
+    # friends_groups = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == current_user.id).all()
+    # user_friend_expense_groups= set(users_groups).intersection(friends_groups)
+
+    # print("------ users_groups ------", users_groups)
+    # print("------ friends_groups ------", friends_groups)
+    # print("------ user_friend_expense_groups ------", user_friend_expense_groups)
+    # db.session.delete(user_friend_expense_groups)
     db.session.delete(friendship)
     db.session.commit()
     return {"message": "Friend/friend request removed"}
