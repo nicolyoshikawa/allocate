@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-
 import * as friendActions from "../../store/friends";
 
 // import "./FriendsPage.css";

@@ -87,6 +87,36 @@ def seed_group_users():
         group_id = 7,
         paid_status = "unpaid"
     )
+    user_group_15 = ExpenseGroupUser(
+        user_id = 2,
+        group_id = 8,
+        paid_status = "unpaid"
+    )
+    user_group_16 = ExpenseGroupUser(
+        user_id = 4,
+        group_id = 8,
+        paid_status = "unpaid"
+    )
+    user_group_17 = ExpenseGroupUser(
+        user_id = 2,
+        group_id = 9,
+        paid_status = "unpaid"
+    )
+    user_group_18 = ExpenseGroupUser(
+        user_id = 6,
+        group_id = 9,
+        paid_status = "unpaid"
+    )
+    user_group_19 = ExpenseGroupUser(
+        user_id = 3,
+        group_id = 10,
+        paid_status = "unpaid"
+    )
+    user_group_20 = ExpenseGroupUser(
+        user_id = 7,
+        group_id = 10,
+        paid_status = "unpaid"
+    )
 
     db.session.add(user_group_1)
     db.session.add(user_group_2)
@@ -102,6 +132,13 @@ def seed_group_users():
     db.session.add(user_group_12)
     db.session.add(user_group_13)
     db.session.add(user_group_14)
+    db.session.add(user_group_15)
+    db.session.add(user_group_16)
+    db.session.add(user_group_17)
+    db.session.add(user_group_18)
+    db.session.add(user_group_19)
+    db.session.add(user_group_20)
+
 
     db.session.commit()
 

@@ -1,3 +1,4 @@
+import { RESET_ACTION } from "./expenses";
 const USER_FRIENDS = "friends/USER_FRIENDS";
 
 const userFriends = (friends) => ({
@@ -51,6 +52,7 @@ export const deleteFriend = (targetId) => async (dispatch) => {
     if (res.ok) {
         const data = await res.json();
         dispatch(getUserFriends());
+        dispatch(RESET_ACTION());
         return data;
     }
 };
