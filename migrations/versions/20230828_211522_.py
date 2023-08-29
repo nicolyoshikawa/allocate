@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: b5e467183c9c
+Revision ID: 8da43d6fbaf1
 Revises:
-Create Date: 2023-08-28 20:55:27.946408
+Create Date: 2023-08-28 21:15:22.676409
 
 """
 from alembic import op
@@ -12,9 +12,8 @@ import os
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
-
 # revision identifiers, used by Alembic.
-revision = 'b5e467183c9c'
+revision = '8da43d6fbaf1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -89,13 +88,13 @@ def upgrade():
     )
     # ### end Alembic commands ###
     if environment == "production":
+        # op.execute(f"ALTER TABLE expenseGroups SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE \"expenseGroups\" SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE \"expenseGroupUsers\" SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE expenses SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE friends SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE comments SET SCHEMA {SCHEMA};")
-
 
 
 def downgrade():
