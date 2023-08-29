@@ -12,6 +12,7 @@ import LandingPage from "./components/LandingPage";
 import NavSideBar from "./components/NavSideBar";
 import Balance from "./components/Balance";
 import FriendDetail from "./components/FriendDetail";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ function App() {
                     <LandingPage/>
                   </Route>
                   <Route>
-                    <h1>Page Not Found</h1>
+                    <PageNotFound/>
                   </Route>
                 </Switch>
                 <Balance/>
@@ -78,7 +79,7 @@ function App() {
             <LandingPage/>
           </Route>
           <Route>
-            <h1>Page Not Found</h1>
+            <PageNotFound/>
           </Route>
         </Switch>
       )}
