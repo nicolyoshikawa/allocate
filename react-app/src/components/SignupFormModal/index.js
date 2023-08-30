@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink} from "react-router-dom";
 import { useModal } from "../../context/Modal";
@@ -31,6 +31,10 @@ function SignupFormModal() {
 			]);
 		}
 	};
+    useEffect(()=> {
+        const errors = [];
+        setErrors(errors);
+	},[username, email, password, first_name, last_name])
 
 	return (
 		<div className="signup-page-container">
