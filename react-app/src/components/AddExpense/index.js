@@ -54,7 +54,7 @@ function AddExpense({expense, param_id}) {
             }
         })
     },[dispatch, expense?.id, expense?.receipt_img_url, expense?.description, expense?.price, expense?.group_id, expense?.expense_date, user_id]);
-    console.log(friend_id, hasSubmitted)
+
     useEffect(() => {
         const errors = [];
         if(description && description.length > 500) errors.push("Your description needs to be less than 500 characters");

@@ -116,3 +116,28 @@ body {
     align-items: center;
     border-bottom: .5px solid #cccccc;
 }
+.friends-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.friends-list {
+    list-style: none;
+    padding-left: 5px;
+}
+
+.friends-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.friends-list li:last-child {
+    border-bottom: none;
+}
+
+.friends-list li button {
+    border: none;
+    border-radius: 4px;
+    margin-left: 5px;
+}
