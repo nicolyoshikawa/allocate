@@ -20,6 +20,9 @@
   margin-right: 20px;
   padding: 5px;
 }
+.profile-button button {
+  font-size: 16px;
+}
 
 .hidden {
   display: none;
@@ -33,7 +36,10 @@
   padding-left: 20px;
   padding-right: 20px;
   align-items: center;
-  font-weight: bold
+  font-weight: bold;
+  border-radius: 4px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .navbar {
@@ -41,5 +47,10 @@
 }
 .home-button {
   margin-left: 20px;
-  padding: 5px;
+  padding: 20px;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 24px;
+  /* color: #c7c7c7eb */
 }

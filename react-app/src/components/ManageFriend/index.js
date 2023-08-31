@@ -55,7 +55,7 @@ const ManageFriend = ({friendObj, sessionUser}) => {
 
             ) : (friendObj.friend.status === "pending") && (friendObj.friend.sender_id === sessionUser.id) ? (
               <li>
-                <div>You are not friends yet. Please remind your friend to accept your friend request.</div>
+                <div className="not-friends-yet">You are not friends yet. Please remind your friend to accept your friend request.</div>
                 <button onClick={(e) => handleDelete(e, friendObj.id)}>Remove Request</button>
                 {/* <div className="review-edit-button">
                     <OpenModalButton

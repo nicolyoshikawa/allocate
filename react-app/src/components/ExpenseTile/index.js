@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import React from 'react';
 
-const ExpenseTile = ({expense, clickable}) => {
+const ExpenseTile = ({expense, clickable, sessionUser}) => {
     const amount_split = Number(expense?.price/2).toFixed(2);
+    const amount_paid = Number(expense?.price).toFixed(2);
     const dateFormat = (expense?.expense_date)
     const date_values = dateFormat ? dateFormat?.split("-") : "";
     const year = dateFormat ? date_values[0] : "";
@@ -27,18 +28,34 @@ const ExpenseTile = ({expense, clickable}) => {
     return (
         <>
             <div className="tile-bar-container">
-                <div>{monthName}-{year}</div>
-                <div>{day}</div>
-                <div>{expense?.receipt_img_url ?
-                        <img src={expense?.receipt_img_url} alt="receipt_img"/>
-                        : <div></div>}
+                <div className="main-block">
+                    <div className="date">
+                        <div className="month">{monthName}</div>
+                        <div className="day">{day}</div>
+                    </div>
+                    <div>{expense?.receipt_img_url ?
+                            <img src={expense?.receipt_img_url} alt="receipt_img"/>
+                            : <div></div>}
+                    </div>
+                    {clickable ? (
+                        <div className="description"><Link to={`/expenses/${expense.id}`}> {expense?.description}</Link></div>
+                        ) : <div className="description">{expense?.description}</div>
+                    }
                 </div>
-                {clickable ? (
-                    <div><Link to={`/expenses/${expense.id}`}> {expense?.description}</Link></div>
-                    ) : <div>{expense?.description}</div>
-                }
-                <div>{paid_by} paid ${expense?.price}</div>
-                <div>{user_owes} owes ${amount_split}</div>
+                <div className="paid-block">
+                    <div className="paid-by">
+                        <div>{paid_by} paid </div>
+                        <div className="money">${amount_paid}</div>
+                    </div>
+                    <div className="paid-by">
+                        <div>{user_owes} owes </div>
+                        {sessionUser?.username === user_owes ? (
+                            <div className="friend-owes">${amount_split}</div>
+                        ) : (
+                            <div className="you-owe">${amount_split}</div>
+                        )}
+                    </div>
+                </div>
             </div>
         </>
     )

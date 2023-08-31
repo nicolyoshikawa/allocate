@@ -37,8 +37,8 @@ function InviteFriend(){
     }, [friend_request, hasSubmitted]);
 
 	return (
-        <>
-            <div className='side-bar-table'>Invite Friend</div>
+        <div className='invite-friend-container'>
+            <div className='invite-friend-table'>Invite Friends</div>
             {hasSubmitted && errors.length > 0 && (
             <div className="login-form-container-errors">
                 <ul>
@@ -49,7 +49,6 @@ function InviteFriend(){
             </div>
             )}
             <form onSubmit={handleRequest}>
-                <div>
                     <input
                         placeholder="Enter an email address"
                         onChange={(e) => setFriend_request(e.target.value)}
@@ -57,11 +56,11 @@ function InviteFriend(){
                         type='text'
                         name='friend_id'
                         required
+                        className='invite-friend-input'
                     />
-                </div>
-                <button type="submit">Send Invite</button>
+                <button type="submit" className='invite-friend'>Send Invite</button>
             </form>
-        </>
+        </div>
 	);
 }
 
