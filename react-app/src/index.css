@@ -287,3 +287,7 @@ body {
 .balance {
     display: inline-block;
 }
+.all-expenses-hide{
+    padding: 5px;
+    color: rgb(245, 244, 244);
+}

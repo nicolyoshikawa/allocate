@@ -48,6 +48,9 @@ function Balance(){
         <>
             {sessionUser && isLoaded &&(
                 <div className="sidebar">
+                    <div className='all-expenses-hide'>
+                        {" "}All Expenses
+                    </div>
                     <div className='side-bar-table'>Your Balance</div>
                     <div className="balance-list">
                         <div className="balance">
