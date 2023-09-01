@@ -16,7 +16,8 @@ function Navigation({ isLoaded }){
 		<div className="navbar-container">
 			<div>
 				<NavLink exact to="/" className="home-button">
-					{/* <img className="nav-logo" src={piechart} alt="Allocate" /> */}
+					<i className="fa-solid fa-chart-pie" style={{ color: "#ffffff" }}></i>
+					{" "}
 					Allocate
 				</NavLink>
 

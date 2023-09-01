@@ -9,24 +9,24 @@ const ManageExpenses = ({expense}) => {
     const user = useSelector(state => state.session.user);
     const closeMenu = () => setShowMenu(false);
 
-    let ownReview = false;
+    let ownExpense = false;
     if(user?.id === expense?.paid_by){
-        ownReview = true;
+        ownExpense = true;
     }
 
     return (
         <>
-        {showMenu && ownReview && (
+        {showMenu && ownExpense && (
             <>
-                <div className="review-edit">
-                    <div className="review-edit-button">
+                <div className="expense-edit">
+                    <div className="expense-edit-button">
                         <OpenModalButton
                             buttonText="Edit expense"
                             onItemClick={closeMenu}
                             modalComponent={<AddExpense expense={expense}/>}
                         />
                     </div>
-                    <div className="review-edit-button">
+                    <div className="expense-edit-button">
                         <OpenModalButton
                             buttonText="Delete"
                             onItemClick={closeMenu}

@@ -30,6 +30,8 @@ function FriendsList(){
                     {sortedFriends.map((friendObj) => {
                         return (
                             <div className="table-list" key={friendObj.id}>
+                                <i className="fa-solid fa-user" style={{ color: "#c7c7c7" }}></i>
+                                {" "}
                                 <NavLink
                                     to={`/friends/${friendObj.id}`}
                                     activeClassName="selected"

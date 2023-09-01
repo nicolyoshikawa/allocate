@@ -69,14 +69,12 @@ function FriendDetail(){
                         <div><ManageFriend friendObj={friendObj} sessionUser={sessionUser}/></div>
                         {!friend_status ? (
                             friendExpenses.length > 0 ? (
-                                friendExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true}/>))
+                                friendExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true} sessionUser={sessionUser}/>))
                                 ) : (
-                                    <div>You and {friendObj.first_name} {friendObj.last_name} are all settled up.</div>
+                                    <div className="settled-tab">You and {friendObj.first_name} {friendObj.last_name} are all settled up.</div>
                             )
                         ) : (
                             <>
-                                {/* <div>You aren't friends yet. Remind your friend to accept their request!</div> */}
-
                             </>
                         )}
                     </div>

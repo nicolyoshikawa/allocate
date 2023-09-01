@@ -31,7 +31,7 @@ function Expense(){
                     { expense ?
                         (<div>
                             <h2>Expense</h2>
-                            <ExpenseTile clickable={false} expense={expense}/>
+                            <ExpenseTile clickable={false} expense={expense} sessionUser={sessionUser}/>
                             <ManageExpenses expense={expense}/>
                         </div>
                         ) : (

@@ -37,27 +37,16 @@ const ManageFriend = ({friendObj, sessionUser}) => {
     <div className='manage-friend-bar-container'>
       Manage Friend
       <div className="friends-container">
-        <div className="friends-card">
+        <div>
           <ul className="friends-list">
             { (friendObj.friend.status === "pending") && (friendObj.friend.sender_id !== sessionUser.id) ? (
               <li key={friendObj.id}>
-                <div className="friend-info">
-                  {/* <img
-                    src={friendObj.user_img_url}
-                    alt={friendObj.username}
-                    className="friend-img"
-                  /> */}
-                  <div className="friend-details">
-                    {/* <div className="friend-name">
-                      {friendObj.first_name} {friendObj.last_name}
-                    </div> */}
-                    {/* <div className="friend-username">{friendObj.username}</div> */}
-                  </div>
-                </div>
                 <div className="friend-buttons">
                   <button onClick={(e) => handleAccept(e, friendObj.id)}>
                     Accept
                   </button>
+                </div>
+                <div>
                   <button onClick={(e) => handleDelete(e, friendObj.id)}>
                     Reject
                   </button>
@@ -65,8 +54,8 @@ const ManageFriend = ({friendObj, sessionUser}) => {
               </li>
 
             ) : (friendObj.friend.status === "pending") && (friendObj.friend.sender_id === sessionUser.id) ? (
-              <>
-                <div>You are not friends yet. Please remind your friend to accept your friend request.</div>
+              <li>
+                <div className="not-friends-yet">You are not friends yet. Please remind your friend to accept your friend request.</div>
                 <button onClick={(e) => handleDelete(e, friendObj.id)}>Remove Request</button>
                 {/* <div className="review-edit-button">
                     <OpenModalButton
@@ -75,29 +64,9 @@ const ManageFriend = ({friendObj, sessionUser}) => {
                         modalComponent={<DeleteExpense friendObj={friendObj}/>}
                     />
                 </div> */}
-              </>
-            ) : (
-              <></>
-            )}
-          </ul>
-        </div>
-        <div className="friends-card">
-          <ul className="friends-list">
-            { friendObj.friend.status === "friends" ? (
+              </li>
+            ) : (friendObj.friend.status === "friends") ? (
               <li key={friendObj.id}>
-                <div className="friend-info">
-                  {/* <img
-                    src={friendObj.user_img_url}
-                    alt={friendObj.username}
-                    className="friend-img"
-                  /> */}
-                  <div className="friend-details">
-                    {/* <div className="friend-name">
-                      {friendObj.first_name} {friendObj.last_name}
-                    </div> */}
-                    {/* <div className="friend-username">{friendObj.username}</div> */}
-                  </div>
-                </div>
                 <button onClick={(e) => handleDelete(e, friendObj.id)}>Unfriend</button>
               </li>
             ) : (
