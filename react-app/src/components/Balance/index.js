@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import * as friendActions from "../../store/friends";
 import * as expenseActions from "../../store/expenses";
+import ExpenseBalance from '../ExpenseBalance';
 
 function Balance(){
     const dispatch = useDispatch();
     const history = useHistory();
+    const location = useLocation();
     const [isLoaded, setIsLoaded] = useState(false);
     const sessionUser = useSelector(state => state.session.user);
     const allExpenses = useSelector(state => Object.values(state.expenses));
+    const friendsListArr = useSelector(state => state.friends.friends);
 
     if (!sessionUser) {
         history.push("/")
     }
+    const path_location = location.pathname.split("/")
+
     useEffect(()=> {
         if(sessionUser){
             dispatch(expenseActions.loadAllUserExpenses())
@@ -21,40 +25,33 @@ function Balance(){
         }
     },[dispatch, sessionUser]);
 
-    let balance = 0;
-    let user_owes = 0;
-    let friend_owes = 0;
-    for(let i = 0; i < allExpenses.length; i++){
-        let exp = allExpenses[i];
-        const amount_split = Number(exp?.price/2);
+    let expences_balance;
+    if(path_location[1] === "home" ){
+        expences_balance = allExpenses
+    }
 
-        if(exp.paid_by === sessionUser.id){
-            user_owes += amount_split
+    let friendObj;
+    let friendGroupArr;
+    if(path_location[1] === "friends"){
+        const friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
+        if(friendArr) {
+            friendObj = friendArr[0];
+            friendGroupArr = friendArr[0]?.group_id
         }
-        if(exp.paid_by !== sessionUser.id){
-            friend_owes += amount_split
+
+        if(friendGroupArr) {
+            expences_balance = allExpenses.filter(el=> el.group_id === friendGroupArr[0]);
         }
     }
-    balance = Math.abs((user_owes) - (friend_owes))
 
 	return (
         <>
-            {sessionUser && (
+            {sessionUser && isLoaded &&(
                 <div className="sidebar">
                     <div className='side-bar-table'>Your Balance</div>
                     <div className="balance-list">
                         <div className="balance">
-                        {user_owes > friend_owes ? (
-                            <>
-                                <div className="you-owe">You are owed</div>
-                                <div className="you-owe">${balance}</div>
-                            </>
-                        ):(
-                            <>
-                                <div className="friend-owes">You owe </div>
-                                <div className="friend-owes">${balance}</div>
-                            </>
-                        )}
+                            <ExpenseBalance balanceArr={expences_balance} sessionUser={sessionUser}/>
                         </div>
                     </div>
                 </div>
