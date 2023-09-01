@@ -83,6 +83,7 @@ button {
 .table-list {
     padding: 5px;
 }
+
 .table-list:hover {
     text-decoration: none;
     border-radius: 4px;
@@ -132,20 +133,25 @@ body {
 }
 .paid-by{
     text-align: right;
-    width: 100px;
+    width: 150px;
     display: inline-block;
     color: #999;
+}
+.paid-by-text{
+    font-size: 13px;
 }
 .money{
     color: black;
     font-weight: bold;
 }
 .friend-owes {
-    color: #5bc5a7;
+    /* color: #5bc5a7; */
+    color: #ff652f;
     font-weight: bold;
 }
 .you-owe{
-    color: #ff652f;
+    /* color: #ff652f; */
+    color: #5bc5a7;
     font-weight: bold;
 }
 .description a {
@@ -273,4 +279,11 @@ body {
     /* font-weight: bold; */
     padding: 5px;
     border-radius: 4px;
+}
+/* Balance */
+.balance-list {
+    padding: 5px;
+}
+.balance {
+    display: inline-block;
 }
