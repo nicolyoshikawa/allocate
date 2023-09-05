@@ -8,7 +8,7 @@ function CreateExpenseModal({param_id}) {
     return (
         <>
             { showMenu && (
-                <div>
+                <div className="add-expenses">
                     <OpenModalButton
                         buttonText="Add an expense"
                         onItemClick={closeMenu}

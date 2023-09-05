@@ -51,7 +51,7 @@ function DeleteExpense({expense}) {
             )}
             <div className="delete-input-container">Are you sure you want to delete this expense?</div>
             <div className="delete-buttons">
-              <button onClick={deleteClickHandler}>Yes</button>
+              <button className="delete-button-color" onClick={deleteClickHandler}>Yes</button>
               <button onClick={keepClickHandler}>No</button>
             </div>
           </div>

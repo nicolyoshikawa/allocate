@@ -45,7 +45,7 @@ function DeleteFriend({friendObjId, deleteword}) {
             )}
             <div className="delete-input-container">Are you sure you want to {deleteword} this friend?</div>
             <div className="delete-buttons">
-                <button onClick={(e) => handleDelete(e, friendObjId)}>Yes</button>
+                <button className="delete-button-color" onClick={(e) => handleDelete(e, friendObjId)}>Yes</button>
                 <button onClick={keepClickHandler}>No</button>
             </div>
           </div>

@@ -298,3 +298,9 @@ body {
     padding: 5px;
     color: rgb(245, 244, 244);
 }
+
+/* Add Expense */
+.add-expenses button {
+    padding: 8px;
+    background-color: #ff652f;
+}
