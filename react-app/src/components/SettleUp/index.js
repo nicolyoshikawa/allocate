@@ -21,7 +21,7 @@ function SettleUp({param_id}) {
 
     const [price, setPrice] = useState(0);
     const [friend_id, setFriend_id] = useState("");
-    const [group_id, setGroup_id] = useState("");
+    // const [group_id, setGroup_id] = useState("");
     const [expense_date, setExpense_date] = useState(dateFormat);
     const [errors, setErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -90,7 +90,7 @@ function SettleUp({param_id}) {
   const reset = () => {
     setPrice("");
     setFriend_id("");
-    setGroup_id(0);
+    // setGroup_id(0);
     setExpense_date(dateFormat);
     setErrors([]);
     setHasSubmitted(false);
