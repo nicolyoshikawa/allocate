@@ -38,12 +38,22 @@ function DeleteExpense({expense}) {
     return (
       <>
         {showModal && (
-          <div>
+          <div className="delete-container">
             <h2>Confirm Delete</h2>
-            {errors.length > 0 && <p>{errors}</p>}
-            <div>Are you sure you want to delete this expense?</div>
-            <button onClick={deleteClickHandler}>Yes</button>
-            <button onClick={keepClickHandler}>No</button>
+            {errors.length > 0 && (
+                <div className="login-form-container-errors">
+                    <ul>
+                        {errors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+            <div className="delete-input-container">Are you sure you want to delete this expense?</div>
+            <div className="delete-buttons">
+              <button onClick={deleteClickHandler}>Yes</button>
+              <button onClick={keepClickHandler}>No</button>
+            </div>
           </div>
         )}
       </>

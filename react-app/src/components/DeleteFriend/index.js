@@ -32,12 +32,22 @@ function DeleteFriend({friendObjId, deleteword}) {
     return (
       <>
         {showModal && (
-          <div>
+          <div className="delete-container">
             <h2>Confirm Delete</h2>
-            {errors.length > 0 && <p>{errors}</p>}
-            <div>Are you sure you want to {deleteword} this friend?</div>
-            <button onClick={(e) => handleDelete(e, friendObjId)}>Yes</button>
-            <button onClick={keepClickHandler}>No</button>
+            {errors.length > 0 && (
+                <div className="login-form-container-errors">
+                    <ul>
+                        {errors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+            <div className="delete-input-container">Are you sure you want to {deleteword} this friend?</div>
+            <div className="delete-buttons">
+                <button onClick={(e) => handleDelete(e, friendObjId)}>Yes</button>
+                <button onClick={keepClickHandler}>No</button>
+            </div>
           </div>
         )}
       </>
