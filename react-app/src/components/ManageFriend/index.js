@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
-import DeleteExpense from "../DeleteExpense";
+import DeleteFriend from "../DeleteFriend";
 import * as friendActions from "../../store/friends";
 
 // import "./FriendsPage.css";
@@ -28,11 +28,6 @@ const ManageFriend = ({friendObj, sessionUser}) => {
     dispatch(friendActions.acceptFriendRequest(targetId));
   };
 
-  const handleDelete = async (e, targetId) => {
-    e.preventDefault();
-    dispatch(friendActions.deleteFriend(targetId));
-  };
-
   return (
     <div className='manage-friend-bar-container'>
       Manage Friend
@@ -47,27 +42,38 @@ const ManageFriend = ({friendObj, sessionUser}) => {
                   </button>
                 </div>
                 <div>
-                  <button onClick={(e) => handleDelete(e, friendObj.id)}>
-                    Reject
-                  </button>
+                  <div className="expense-edit-button">
+                        <OpenModalButton
+                            buttonText="Reject"
+                            onItemClick={closeMenu}
+                            modalComponent={<DeleteFriend friendObjId={friendObj.id} deleteword={"reject"}/>}
+                        />
+                  </div>
                 </div>
               </li>
 
             ) : (friendObj.friend.status === "pending") && (friendObj.friend.sender_id === sessionUser.id) ? (
               <li>
-                <div className="not-friends-yet">You are not friends yet. Please remind your friend to accept your friend request.</div>
-                <button onClick={(e) => handleDelete(e, friendObj.id)}>Remove Request</button>
-                {/* <div className="review-edit-button">
-                    <OpenModalButton
-                        buttonText="Remove Request"
-                        onItemClick={closeMenu}
-                        modalComponent={<DeleteExpense friendObj={friendObj}/>}
-                    />
-                </div> */}
+                <div className="not-friends-yet">
+                  You are not friends yet. Please remind your friend to accept your friend request.
+                </div>
+                <div className="expense-edit-button">
+                        <OpenModalButton
+                            buttonText="Remove Request"
+                            onItemClick={closeMenu}
+                            modalComponent={<DeleteFriend friendObjId={friendObj.id} deleteword={"remove"}/>}
+                        />
+                </div>
               </li>
             ) : (friendObj.friend.status === "friends") ? (
               <li key={friendObj.id}>
-                <button onClick={(e) => handleDelete(e, friendObj.id)}>Unfriend</button>
+                <div className="expense-edit-button">
+                        <OpenModalButton
+                            buttonText="Unfriend"
+                            onItemClick={closeMenu}
+                            modalComponent={<DeleteFriend friendObjId={friendObj.id} deleteword={"remove"}/>}
+                        />
+                </div>
               </li>
             ) : (
               <></>
