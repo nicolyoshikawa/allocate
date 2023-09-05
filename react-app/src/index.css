@@ -304,3 +304,7 @@ body {
     padding: 8px;
     background-color: #ff652f;
 }
+.add-expenses button:hover {
+    padding: 8px;
+    background-color: rgb(128, 128, 128, .8);
+}
