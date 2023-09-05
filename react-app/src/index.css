@@ -336,6 +336,13 @@ body {
     margin: 6px 0px;
     width: 100%;
 }
+.expense-form-input-container div {
+    font-size: 16px;
+    margin: 6px 0px;
+    width: 100%;
+    text-align:right;
+    color: #808080;
+}
 .expense-form-input-container select {
     padding: 0px 8px;
     font-size: 16px;

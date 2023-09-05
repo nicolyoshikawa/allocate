@@ -13,7 +13,7 @@ function BalanceFunction(balanceArr, sessionUser){
             friend_owes += amount_split
         }
     }
-    // balance = Math.abs((user_owes) - (friend_owes));
+
     balance = (user_owes) - (friend_owes);
     return balance;
 }

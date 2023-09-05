@@ -17,13 +17,15 @@ function CreateExpenseModal({param_id}) {
                             modalComponent={<AddExpense param_id={param_id}/>}
                         />
                     </div>
-                    <div className="settle-up">
-                        <OpenModalButton
-                            buttonText="Settle up"
-                            onItemClick={closeMenu}
-                            modalComponent={<SettleUp param_id={param_id}/>}
-                        />
-                    </div>
+                    {param_id && (
+                        <div className="settle-up">
+                            <OpenModalButton
+                                buttonText="Settle up"
+                                onItemClick={closeMenu}
+                                modalComponent={<SettleUp param_id={param_id}/>}
+                            />
+                        </div>
+                    )}
                 </>
             )}
         </>

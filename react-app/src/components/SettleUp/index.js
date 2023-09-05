@@ -19,7 +19,6 @@ function SettleUp({param_id}) {
     const day = today.toLocaleString("default", { day: "2-digit" });
     const dateFormat = year + "-" + month + "-" + day;
 
-    const [receipt_img_url, setReceipt_img_url] = useState("");
     const [price, setPrice] = useState(0);
     const [friend_id, setFriend_id] = useState("");
     const [group_id, setGroup_id] = useState("");
@@ -33,7 +32,7 @@ function SettleUp({param_id}) {
 
     const acceptedFriendsArr = friendsListArr.filter(el=> el.friend.status === "friends");
     const sortedFriends = acceptedFriendsArr.sort((a,b) => (a.id) - (b.id))
-
+    const selectedFriend = sortedFriends.filter(el=> el.id === param_id)
     if(friend_id === "" && param_id) setFriend_id(param_id);
 
     const user_id = user.id;
@@ -51,7 +50,8 @@ function SettleUp({param_id}) {
             expences_balance = allExpenses.filter(el=> el.group_id === friendGroupArr[0]);
         }
     } else {
-        expences_balance = allExpenses
+        // expences_balance = allExpenses
+        expences_balance = []
     }
     let balance = BalanceFunction(expences_balance, user);
 
@@ -59,21 +59,15 @@ function SettleUp({param_id}) {
         const errors = [];
         if(price && (price < 1)) errors.push("Price needs to be at least $1");
         if(friend_id === "") errors.push("Please choose a friend to split with");
-        if(receipt_img_url && (!receipt_img_url.endsWith(".png") &&
-            !receipt_img_url.endsWith(".jpg") && !receipt_img_url.endsWith(".jpeg"))) {
-            errors.push("Image URL must end in .png, .jpg, or .jpeg");
-        }
-        if(receipt_img_url && receipt_img_url.length > 255) {
-            errors.push("Image URL needs to be under 255 characters");
-        }
         if(balance) setPrice(Math.abs(balance));
+        if(friend_id) setFriend_id(friend_id)
         setErrors(errors);
-    }, [receipt_img_url, price, hasSubmitted, friend_id, balance]);
+    }, [price, hasSubmitted, friend_id, balance]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
-    const settlement = {price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
+    const settlement = {price, expense_date, friend_id, paid_by: user_id};
 
     if(Object.values(errors).length === 0){
         setErrors([]);
@@ -94,7 +88,6 @@ function SettleUp({param_id}) {
   };
 
   const reset = () => {
-    setReceipt_img_url("")
     setPrice("");
     setFriend_id("");
     setGroup_id(0);
@@ -123,45 +116,17 @@ function SettleUp({param_id}) {
             <form onSubmit={handleSubmit}>
                 <div className="expense-form-input-container">
                     <label>Settle balance with:</label>
-                    <select name="friends" id="friend-select" onChange={(e) => setFriend_id(e.target.value)}>
-                        <option value="">-- Choose a friend --</option>
-                        {sortedFriends.map((friendObj) => {
+                        {selectedFriend.map((friendObj) => {
                             return(
-                                <option
-                                    value={friendObj.id}
-                                    key={friendObj.id}
-                                    required
-                                    selected={
-                                        (friend_id !== null && Number(friend_id) === friendObj.id) ||
-                                        (param_id !== null && Number(param_id) === friendObj.id)
-                                    }
-                                >
-                                {friendObj.first_name} {friendObj.last_name}
-                                </option>
+                                <div>
+                                    {friendObj.first_name} {friendObj.last_name}
+                                </div>
                             )
                         })}
-                    </select>
                 </div>
                 <div className="expense-form-input-container">
                     <label>Settle amt: </label>
-                    $ {" "}
-                    <input
-                        type='text'
-                        onChange={(e) => setPrice(e.target.value)}
-                        value={price}
-                        placeholder='0.00'
-                        name='price'
-                        required
-                    />
-                </div>
-                <div className="expense-form-input-container">
-                    <input
-                        type='text'
-                        onChange={(e) => setReceipt_img_url(e.target.value)}
-                        value={receipt_img_url}
-                        placeholder='Receipt Image'
-                        name='receipt_img_url'
-                    />
+                    <div>$ {" "} {price}</div>
                 </div>
                 <div className="expense-form-input-container">
                     <label>Settle date:</label>
