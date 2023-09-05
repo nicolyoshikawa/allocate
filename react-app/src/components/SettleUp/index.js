@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as expenseActions from "../../store/expenses";
-import * as friendActions from "../../store/friends";
+import * as balanceActions from "../../store/balances";
+import BalanceFunction from "../BalanceFunc";
 
-function AddExpense({expense, param_id}) {
+function SettleUp({param_id}) {
     const dispatch = useDispatch();
     const history = useHistory();
+    const location = useLocation();
     const { closeModal } = useModal();
+    const path_location = location.pathname.split("/");
+
     const today = new Date();
     const year = today.toLocaleString("default", { year: "numeric" });
     const month = today.toLocaleString("default", { month: "2-digit" });
@@ -16,8 +20,7 @@ function AddExpense({expense, param_id}) {
     const dateFormat = year + "-" + month + "-" + day;
 
     const [receipt_img_url, setReceipt_img_url] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
+    const [price, setPrice] = useState(0);
     const [friend_id, setFriend_id] = useState("");
     const [group_id, setGroup_id] = useState("");
     const [expense_date, setExpense_date] = useState(dateFormat);
@@ -26,38 +29,34 @@ function AddExpense({expense, param_id}) {
 
     const user = useSelector(state => state.session.user);
     const friendsListArr = useSelector(state => state.friends.friends);
+    const allExpenses = useSelector(state => Object.values(state.expenses));
+
     const acceptedFriendsArr = friendsListArr.filter(el=> el.friend.status === "friends");
     const sortedFriends = acceptedFriendsArr.sort((a,b) => (a.id) - (b.id))
 
-    let expLength = 0;
-    if(expense){
-        expLength = Object.keys(expense).length;
-    }
-    if(friend_id === "" && param_id){
-        setFriend_id(param_id)
-    }
+    if(friend_id === "" && param_id) setFriend_id(param_id);
 
     const user_id = user.id;
+    let expences_balance;
+    let friendObj;
+    let friendGroupArr;
+    if(path_location[1] === "friends"){
+        const friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
+        if(friendArr) {
+            friendObj = friendArr[0];
+            friendGroupArr = friendArr[0]?.group_id
+        }
 
-    useEffect(()=> {
-        dispatch(friendActions.getUserFriends())
-        dispatch(expenseActions.loadExpenseById(expense?.id))
-        .then((expObj)=>{
-            if(expObj){
-                const friendArr = expObj.expense_group_users.filter(el=> el.id !== user_id);
-                setReceipt_img_url(expObj.receipt_img_url);
-                setDescription(expObj.description);
-                setPrice(expObj.price);
-                setGroup_id(expObj.group_id);
-                setExpense_date(expObj.expense_date);
-                setFriend_id(friendArr[0].id)
-            }
-        })
-    },[dispatch, expense?.id, expense?.receipt_img_url, expense?.description, expense?.price, expense?.group_id, expense?.expense_date, user_id]);
+        if(friendGroupArr) {
+            expences_balance = allExpenses.filter(el=> el.group_id === friendGroupArr[0]);
+        }
+    } else {
+        expences_balance = allExpenses
+    }
+    let balance = BalanceFunction(expences_balance, user);
 
     useEffect(() => {
         const errors = [];
-        if(description && description.length > 500) errors.push("Your description needs to be less than 500 characters");
         if(price && (price < 1)) errors.push("Price needs to be at least $1");
         if(friend_id === "") errors.push("Please choose a friend to split with");
         if(receipt_img_url && (!receipt_img_url.endsWith(".png") &&
@@ -67,50 +66,35 @@ function AddExpense({expense, param_id}) {
         if(receipt_img_url && receipt_img_url.length > 255) {
             errors.push("Image URL needs to be under 255 characters");
         }
+        if(balance) setPrice(Math.abs(balance));
         setErrors(errors);
-    }, [receipt_img_url, description, price, hasSubmitted, friend_id]);
+    }, [receipt_img_url, price, hasSubmitted, friend_id, balance]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
-    const newExpense = {description, price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
-    const updateExpense = {id: expense?.id, description, price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
+    const settlement = {price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
 
     if(Object.values(errors).length === 0){
         setErrors([]);
 
-        if(expLength === 0){
-            const createExpense = await dispatch(expenseActions.createANewExpense(newExpense));
-            if(createExpense.errors){
-                const errors = [];
-                errors.push(createExpense.errors);
-                setErrors(errors);
-            } else {
-                reset();
-                history.push(`/expenses/${createExpense.id}`);
-                setErrors([]);
-                closeModal();
-            }
-        }
-        if(expLength > 0){
-            const updatedExpense = await dispatch(expenseActions.updateAnExpense(updateExpense));
-            if(updatedExpense.errors){
-                const errors = [];
-                errors.push(updatedExpense.errors);
-                setErrors(errors);
-            } else {
-                reset();
-                history.push(`/expenses/${updatedExpense.id}`);
-                dispatch(expenseActions.loadExpenseById(updatedExpense.id));
-                closeModal();
-            }
+        const updatePaidStatus = await dispatch(balanceActions.settleBalance(settlement));
+        if(updatePaidStatus.errors){
+            const errors = [];
+            errors.push(updatePaidStatus.errors);
+            setErrors(errors);
+        } else {
+            reset();
+            // dispatch(expenseActions.loadAllUserExpenses());
+            history.push("/home");
+            setErrors([]);
+            closeModal();
         }
     }
   };
 
   const reset = () => {
     setReceipt_img_url("")
-    setDescription("");
     setPrice("");
     setFriend_id("");
     setGroup_id(0);
@@ -119,10 +103,14 @@ function AddExpense({expense, param_id}) {
     setHasSubmitted(false);
   };
 
+  const keepClickHandler = () => {
+    closeModal()
+  };
+
   return (
     <>
         <div className="add-expense-form-container">
-            {expLength > 0 ? <h1>Edit Expense</h1> : <h1>Add An Expense</h1>}
+            <h1>Settle Up</h1>
             {hasSubmitted && errors.length > 0 && (
             <div className="login-form-container-errors">
                 <ul>
@@ -134,7 +122,7 @@ function AddExpense({expense, param_id}) {
             )}
             <form onSubmit={handleSubmit}>
                 <div className="expense-form-input-container">
-                    <label>Split with:</label>
+                    <label>Settle balance with:</label>
                     <select name="friends" id="friend-select" onChange={(e) => setFriend_id(e.target.value)}>
                         <option value="">-- Choose a friend --</option>
                         {sortedFriends.map((friendObj) => {
@@ -154,28 +142,8 @@ function AddExpense({expense, param_id}) {
                         })}
                     </select>
                 </div>
-                {/* <div>
-                    <label>Group</label>
-                    <input
-                        type='text'
-                        onChange={(e) => setGroup_id(e.target.value)}
-                        value={group_id}
-                        placeholder='Group'
-                        name='group_id'
-                    />
-                </div> */}
                 <div className="expense-form-input-container">
-                    <input
-                        type='text'
-                        onChange={(e) => setDescription(e.target.value)}
-                        value={description}
-                        placeholder='Enter a description'
-                        name='description'
-                        required
-                    />
-                </div>
-                <div className="expense-form-input-container">
-                    <label>Receipt amt: </label>
+                    <label>Settle amt: </label>
                     $ {" "}
                     <input
                         type='text'
@@ -196,18 +164,21 @@ function AddExpense({expense, param_id}) {
                     />
                 </div>
                 <div className="expense-form-input-container">
-                    <label>Expense date:</label>
+                    <label>Settle date:</label>
                     <input
                         type="date"
                         value={expense_date}
                         onChange={(e) => setExpense_date(e.target.value)}
                     />
                 </div>
-                <button type="submit">Confirm</button>
+                <div className="delete-buttons">
+                    <button onClick={keepClickHandler}>Cancel</button>
+                    <button className="delete-button-color" type="submit">Save</button>
+                </div>
             </form>
         </div>
     </>
   );
 }
 
-export default AddExpense;
+export default SettleUp;
