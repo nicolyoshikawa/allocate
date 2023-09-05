@@ -88,9 +88,13 @@ button {
     text-decoration: none;
     border-radius: 4px;
     background-color: rgb(128, 128, 128, .8);
+
 }
 .table-list a {
     text-decoration: none;
+}
+.table-list a:hover {
+    color: white
 }
 body {
     padding-left: 20px;
@@ -260,6 +264,9 @@ body {
 
     background-color: #cccccc;
     color: black
+}
+.invite-friend:hover {
+    color: white
 }
 .invite-friend-input{
     display: flex;

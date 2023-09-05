@@ -26,10 +26,6 @@ function Balance(){
     },[dispatch, sessionUser]);
 
     let expences_balance;
-    if(path_location[1] === "home" ){
-        expences_balance = allExpenses
-    }
-
     let friendObj;
     let friendGroupArr;
     if(path_location[1] === "friends"){
@@ -42,6 +38,8 @@ function Balance(){
         if(friendGroupArr) {
             expences_balance = allExpenses.filter(el=> el.group_id === friendGroupArr[0]);
         }
+    } else {
+        expences_balance = allExpenses
     }
 
 	return (
