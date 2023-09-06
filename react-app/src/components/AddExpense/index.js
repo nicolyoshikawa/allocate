@@ -87,7 +87,8 @@ function AddExpense({expense, param_id}) {
                 setErrors(errors);
             } else {
                 reset();
-                history.push(`/expenses/${createExpense.id}`);
+                // history.push(`/expenses/${createExpense.id}`);
+                // dispatch(expenseActions.loadExpenseById(createExpense.id));
                 setErrors([]);
                 closeModal();
             }
@@ -100,7 +101,7 @@ function AddExpense({expense, param_id}) {
                 setErrors(errors);
             } else {
                 reset();
-                history.push(`/expenses/${updatedExpense.id}`);
+                // history.push(`/expenses/${updatedExpense.id}`);
                 dispatch(expenseActions.loadExpenseById(updatedExpense.id));
                 closeModal();
             }

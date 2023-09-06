@@ -67,24 +67,26 @@ function SettleUp({param_id}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
-    const settlement = {price, expense_date, friend_id, paid_by: user_id};
 
-    if(Object.values(errors).length === 0){
-        setErrors([]);
+    for(let i = 0; i < expences_balance.length; i++){
+        let exp_obj = expences_balance[i];
+        const errors = [];
 
-        const updatePaidStatus = await dispatch(balanceActions.settleBalance(settlement));
-        if(updatePaidStatus.errors){
-            const errors = [];
-            errors.push(updatePaidStatus.errors);
-            setErrors(errors);
-        } else {
-            reset();
-            // dispatch(expenseActions.loadAllUserExpenses());
-            history.push("/home");
+        if(user.id !== exp_obj.expense_group_users[0].id && user.id !== exp_obj.expense_group_users[1].id ) {
+            errors.push("You do not have access to delete this expense.")
+        };
+
+        setErrors(errors);
+
+        if(Object.values(errors).length === 0){
             setErrors([]);
-            closeModal();
+            let res = await dispatch(expenseActions.deleteExpense(exp_obj.id));
+            // reset();
         }
     }
+    // history.push("/home");
+    closeModal()
+
   };
 
   const reset = () => {
@@ -118,7 +120,7 @@ function SettleUp({param_id}) {
                     <label>Settle balance with:</label>
                         {selectedFriend.map((friendObj) => {
                             return(
-                                <div>
+                                <div key={friendObj.id}>
                                     {friendObj.first_name} {friendObj.last_name}
                                 </div>
                             )

@@ -112,11 +112,14 @@ def delete_an_expense(id):
     if not expense:
         return {'errors': ["Expense could not be found"]}, 404
 
-    if current_user.id == expense.paid_by:
-        db.session.delete(expense)
-        db.session.commit()
-        return { "message": ["Expense successfully deleted"]}, 200
-    return {'errors': ['Unauthorized']}
+    expense_group_user = ExpenseGroupUser.query.filter(ExpenseGroupUser.group_id == expense.group_id, ExpenseGroupUser.user_id == current_user.id).first()
+    if not expense_group_user:
+        return {'errors': ['Unauthorized']}
+
+    db.session.delete(expense)
+    db.session.commit()
+    return { "message": ["Expense successfully deleted"]}, 200
+
 
 @expense_routes.route('/', methods=["GET"])
 @login_required
