@@ -2,11 +2,4 @@
     width: 100%;
     min-height: 90vh;
     background-image: url(../../assets/facets.png);
-    /* display: grid; */
-    /* grid-template-rows: auto;
-    grid-template-columns: auto;
-    grid-template-areas: ". btns"
-    ". image"
-    "txt image"
-    ". image"; */
 }

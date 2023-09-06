@@ -34,7 +34,9 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
                         <div className="day">{day}</div>
                     </div>
                     <div>{expense?.receipt_img_url ?
+                        <a href={expense?.receipt_img_url} target="_blank">
                             <img src={expense?.receipt_img_url} alt="receipt_img"/>
+                        </a>
                             : <div></div>}
                     </div>
                     {clickable ? (
