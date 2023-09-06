@@ -41,6 +41,7 @@ function AddExpense({expense, param_id}) {
 
     useEffect(()=> {
         dispatch(friendActions.getUserFriends())
+        dispatch(expenseActions.loadAllUserExpenses())
         dispatch(expenseActions.loadExpenseById(expense?.id))
         .then((expObj)=>{
             if(expObj){
@@ -88,7 +89,7 @@ function AddExpense({expense, param_id}) {
             } else {
                 reset();
                 // history.push(`/expenses/${createExpense.id}`);
-                // dispatch(expenseActions.loadExpenseById(createExpense.id));
+                dispatch(expenseActions.loadAllUserExpenses());
                 setErrors([]);
                 closeModal();
             }

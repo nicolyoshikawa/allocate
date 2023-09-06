@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as expenseActions from "../../store/expenses";
-import * as balanceActions from "../../store/balances";
 import BalanceFunction from "../BalanceFunc";
 
 function SettleUp({param_id}) {
