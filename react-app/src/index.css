@@ -128,6 +128,8 @@ body {
 .main-block{
     display: flex;
     justify-content: space-between;
+    justify-content:left;
+    text-align: left;
     align-items: center;
 }
 .paid-block{
@@ -187,6 +189,7 @@ body {
     padding: 5px;
     height: 35px;
     width: 35px;
+    /* text-align: left; */
 }
 
 /* Manage Expenses */

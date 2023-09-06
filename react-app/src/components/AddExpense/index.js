@@ -74,6 +74,7 @@ function AddExpense({expense, param_id}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
+    console.log(price)
     const newExpense = {description, price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
     const updateExpense = {id: expense?.id, description, price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
 
