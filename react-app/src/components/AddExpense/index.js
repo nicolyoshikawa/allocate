@@ -62,10 +62,12 @@ function AddExpense({expense, param_id}) {
         if(description && description.length > 500) errors.push("Your description needs to be less than 500 characters");
         if(price && (price < 1)) errors.push("Price needs to be at least $1");
         if(friend_id === "") errors.push("Please choose a friend to split with");
-        // if(receipt_img_url &&(!receipt_img_url.endsWith(".png") &&
-        //     !receipt_img_url.endsWith(".jpg") && !receipt_img_url.endsWith(".jpeg"))) {
-        //     errors.push("Image must end in .png, .jpg, or .jpeg");
-        // }
+        if(receipt_img_url){
+            const img = receipt_img_url.type
+            if(img && !img.endsWith("pdf") && !img.endsWith("png") && !img.endsWith("jpg") && !img.endsWith("jpeg")){
+                errors.push("Image file type must be pdf, png, jpg, or jpeg");
+            }
+        }
         setErrors(errors);
     }, [receipt_img_url, description, price, hasSubmitted, friend_id]);
 
@@ -204,13 +206,6 @@ function AddExpense({expense, param_id}) {
                     />
                 </div>
                 <div className="expense-form-input-container">
-                    {/* <input
-                        type='text'
-                        onChange={(e) => setReceipt_img_url(e.target.value)}
-                        value={receipt_img_url}
-                        placeholder='Receipt Image'
-                        name='receipt_img_url'
-                    /> */}
                     <input
                         type="file"
                         accept="image/*"
