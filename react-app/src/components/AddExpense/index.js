@@ -15,7 +15,8 @@ function AddExpense({expense, param_id}) {
     const day = today.toLocaleString("default", { day: "2-digit" });
     const dateFormat = year + "-" + month + "-" + day;
 
-    const [receipt_img_url, setReceipt_img_url] = useState("");
+    const [receipt_img_url, setReceipt_img_url] = useState(null);
+    const [imageLoading, setImageLoading] = useState(false);
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const [friend_id, setFriend_id] = useState("");
@@ -61,13 +62,10 @@ function AddExpense({expense, param_id}) {
         if(description && description.length > 500) errors.push("Your description needs to be less than 500 characters");
         if(price && (price < 1)) errors.push("Price needs to be at least $1");
         if(friend_id === "") errors.push("Please choose a friend to split with");
-        if(receipt_img_url && (!receipt_img_url.endsWith(".png") &&
-            !receipt_img_url.endsWith(".jpg") && !receipt_img_url.endsWith(".jpeg"))) {
-            errors.push("Image URL must end in .png, .jpg, or .jpeg");
-        }
-        if(receipt_img_url && receipt_img_url.length > 255) {
-            errors.push("Image URL needs to be under 255 characters");
-        }
+        // if(receipt_img_url &&(!receipt_img_url.endsWith(".png") &&
+        //     !receipt_img_url.endsWith(".jpg") && !receipt_img_url.endsWith(".jpeg"))) {
+        //     errors.push("Image must end in .png, .jpg, or .jpeg");
+        // }
         setErrors(errors);
     }, [receipt_img_url, description, price, hasSubmitted, friend_id]);
 
@@ -75,8 +73,24 @@ function AddExpense({expense, param_id}) {
     e.preventDefault();
     setHasSubmitted(true);
 
-    const newExpense = {description, price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
-    const updateExpense = {id: expense?.id, description, price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
+    const newExpense = new FormData();
+    newExpense.append("description", description);
+    newExpense.append("price", price);
+    newExpense.append("expense_date", expense_date);
+    newExpense.append("friend_id", friend_id);
+    newExpense.append("paid_by", user_id);
+    newExpense.append("receipt_img_url", receipt_img_url);
+    // aws uploads can be a bit slow—displaying
+    // some sort of loading message is a good idea
+    const updateExpense = new FormData();
+    // updateExpense.append("id", expense?.id);
+    updateExpense.append("description", description);
+    updateExpense.append("price", price);
+    updateExpense.append("expense_date", expense_date);
+    updateExpense.append("friend_id", friend_id);
+    updateExpense.append("paid_by", user_id);
+    updateExpense.append("receipt_img_url", receipt_img_url);
+    setImageLoading(true);
 
     if(Object.values(errors).length === 0){
         setErrors([]);
@@ -96,7 +110,7 @@ function AddExpense({expense, param_id}) {
             }
         }
         if(expLength > 0){
-            const updatedExpense = await dispatch(expenseActions.updateAnExpense(updateExpense));
+            const updatedExpense = await dispatch(expenseActions.updateAnExpense(updateExpense, expense?.id));
             if(updatedExpense.errors){
                 const errors = [];
                 errors.push(updatedExpense.errors);
@@ -135,7 +149,7 @@ function AddExpense({expense, param_id}) {
                 </ul>
             </div>
             )}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className="expense-form-input-container">
                     <label>Split with:</label>
                     <select name="friends" id="friend-select" onChange={(e) => setFriend_id(e.target.value)}>
@@ -190,12 +204,17 @@ function AddExpense({expense, param_id}) {
                     />
                 </div>
                 <div className="expense-form-input-container">
-                    <input
+                    {/* <input
                         type='text'
                         onChange={(e) => setReceipt_img_url(e.target.value)}
                         value={receipt_img_url}
                         placeholder='Receipt Image'
                         name='receipt_img_url'
+                    /> */}
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setReceipt_img_url(e.target.files[0])}
                     />
                 </div>
                 <div className="expense-form-input-container">
@@ -207,6 +226,7 @@ function AddExpense({expense, param_id}) {
                     />
                 </div>
                 <button type="submit">Confirm</button>
+                {(imageLoading)&& <p>Loading...</p>}
             </form>
         </div>
     </>
