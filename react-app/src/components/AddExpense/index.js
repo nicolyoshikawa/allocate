@@ -72,6 +72,7 @@ function AddExpense({expense, param_id}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
+
     const newExpense = new FormData();
     newExpense.append("description", description);
     newExpense.append("price", price);
