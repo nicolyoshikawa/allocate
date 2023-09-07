@@ -10,6 +10,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding: 20px
 }
 .landing-text h1 {
     font-size: 2.5rem;
@@ -20,6 +21,7 @@
     align-items: center;
     text-align: center;
     font-size: 6rem;
+    padding: 40px
 }
 .landing-img i {
     align-items: center;

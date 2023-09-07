@@ -70,23 +70,22 @@ def update_an_expense(id):
             if friend_id == current_user.id:
                 return {'errors': ["You cannot create an expense to split with yourself"]}, 403
 
-            # receipt_img_url = form.data["receipt_img_url"]
-            # if not receipt_img_url:
-            #     receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
-
             receipt_img_url = form.data["receipt_img_url"]
-            receipt_img_url.filename = get_unique_filename(receipt_img_url.filename)
-            upload = upload_file_to_s3(receipt_img_url)
-            # print(upload)
-            if "url" not in upload:
-            # if the dictionary doesn't have a url key
-            # it means that there was an error when we tried to upload
-            # so we send back that error message (and we printed it above)
-                # return render_template("post_form.html", form=form, errors=[upload])
-                return {'errors': [upload]}, 401
+            if receipt_img_url:
 
-            url = upload["url"]
-            receipt_image = url
+                receipt_img_url.filename = get_unique_filename(receipt_img_url.filename)
+                upload = upload_file_to_s3(receipt_img_url)
+                # print(upload)
+                if "url" not in upload:
+                # if the dictionary doesn't have a url key
+                # it means that there was an error when we tried to upload
+                # so we send back that error message (and we printed it above)
+                    # return render_template("post_form.html", form=form, errors=[upload])
+                    return {'errors': [upload]}, 401
+
+                url = upload["url"]
+                receipt_image = url
+                expense.receipt_img_url = receipt_image
 
             expense_date = form.data["expense_date"]
             if not expense_date:
@@ -115,7 +114,7 @@ def update_an_expense(id):
             expense.expense_date = expense_date
             expense.description = form.data["description"]
             expense.price = form.data["price"]
-            expense.receipt_img_url = receipt_image
+            # expense.receipt_img_url = receipt_image
             db.session.commit()
             return expense.to_dict()
         return {'errors': validation_errors_to_error_messages(form.errors)}, 401
@@ -157,20 +156,21 @@ def add_an_expense():
     if form.validate_on_submit():
 
         receipt_img_url = form.data["receipt_img_url"]
-        receipt_img_url.filename = get_unique_filename(receipt_img_url.filename)
-        upload = upload_file_to_s3(receipt_img_url)
-        # print(upload)
-        if "url" not in upload:
-        # if the dictionary doesn't have a url key
-        # it means that there was an error when we tried to upload
-        # so we send back that error message (and we printed it above)
-            # return render_template("post_form.html", form=form, errors=[upload])
-            return {'errors': [upload]}, 401
-        # if not receipt_img_url:
-            # receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
 
-        url = upload["url"]
-        receipt_image = url
+        if not receipt_img_url:
+            receipt_image = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+        else:
+            receipt_img_url.filename = get_unique_filename(receipt_img_url.filename)
+            upload = upload_file_to_s3(receipt_img_url)
+            # print(upload)
+            if "url" not in upload:
+            # if the dictionary doesn't have a url key
+            # it means that there was an error when we tried to upload
+            # so we send back that error message (and we printed it above)
+                # return render_template("post_form.html", form=form, errors=[upload])
+                return {'errors': [upload]}, 401
+            url = upload["url"]
+            receipt_image = url
 
         expense_date = form.data["expense_date"]
         if not expense_date:

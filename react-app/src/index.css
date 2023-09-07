@@ -6,6 +6,8 @@ body {
 img {
     height: 50px;
     width: 50px;
+    /* padding-left: 5px; */
+    padding-right: 10px
 }
 button:hover {
     background-color: rgb(128, 128, 128, .8);

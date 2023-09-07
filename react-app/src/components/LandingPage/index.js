@@ -32,13 +32,13 @@ function LandingPage(){
                 </div>
             </div>
             <div className='landing-img'>
-                <i className="fa-solid fa-star-of-life fa-bounce" style={{ color: "#808080", fontWeight: "bold" }}></i>
+                {/* <i className="fa-solid fa-star-of-life fa-bounce" style={{ color: "#808080", fontWeight: "bold" }}></i> */}
                 <i className="fa-solid fa-people-group fa-bounce" style={{ color: "#373B3F", fontWeight: "bold" }}></i>
                 {/* <i className="fa-solid fa-arrows-split-up-and-left" style={{ color: "#808080", fontWeight: "bold" }}></i> */}
-                <i className="fa-solid fa-dollar-sign fa-bounce" style={{ color: "#808080", fontWeight: "bold" }}></i>
-                <i className="fa-solid fa-file-invoice-dollar" style={{ color: "#373B3F", fontWeight: "bold" }}></i>
+                {/* <i className="fa-solid fa-dollar-sign fa-bounce" style={{ color: "#808080", fontWeight: "bold" }}></i> */}
+                <i className="fa-solid fa-file-invoice-dollar fa-bounce" style={{ color: "#373B3F", fontWeight: "bold" }}></i>
                 {/* <i className="fa-brands fa-uncharted" style={{ color: "#808080", fontWeight: "bold" }}></i> */}
-                <i className="fa-solid fa-comments-dollar" style={{ color: "#808080", fontWeight: "bold" }}></i>
+                {/* <i className="fa-solid fa-comments-dollar" style={{ color: "#808080", fontWeight: "bold" }}></i> */}
             </div>
         </div>
     )
