@@ -166,11 +166,11 @@ def add_an_expense():
         # so we send back that error message (and we printed it above)
             # return render_template("post_form.html", form=form, errors=[upload])
             return {'errors': [upload]}, 401
+        # if not receipt_img_url:
+            # receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
 
         url = upload["url"]
         receipt_image = url
-        # if not receipt_img_url:
-        #     receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
 
         expense_date = form.data["expense_date"]
         if not expense_date:
