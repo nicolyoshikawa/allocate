@@ -54,7 +54,7 @@ function FriendDetail(){
 
 	return (
         <>
-            {isLoaded && sessionUser && friendObj ? (
+            {sessionUser && friendObj ? (
                 <>
                     <div className="middle">
                         <div className='expense-bar-container'>
