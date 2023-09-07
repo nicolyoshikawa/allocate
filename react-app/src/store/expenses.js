@@ -64,17 +64,16 @@ export const createANewExpense = (expense) => async (dispatch) => {
   const data = await response.json();
   if (response.ok) {
     dispatch(createAnExpense(data));
-  }else {
-    console.log("There was an error making your post!")
-}
+  }
   return data;
 };
 
-export const updateAnExpense = (expense) => async dispatch => {
-  const response = await fetch(`/api/expenses/${expense.id}`, {
+export const updateAnExpense = (expense, id) => async dispatch => {
+  const response = await fetch(`/api/expenses/${id}`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(expense)
+    // headers: { 'Content-Type': 'application/json' },
+    // body: JSON.stringify(expense)
+    body: expense
   });
   const data = await response.json();
   if (response.ok) {
