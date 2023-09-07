@@ -62,6 +62,10 @@ function AddExpense({expense, param_id}) {
         if(description && description.length > 500) errors.push("Your description needs to be less than 500 characters");
         if(price && (price < 1)) errors.push("Price needs to be at least $1");
         if(friend_id === "") errors.push("Please choose a friend to split with");
+        // if(receipt_img_url &&(!receipt_img_url.endsWith(".png") &&
+        //     !receipt_img_url.endsWith(".jpg") && !receipt_img_url.endsWith(".jpeg"))) {
+        //     errors.push("Image must end in .png, .jpg, or .jpeg");
+        // }
         setErrors(errors);
     }, [receipt_img_url, description, price, hasSubmitted, friend_id]);
 
