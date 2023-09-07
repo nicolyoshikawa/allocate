@@ -2,6 +2,8 @@ from flask import Blueprint, jsonify, session, request
 from app.models import User, db, Expense, ExpenseGroupUser, ExpenseGroup
 from app.forms import ExpenseForm
 from flask_login import current_user, login_required
+from app.api.aws_util import (
+    upload_file_to_s3, get_unique_filename)
 from .auth_routes import validation_errors_to_error_messages
 from datetime import date
 
@@ -139,9 +141,22 @@ def add_an_expense():
 
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+
         receipt_img_url = form.data["receipt_img_url"]
-        if not receipt_img_url:
-            receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+        receipt_img_url.filename = get_unique_filename(receipt_img_url.filename)
+        upload = upload_file_to_s3(receipt_img_url)
+        print(upload)
+        if "url" not in upload:
+        # if the dictionary doesn't have a url key
+        # it means that there was an error when we tried to upload
+        # so we send back that error message (and we printed it above)
+            # return render_template("post_form.html", form=form, errors=[upload])
+            return {'errors': [upload]}, 401
+
+        url = upload["url"]
+        receipt_image = url
+        # if not receipt_img_url:
+        #     receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
 
         expense_date = form.data["expense_date"]
         if not expense_date:
@@ -175,7 +190,7 @@ def add_an_expense():
             paid_by=current_user.id,
             description=form.data["description"],
             price=form.data["price"],
-            receipt_img_url=receipt_img_url,
+            receipt_img_url=receipt_image,
             expense_date=expense_date
         )
 
