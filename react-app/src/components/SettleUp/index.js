@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as expenseActions from "../../store/expenses";
 import BalanceFunction from "../BalanceFunc";
 
 function SettleUp({param_id}) {
     const dispatch = useDispatch();
-    const history = useHistory();
+    // const history = useHistory();
     const location = useLocation();
     const { closeModal } = useModal();
     const path_location = location.pathname.split("/");
@@ -34,7 +34,7 @@ function SettleUp({param_id}) {
     const selectedFriend = sortedFriends.filter(el=> el.id === param_id)
     if(friend_id === "" && param_id) setFriend_id(param_id);
 
-    const user_id = user.id;
+    // const user_id = user.id;
     let expences_balance;
     let friendObj;
     let friendGroupArr;
@@ -58,7 +58,11 @@ function SettleUp({param_id}) {
         const errors = [];
         if(price && (price < 1)) errors.push("Price needs to be at least $1");
         if(friend_id === "") errors.push("Please choose a friend to split with");
-        if(balance) setPrice(Math.abs(balance));
+        if(balance) {
+            const abs_balance = Math.abs(balance);
+            const fixed = Number(Math.abs(abs_balance)).toFixed(2);
+            setPrice(Math.abs(fixed))
+        };
         if(friend_id) setFriend_id(friend_id)
         setErrors(errors);
     }, [price, hasSubmitted, friend_id, balance]);
@@ -70,7 +74,6 @@ function SettleUp({param_id}) {
     for(let i = 0; i < expences_balance.length; i++){
         let exp_obj = expences_balance[i];
         const errors = [];
-
         if(user.id !== exp_obj.expense_group_users[0].id && user.id !== exp_obj.expense_group_users[1].id ) {
             errors.push("You do not have access to delete this expense.")
         };
@@ -79,7 +82,7 @@ function SettleUp({param_id}) {
 
         if(Object.values(errors).length === 0){
             setErrors([]);
-            let res = await dispatch(expenseActions.deleteExpense(exp_obj.id));
+            await dispatch(expenseActions.deleteExpense(exp_obj.id));
             // reset();
         }
     }
@@ -88,14 +91,14 @@ function SettleUp({param_id}) {
 
   };
 
-  const reset = () => {
-    setPrice("");
-    setFriend_id("");
-    // setGroup_id(0);
-    setExpense_date(dateFormat);
-    setErrors([]);
-    setHasSubmitted(false);
-  };
+//   const reset = () => {
+//     setPrice("");
+//     setFriend_id("");
+//     // setGroup_id(0);
+//     setExpense_date(dateFormat);
+//     setErrors([]);
+//     setHasSubmitted(false);
+//   };
 
   const keepClickHandler = () => {
     closeModal()

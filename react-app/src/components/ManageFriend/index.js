@@ -71,7 +71,7 @@ const ManageFriend = ({friendObj, sessionUser}) => {
                         <OpenModalButton
                             buttonText="Unfriend"
                             onItemClick={closeMenu}
-                            modalComponent={<DeleteFriend friendObjId={friendObj.id} deleteword={"remove"}/>}
+                            modalComponent={<DeleteFriend friendObjId={friendObj.id} deleteword={"remove"} friendObj={friendObj}/>}
                         />
                 </div>
               </li>

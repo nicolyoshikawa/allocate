@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as expenseActions from "../../store/expenses";
 import * as friendActions from "../../store/friends";
 
 function AddExpense({expense, param_id}) {
     const dispatch = useDispatch();
-    const history = useHistory();
+    // const history = useHistory();
     const { closeModal } = useModal();
     const today = new Date();
     const year = today.toLocaleString("default", { year: "numeric" });
