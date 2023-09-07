@@ -1,5 +1,49 @@
 .landingPage {
-    width: 100%;
-    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
     background-image: url(../../assets/facets.png);
+    padding: 40px
+}
+.landing-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px
+}
+.landing-text h1 {
+    font-size: 2.5rem;
+    color: #373B3F
+}
+.landing-img {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 6rem;
+    padding: 40px
+}
+.landing-img i {
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    display: flex;
+    min-height: 90vh;
+    padding: 5px;
+    font-size: 6rem;
+}
+.landing-signup button{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    font-size: 1rem;
+}
+.landing-middle-text{
+    font-size: 1rem;
+    padding: 20px;
+    color: #373B3F
+}
+.landing-middle-text div {
+    padding: 3px
 }

@@ -1,7 +1,13 @@
 /* TODO Add site wide styles */
+body {
+    background-color: rgb(245, 244, 244);
+    font-family: Open-Sans, sans-serif;
+}
 img {
     height: 50px;
     width: 50px;
+    /* padding-left: 5px; */
+    padding-right: 10px
 }
 button:hover {
     background-color: rgb(128, 128, 128, .8);
@@ -23,8 +29,10 @@ button {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    /* padding: 20px; */
+    padding-left: 15px;
+    padding-right: 15px;
     gap: 10px;
+    min-height:100vh
 }
 .sections {
     width: 100%;
@@ -44,8 +52,7 @@ button {
     width: 100%;
     margin-top: 0px;
     background-color: white;
-    /* height: max-content;
-    height: 100%; */
+    min-height:100vh;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
@@ -95,12 +102,6 @@ button {
 }
 .table-list a:hover {
     color: white
-}
-body {
-    padding-left: 20px;
-    padding-right: 20px;
-    background-color: rgb(245, 244, 244);
-    font-family: Open-Sans, sans-serif;
 }
 
 @media screen and (min-width: 1275px) {

@@ -57,8 +57,8 @@ export const loadExpenseById = (id) => async (dispatch) => {
 export const createANewExpense = (expense) => async (dispatch) => {
   const response = await fetch('/api/expenses/', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json'},
-    body: JSON.stringify(expense)
+    // headers: { 'Content-Type': 'application/json'},
+    body: expense
   });
 
   const data = await response.json();
@@ -68,11 +68,12 @@ export const createANewExpense = (expense) => async (dispatch) => {
   return data;
 };
 
-export const updateAnExpense = (expense) => async dispatch => {
-  const response = await fetch(`/api/expenses/${expense.id}`, {
+export const updateAnExpense = (expense, id) => async dispatch => {
+  const response = await fetch(`/api/expenses/${id}`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(expense)
+    // headers: { 'Content-Type': 'application/json' },
+    // body: JSON.stringify(expense)
+    body: expense
   });
   const data = await response.json();
   if (response.ok) {
