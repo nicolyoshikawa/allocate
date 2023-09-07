@@ -41,6 +41,7 @@ function AddExpense({expense, param_id}) {
 
     useEffect(()=> {
         dispatch(friendActions.getUserFriends())
+        dispatch(expenseActions.loadAllUserExpenses())
         dispatch(expenseActions.loadExpenseById(expense?.id))
         .then((expObj)=>{
             if(expObj){
@@ -73,6 +74,7 @@ function AddExpense({expense, param_id}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
+    console.log(price)
     const newExpense = {description, price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
     const updateExpense = {id: expense?.id, description, price, receipt_img_url, expense_date, friend_id, paid_by: user_id};
 
@@ -87,7 +89,8 @@ function AddExpense({expense, param_id}) {
                 setErrors(errors);
             } else {
                 reset();
-                history.push(`/expenses/${createExpense.id}`);
+                // history.push(`/expenses/${createExpense.id}`);
+                dispatch(expenseActions.loadAllUserExpenses());
                 setErrors([]);
                 closeModal();
             }
@@ -100,7 +103,7 @@ function AddExpense({expense, param_id}) {
                 setErrors(errors);
             } else {
                 reset();
-                history.push(`/expenses/${updatedExpense.id}`);
+                // history.push(`/expenses/${updatedExpense.id}`);
                 dispatch(expenseActions.loadExpenseById(updatedExpense.id));
                 closeModal();
             }
@@ -121,7 +124,7 @@ function AddExpense({expense, param_id}) {
 
   return (
     <>
-        <div>
+        <div className="add-expense-form-container">
             {expLength > 0 ? <h1>Edit Expense</h1> : <h1>Add An Expense</h1>}
             {hasSubmitted && errors.length > 0 && (
             <div className="login-form-container-errors">
@@ -133,10 +136,10 @@ function AddExpense({expense, param_id}) {
             </div>
             )}
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Split with: </label>
+                <div className="expense-form-input-container">
+                    <label>Split with:</label>
                     <select name="friends" id="friend-select" onChange={(e) => setFriend_id(e.target.value)}>
-                        <option value="">--Please choose a friend--</option>
+                        <option value="">-- Choose a friend --</option>
                         {sortedFriends.map((friendObj) => {
                             return(
                                 <option
@@ -164,7 +167,7 @@ function AddExpense({expense, param_id}) {
                         name='group_id'
                     />
                 </div> */}
-                <div>
+                <div className="expense-form-input-container">
                     <input
                         type='text'
                         onChange={(e) => setDescription(e.target.value)}
@@ -174,7 +177,9 @@ function AddExpense({expense, param_id}) {
                         required
                     />
                 </div>
-                <div>$
+                <div className="expense-form-input-container">
+                    <label>Receipt amt: </label>
+                    $ {" "}
                     <input
                         type='text'
                         onChange={(e) => setPrice(e.target.value)}
@@ -184,7 +189,7 @@ function AddExpense({expense, param_id}) {
                         required
                     />
                 </div>
-                <div>
+                <div className="expense-form-input-container">
                     <input
                         type='text'
                         onChange={(e) => setReceipt_img_url(e.target.value)}
@@ -193,8 +198,8 @@ function AddExpense({expense, param_id}) {
                         name='receipt_img_url'
                     />
                 </div>
-                <div>
-                    <label>Expense date: </label>
+                <div className="expense-form-input-container">
+                    <label>Expense date:</label>
                     <input
                         type="date"
                         value={expense_date}

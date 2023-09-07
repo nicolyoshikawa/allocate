@@ -83,13 +83,18 @@ button {
 .table-list {
     padding: 5px;
 }
+
 .table-list:hover {
     text-decoration: none;
     border-radius: 4px;
     background-color: rgb(128, 128, 128, .8);
+
 }
 .table-list a {
     text-decoration: none;
+}
+.table-list a:hover {
+    color: white
 }
 body {
     padding-left: 20px;
@@ -123,6 +128,8 @@ body {
 .main-block{
     display: flex;
     justify-content: space-between;
+    justify-content:left;
+    text-align: left;
     align-items: center;
 }
 .paid-block{
@@ -132,20 +139,25 @@ body {
 }
 .paid-by{
     text-align: right;
-    width: 100px;
+    width: 150px;
     display: inline-block;
     color: #999;
+}
+.paid-by-text{
+    font-size: 13px;
 }
 .money{
     color: black;
     font-weight: bold;
 }
 .friend-owes {
-    color: #5bc5a7;
+    /* color: #5bc5a7; */
+    color: #ff652f;
     font-weight: bold;
 }
 .you-owe{
-    color: #ff652f;
+    /* color: #ff652f; */
+    color: #5bc5a7;
     font-weight: bold;
 }
 .description a {
@@ -177,6 +189,7 @@ body {
     padding: 5px;
     height: 35px;
     width: 35px;
+    /* text-align: left; */
 }
 
 /* Manage Expenses */
@@ -255,6 +268,9 @@ body {
     background-color: #cccccc;
     color: black
 }
+.invite-friend:hover {
+    color: white
+}
 .invite-friend-input{
     display: flex;
     justify-content: center;
@@ -273,4 +289,80 @@ body {
     /* font-weight: bold; */
     padding: 5px;
     border-radius: 4px;
+}
+/* Balance */
+.balance-list {
+    padding: 5px;
+}
+.balance {
+    display: inline-block;
+}
+.all-expenses-hide{
+    padding: 5px;
+    color: rgb(245, 244, 244);
+}
+
+/* Add Expense */
+.add-expenses button {
+    padding: 8px;
+    background-color: #ff652f;
+    margin-left: 5px;
+}
+.add-expenses button:hover {
+    padding: 8px;
+    background-color: rgb(128, 128, 128, .8);
+}
+.settle-up button {
+    padding: 8px;
+    background-color:#5bc5a7;
+    margin-left: 5px;
+}
+.settle-up button:hover {
+    padding: 8px;
+    background-color: rgb(128, 128, 128, .8);
+}
+.add-expense-form-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.expense-form-input-container {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    /* margin-bottom: 10px; */
+    width: 100%;
+}
+.expense-form-input-container input {
+    padding: 0px 8px;
+    font-size: 16px;
+    margin: 6px 0px;
+    width: 100%;
+}
+.expense-form-input-container div {
+    font-size: 16px;
+    margin: 6px 0px;
+    width: 100%;
+    text-align:right;
+    color: #808080;
+}
+.expense-form-input-container select {
+    padding: 0px 8px;
+    font-size: 16px;
+    margin: 6px 0px;
+    width: 100%;
+}
+.expense-form-input-container label {
+    padding-right: 5px;
+    text-align:left;
+    width: 75%;
+}
+.add-expense-form-container button {
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: 10px;
+    width: 100%;
+    margin: 6px 0px;
+    font-family: Open-Sans, sans-serif;
 }

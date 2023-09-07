@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import OpenModalButton from "../OpenModalButton";
 import AddExpense from "../AddExpense";
+import SettleUp from "../SettleUp";
 
 function CreateExpenseModal({param_id}) {
     const [showMenu, setShowMenu] = useState(true);
@@ -8,13 +9,24 @@ function CreateExpenseModal({param_id}) {
     return (
         <>
             { showMenu && (
-                <div>
-                    <OpenModalButton
-                        buttonText="Add an expense"
-                        onItemClick={closeMenu}
-                        modalComponent={<AddExpense param_id={param_id}/>}
-                    />
-                </div>
+                <>
+                    <div className="add-expenses">
+                        <OpenModalButton
+                            buttonText="Add an expense"
+                            onItemClick={closeMenu}
+                            modalComponent={<AddExpense param_id={param_id}/>}
+                        />
+                    </div>
+                    {param_id && (
+                        <div className="settle-up">
+                            <OpenModalButton
+                                buttonText="Settle up"
+                                onItemClick={closeMenu}
+                                modalComponent={<SettleUp param_id={param_id}/>}
+                            />
+                        </div>
+                    )}
+                </>
             )}
         </>
     )

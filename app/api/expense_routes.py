@@ -19,6 +19,23 @@ def add_group_user_dict(exp):
     exp_dict["expense_group_users"] = group_user_list
     return exp_dict
 
+# def add_balance_dict(exp):
+#     # exp_group_users = ExpenseGroupUser.query.filter(exp.group_id == ExpenseGroupUser.group_id).all()
+#     balance_dict = {}
+#     paid_amount = exp.price
+#     if exp.paid_by == current_user.id:
+#         friend_owes = (paid_amount/2)
+#     if exp.paid_by != current_user.id:
+#         friend_owes = (paid_amount/2)
+#     # group_user_list = []
+#     # for exp_group_user in exp_group_users:
+#     #     user = User.query.get(exp_group_user.user_id)
+#     #     user_dict = user.to_dict()
+#     #     group_user_list.append(user_dict)
+
+#     balance_dict["friend_owes"] = friend_owes
+#     return balance_dict
+
 @expense_routes.route('/<int:id>', methods=["GET"])
 @login_required
 def get_a_specific_expense(id):
@@ -95,11 +112,14 @@ def delete_an_expense(id):
     if not expense:
         return {'errors': ["Expense could not be found"]}, 404
 
-    if current_user.id == expense.paid_by:
-        db.session.delete(expense)
-        db.session.commit()
-        return { "message": ["Expense successfully deleted"]}, 200
-    return {'errors': ['Unauthorized']}
+    expense_group_user = ExpenseGroupUser.query.filter(ExpenseGroupUser.group_id == expense.group_id, ExpenseGroupUser.user_id == current_user.id).first()
+    if not expense_group_user:
+        return {'errors': ['Unauthorized']}
+
+    db.session.delete(expense)
+    db.session.commit()
+    return { "message": ["Expense successfully deleted"]}, 200
+
 
 @expense_routes.route('/', methods=["GET"])
 @login_required
@@ -108,6 +128,7 @@ def get_all_expenses():
     expense_list = []
     for expense in all_expenses:
         exp_dict = add_group_user_dict(expense)
+        # exp_dict["balance"] = add_balance_dict(expense)
         expense_list.append(exp_dict)
     return {"expenses": expense_list}
 

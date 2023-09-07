@@ -16,6 +16,11 @@ function UpdateExpense(){
                         onItemClick={closeMenu}
                         modalComponent={<AddExpense expense={expense}/>}
                     />
+                    <OpenModalButton
+                            buttonText="Settle up"
+                            onItemClick={closeMenu}
+                            modalComponent={<SettleUp param_id={param_id}/>}
+                    />
                 </div>
             )}
         </>

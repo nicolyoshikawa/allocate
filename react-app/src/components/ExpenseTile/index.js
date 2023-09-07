@@ -34,7 +34,9 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
                         <div className="day">{day}</div>
                     </div>
                     <div>{expense?.receipt_img_url ?
+                        <a href={expense?.receipt_img_url} target="_blank">
                             <img src={expense?.receipt_img_url} alt="receipt_img"/>
+                        </a>
                             : <div></div>}
                     </div>
                     {clickable ? (
@@ -44,15 +46,21 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
                 </div>
                 <div className="paid-block">
                     <div className="paid-by">
-                        <div>{paid_by} paid </div>
+                        <div className="paid-by-text">{paid_by} paid </div>
                         <div className="money">${amount_paid}</div>
                     </div>
                     <div className="paid-by">
-                        <div>{user_owes} owes </div>
+
                         {sessionUser?.username === user_owes ? (
-                            <div className="friend-owes">${amount_split}</div>
+                            <>
+                                <div className="paid-by-text">{paid_by} lent you</div>
+                                <div className="friend-owes">${amount_split}</div>
+                            </>
                         ) : (
-                            <div className="you-owe">${amount_split}</div>
+                            <>
+                                <div className="paid-by-text">You lent {user_owes}</div>
+                                <div className="you-owe">${amount_split}</div>
+                            </>
                         )}
                     </div>
                 </div>

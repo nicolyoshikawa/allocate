@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import * as expenseActions from "../../store/expenses";
+import * as friendActions from "../../store/friends";
 
-function DeleteExpense({expense}) {
+function DeleteFriend({friendObjId, deleteword}) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
@@ -16,20 +16,14 @@ function DeleteExpense({expense}) {
       history.push("/")
   }
 
-  useEffect(() => {
-    const errors = [];
-    if(user.id !== expense.paid_by) errors.push("You do not have access to delete this expense.");
-    setErrors(errors);
-  }, [user.id, expense.paid_by]);
-
-  const deleteClickHandler = async () => {
-    const expenseDeleted = await dispatch(expenseActions.deleteExpense(expense.id));
-
-    if (expenseDeleted) {
+  const handleDelete = async (e, friendObjId) => {
+    e.preventDefault();
+    const friendDeleted = await dispatch(friendActions.deleteFriend(friendObjId));
+    if (friendDeleted) {
         history.push("/home");
         closeModal()
     };
-  }
+  };
 
   const keepClickHandler = () => {
     setShowModal(false);
@@ -49,14 +43,14 @@ function DeleteExpense({expense}) {
                     </ul>
                 </div>
             )}
-            <div className="delete-input-container">Are you sure you want to delete this expense?</div>
+            <div className="delete-input-container">Are you sure you want to {deleteword} this friend?</div>
             <div className="delete-buttons">
-              <button className="delete-button-color" onClick={deleteClickHandler}>Yes</button>
-              <button onClick={keepClickHandler}>No</button>
+                <button className="delete-button-color" onClick={(e) => handleDelete(e, friendObjId)}>Yes</button>
+                <button onClick={keepClickHandler}>No</button>
             </div>
           </div>
         )}
       </>
     );
 }
-export default DeleteExpense;
+export default DeleteFriend;
