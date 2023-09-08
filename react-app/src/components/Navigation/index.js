@@ -7,6 +7,7 @@ import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 // import piechart from "../../assets/piechart.png";
 import './Navigation.css';
+import Info from './info';
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
@@ -41,7 +42,7 @@ function Navigation({ isLoaded }){
 				</div>
 			)}
 			{isLoaded && sessionUser && (
-				<div>
+				<div className='profile-info'>
 					<ProfileButton user={sessionUser} />
 				</div>
 			)}
