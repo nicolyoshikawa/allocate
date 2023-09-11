@@ -111,7 +111,7 @@ To run the application, navigate into the project folder in two separate termina
 
 ## Screenshots
 
-### Login
+### Login/Sign Up
 
 https://github.com/nicolyoshikawa/allocate/assets/112415366/d56a80b2-889a-4d8f-a657-ccac8c0b9d4d
 
