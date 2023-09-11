@@ -162,7 +162,7 @@ The project is fully functional in its current state, but some other features we
 const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
-...
+   ...
     if(Object.values(errors).length === 0){
         setErrors([]);
 
