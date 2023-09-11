@@ -117,8 +117,10 @@ To run the application, navigate into the project folder in two separate termina
 
 https://github.com/nicolyoshikawa/allocate/assets/112415366/1d257bfc-f16b-4803-88de-474d0621b061
 
-
 ### Expenses
+
+https://github.com/nicolyoshikawa/allocate/assets/112415366/a949fbb3-071a-4c34-820b-406f0fd779ac
+
 
 
 ## [Wiki Documents](https://github.com/nicolyoshikawa/allocate/wiki)
