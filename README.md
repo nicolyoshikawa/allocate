@@ -113,6 +113,8 @@ To run the application, navigate into the project folder in two separate termina
 
 ### Login
 
+https://github.com/nicolyoshikawa/allocate/assets/112415366/d56a80b2-889a-4d8f-a657-ccac8c0b9d4d
+
 ### Friends
 
 https://github.com/nicolyoshikawa/allocate/assets/112415366/1d257bfc-f16b-4803-88de-474d0621b061
@@ -121,9 +123,7 @@ https://github.com/nicolyoshikawa/allocate/assets/112415366/1d257bfc-f16b-4803-8
 
 https://github.com/nicolyoshikawa/allocate/assets/112415366/a949fbb3-071a-4c34-820b-406f0fd779ac
 
-
 https://github.com/nicolyoshikawa/allocate/assets/112415366/6c300cf4-883a-4fca-8b12-8aa2c9f5f389
-
 
 ## [Wiki Documents](https://github.com/nicolyoshikawa/allocate/wiki)
 - [API Routes](https://github.com/nicolyoshikawa/allocate/wiki/Backend-Routes)
