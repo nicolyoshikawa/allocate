@@ -6,11 +6,13 @@
   </a>
 </p>
 
-> [Pour'd](https://pourd.onrender.com/) is an Untappd clone created by Eric Kinder, Nicol Yoshikawa, and Huey Nguyen. Demonstrating an expert use of the technologies listed below, the team at Pour'd has developed a web application to allow users to explore, share, and review their favorite (or not so favorite) drinks, while connecting with fellow enthusiasts. Pour'd is your passport to drink discovery and community engagement. Join us now!
+> [Allocate](https://allocate-py6y.onrender.com/) is a Splitwise clone created by Nicol Yoshikawa.
+>
+> Demonstrating an expert use of the technologies listed below, the team at Pour'd has developed a web application to allow users to explore, share, and review their favorite (or not so favorite) drinks, while connecting with fellow enthusiasts. Pour'd is your passport to drink discovery and community engagement. Join us now!
 
 ## Technologies Used
 
-Pour'd was built using the following technologies:
+Allocate was built using the following technologies:
 
 - Python
 - Flask
@@ -19,6 +21,7 @@ Pour'd was built using the following technologies:
 - JavaScript
 - React
 - Redux
+- AWS S3
 
 ![image](https://github.com/nicolyoshikawa/pour-d/assets/78172054/c4d9ef19-e79c-4fe0-8804-e1164b621846)
 
