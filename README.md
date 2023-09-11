@@ -23,9 +23,7 @@ Allocate was built using the following technologies:
 - Redux
 - AWS S3
 
-![image](https://github.com/nicolyoshikawa/pour-d/assets/78172054/c4d9ef19-e79c-4fe0-8804-e1164b621846)
-
-### 🏠 [Homepage](https://pourd.onrender.com/home)
+### 🏠 [Homepage](https://allocate-py6y.onrender.com/home)
 
 ## Table of Contents
 
@@ -40,7 +38,6 @@ Allocate was built using the following technologies:
  	- React Components
  	- Redux Store Tree
 	- User Stories
-	- Wireframes 
 - [To-Dos/Future Features](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#to-dosfuture-features)
 - [Technical Implementation Details](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#technical-implementation-details)
 	- Challenges
