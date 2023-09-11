@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch} from "react-router-dom";
-import SignupFormPage from "./components/SignupFormPage";
-import LoginFormPage from "./components/LoginFormPage";
+import SignupFormModal from "./components/SignupFormModal"
+import LoginFormModal from "./components/LoginFormModal";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import Home from "./components/HomePage";
@@ -46,6 +46,12 @@ function App() {
                   <Route exact path="/">
                     <LandingPage/>
                   </Route>
+                  <Route path="/login" >
+                    <LoginFormModal />
+                  </Route>
+                  <Route path="/signup">
+                    <SignupFormModal />
+                  </Route>
                   <Route>
                     <PageNotFound/>
                   </Route>
@@ -58,10 +64,10 @@ function App() {
       {isLoaded && !user && (
         <Switch>
           <Route path="/login" >
-            <LoginFormPage />
+            <LoginFormModal />
           </Route>
           <Route path="/signup">
-            <SignupFormPage />
+            <SignupFormModal />
           </Route>
           <Route exact path="/expenses/:id">
             <Expense/>
