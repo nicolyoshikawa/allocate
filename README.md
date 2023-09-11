@@ -6,9 +6,7 @@
   </a>
 </p>
 
-> [Allocate](https://allocate-py6y.onrender.com/) is a Splitwise clone created by Nicol Yoshikawa.
->
-> Demonstrating an expert use of the technologies listed below, the team at Allocate has developed a web application to allow users to explore, share, and review their favorite (or not so favorite) drinks, while connecting with fellow enthusiasts. Allocate is your passport to drink discovery and community engagement. Join us now!
+> [Allocate](https://allocate-py6y.onrender.com/) is a Splitwise clone created by Nicol Yoshikawa. Demonstrating an expert use of the technologies listed below, the team at Allocate has developed a web application to allow users to split expenses with friends, track balances, and settle balances.
 
 ## Technologies Used
 
