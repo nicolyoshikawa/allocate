@@ -1,148 +1,199 @@
-# Flask React Project
 
-This is the starter for the Flask React project.
+<h1 align="center">Welcome to Allocate </h1>
+<p>
+  <a href="https://github.com/nicolyoshikawa/allocate/wiki" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+</p>
 
-## Getting started
-1. Clone this repository (only this branch)
+> [Pour'd](https://pourd.onrender.com/) is an Untappd clone created by Eric Kinder, Nicol Yoshikawa, and Huey Nguyen. Demonstrating an expert use of the technologies listed below, the team at Pour'd has developed a web application to allow users to explore, share, and review their favorite (or not so favorite) drinks, while connecting with fellow enthusiasts. Pour'd is your passport to drink discovery and community engagement. Join us now!
+
+## Technologies Used
+
+Pour'd was built using the following technologies:
+
+- Python
+- Flask
+- SQLAlchemy/Alembic
+- WTForms
+- JavaScript
+- React
+- Redux
+
+![image](https://github.com/nicolyoshikawa/pour-d/assets/78172054/c4d9ef19-e79c-4fe0-8804-e1164b621846)
+
+### 🏠 [Homepage](https://pourd.onrender.com/home)
+
+## Table of Contents
+
+ - [Installing/Getting Started](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#installation)
+	 - [Initial Configuration](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#initial-configuration)
+- [Screenshots](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#screenshots)
+- [Wiki Documents](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#wiki-documents)
+	- API Routes
+ 	- Database Schema
+ 	- Features
+ 	- Frontend Routes
+ 	- React Components
+ 	- Redux Store Tree
+	- User Stories
+	- Wireframes 
+- [To-Dos/Future Features](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#to-dosfuture-features)
+- [Technical Implementation Details](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#technical-implementation-details)
+	- Challenges
+	- Code Snippets
+- [Authors](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#authors)
+- [Show your support](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#show-your-support)
+
+## Installation
+
+### Initial Configuration
+#### Flask
+To install and run this project locally, start off with your backend server.
+
+1. Clone this repository
+    ```bash
+    git clone https://github.com/nicolyoshikawa/pour-d.git
+    ```
 
 2. Install dependencies
-
-      ```bash
-      pipenv install -r requirements.txt
-      ```
+    ```bash
+    pipenv install -r requirements.txt
+    ```
 
 3. Create a **.env** file based on the example with proper settings for your
    development environment
+    - Make sure the SQLite3 database connection URL is in the **.env** file
+    - The env example organizes all tables inside the `flask_schema` schema, defined
+        by the `SCHEMA` environment variable.  Replace the value for
+        `SCHEMA` with a unique name, **making sure you use the snake_case
+        convention**.
+    <br></br>
 
-4. Make sure the SQLite3 database connection URL is in the **.env** file
-
-5. This starter organizes all tables inside the `flask_schema` schema, defined
-   by the `SCHEMA` environment variable.  Replace the value for
-   `SCHEMA` with a unique name, **making sure you use the snake_case
-   convention**.
-
-6. Get into your pipenv, migrate your database, seed your database, and run your Flask app
+4. Get into your pipenv, migrate your database, seed your database, and run your Flask app
 
    ```bash
    pipenv shell
    ```
-
+   and then
    ```bash
-   flask db upgrade
-   ```
-
-   ```bash
-   flask seed all
-   ```
-
-   ```bash
+   flask db upgrade &&
+   flask seed all &&
    flask run
    ```
 
-7. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+5. Now that you have your backend Flask server running. You need to run the React App in development in a different terminal instance.
+
+#### React
+1. Make sure you have a new terminal instance seperate from your terminal for your backend. Navigate into the pour'd project folder and then into react-app folder.
+    ```bash
+    cd react-app
+    ```
+
+2. Install all your dependencies before starting up the application.
+    ```bash
+    npm install &&
+    npm start
+    ```
+
+3. Now that you have both your Flask backend and React App frontend running, enjoy using Pour'd. Cheers!
+
+### Operating
+To run the application, navigate into the project folder in two separate terminal windows.
+
+1. Ensure that the database has already been migrated and seeded. If it hasn't been done yet, refer to [Intitial Configuration](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#initial-configuration)
+
+2. In one terminal, go into pipenv and run the Flask app
+    ```bash
+    pipenv shell && flask run
+    ```
+
+3. In the other terminal, start the React app.
+
+4. Pour'd will open in your browser and you can now enjoy using Pour'd. Cheers!
+
+## Screenshots
+
+### Login
+
+![image](https://github.com/nicolyoshikawa/pour-d/assets/78172054/ac0d5485-27b7-440e-a824-28df365977e4)
+
+### Profile
+
+![ezgif com-gif-maker](https://github.com/nicolyoshikawa/pour-d/assets/112415366/411fb169-c4b6-4530-b77c-d4d6473de871)
+
+### Drinks
+
+https://github.com/nicolyoshikawa/pour-d/assets/112415366/f89fecdf-d4a3-4b8c-854e-49713ac7fb34
+
+### Reviews
+
+https://github.com/nicolyoshikawa/pour-d/assets/112415366/3ff2f7db-c294-492e-876d-f9dd486bb05f
+
+### Friends
+
+https://github.com/nicolyoshikawa/pour-d/assets/112415366/5e72eff5-64e3-4592-a758-d030d5945de2
+
+## [Wiki Documents](https://github.com/nicolyoshikawa/pour-d/wiki)
+- [API Routes](https://github.com/nicolyoshikawa/pour-d/wiki/Backend-Routes)
+- [Database Schema](https://github.com/nicolyoshikawa/pour-d/wiki/Database-Schema)
+- [Features](https://github.com/nicolyoshikawa/pour-d/wiki/Feature-List)
+- [Frontend Routes](https://github.com/nicolyoshikawa/pour-d/wiki/Frontend-Routes)
+- [React Components](https://github.com/nicolyoshikawa/pour-d/wiki/React-Components)
+- [Redux Store Tree](https://github.com/nicolyoshikawa/pour-d/wiki/Redux-Store-Tree)
+- [User Stories](https://github.com/nicolyoshikawa/pour-d/wiki/User-Stories)
+- [Wireframes](https://github.com/nicolyoshikawa/pour-d/wiki/Wireframes)
 
 
-## Deployment through Render.com
+## To-Dos/Future Features
 
-First, refer to your Render.com deployment articles for more detailed
-instructions about getting started with [Render.com], creating a production
-database, and deployment debugging tips.
+The project is fully functional in its current state, but some other features we would like to implement in the future include:
 
-From the [Dashboard], click on the "New +" button in the navigation bar, and
-click on "Web Service" to create the application that will be deployed.
+- Ability to upload images for drinks and reviews with AWS
+- Fully featured friends system with ability to view other users profiles and send friend requests
+- "Load more" style pagination when viewing all drinks or reviews
 
-Look for the name of the application you want to deploy, and click the "Connect"
-button to the right of the name.
+## Technical Implementation Details
 
-Now, fill out the form to configure the build and start commands, as well as add
-the environment variables to properly deploy the application.
+### Code Snippets
 
-### Part A: Configure the Start and Build Commands
+**Search box component**
+```javascript
+    const dispatch = useDispatch()
 
-Start by giving your application a name.
+    const drinks = useSelector(state => state.drinks) // Load all drinks for search bar to query
+    const [searchInput, setSearchInput] = useState("") // Set current query to user's input
+    let hideDiv // Used for removing border if search results are empty
 
-Leave the root directory field blank. By default, Render will run commands from
-the root directory.
+    useEffect(() => {
+        dispatch(loadAllDrinks())
+    }, [dispatch])
 
-Make sure the Environment field is set set to "Python 3", the Region is set to
-the location closest to you, and the Branch is set to "main".
+    const onClickHandler = () => {
+        setSearchInput("")
+    }
 
-Next, add your Build command. This is a script that should include everything
-that needs to happen _before_ starting the server.
 
-For your Flask project, enter the following command into the Build field, all in
-one line:
+    if (drinks) {
+        // Create array of drinks with name matching current input from user
+        let filterDrinks = Object.values(drinks).filter((drink) => {
+            if (searchInput.length && drink.name.toLowerCase().includes(searchInput.toLowerCase())) {
+                return drink
+            }
+        })
 
-```shell
-# build command - enter all in one line
-npm install --prefix react-app &&
-npm run build --prefix react-app &&
-pip install -r requirements.txt &&
-pip install psycopg2 &&
-flask db upgrade &&
-flask seed all
+        // Remove border if results are empty
+        if (searchInput.length && filterDrinks.length) {
+            hideDiv = "results"
+        } else {
+            hideDiv = "results-hide"
+        }
+    return (
+	...
+	)}
 ```
 
-This script will install dependencies for the frontend, and run the build
-command in the __package.json__ file for the frontend, which builds the React
-application. Then, it will install the dependencies needed for the Python
-backend, and run the migration and seed files.
+## Author
 
-Now, add your start command in the Start field:
-
-```shell
-# start script
-gunicorn app:app
-```
-
-_If you are using websockets, use the following start command instead for increased performance:_
-
-`gunicorn --worker-class eventlet -w 1 app:app`
-
-### Part B: Add the Environment Variables
-
-Click on the "Advanced" button at the bottom of the form to configure the
-environment variables your application needs to access to run properly. In the
-development environment, you have been securing these variables in the __.env__
-file, which has been removed from source control. In this step, you will need to
-input the keys and values for the environment variables you need for production
-into the Render GUI.
-
-Click on "Add Environment Variable" to start adding all of the variables you
-need for the production environment.
-
-Add the following keys and values in the Render GUI form:
-
-- SECRET_KEY (click "Generate" to generate a secure secret for production)
-- FLASK_ENV production
-- FLASK_APP app
-- SCHEMA (your unique schema name, in snake_case)
-- REACT_APP_BASE_URL (use render.com url, located at top of page, similar to
-  https://this-application-name.onrender.com)
-
-In a new tab, navigate to your dashboard and click on your Postgres database
-instance.
-
-Add the following keys and values:
-
-- DATABASE_URL (copy value from Internal Database URL field)
-
-_Note: Add any other keys and values that may be present in your local __.env__
-file. As you work to further develop your project, you may need to add more
-environment variables to your local __.env__ file. Make sure you add these
-environment variables to the Render GUI as well for the next deployment._
-
-Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your
-application every time you push to main.
-
-Now, you are finally ready to deploy! Click "Create Web Service" to deploy your
-project. The deployment process will likely take about 10-15 minutes if
-everything works as expected. You can monitor the logs to see your build and
-start commands being executed, and see any errors in the build process.
-
-When deployment is complete, open your deployed site and check to see if you
-successfully deployed your Flask application to Render! You can find the URL for
-your site just below the name of the Web Service at the top of the page.
-
-[Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/
+👤 **Nicol Yoshikawa**
+* Nicol's [Github](https://github.com/nicolyoshikawa) and [LinkedIn](https://www.linkedin.com/in/nicol-yoshikawa/)
