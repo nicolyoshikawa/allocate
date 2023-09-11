@@ -140,7 +140,43 @@ The project is fully functional in its current state, but some other features we
 
 ### Code Snippets
 
-**Search box component**
+**Add/Edit Expense Component**
+```javascript
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    setHasSubmitted(true);
+
+    const newExpense = new FormData();
+    newExpense.append("description", description);
+    newExpense.append("price", price);
+    newExpense.append("expense_date", expense_date);
+    newExpense.append("friend_id", friend_id);
+    newExpense.append("paid_by", user_id);
+    newExpense.append("receipt_img_url", receipt_img_url);
+
+    const updateExpense = new FormData();
+    updateExpense.append("description", description);
+    updateExpense.append("price", price);
+    updateExpense.append("expense_date", expense_date);
+    updateExpense.append("friend_id", friend_id);
+    updateExpense.append("paid_by", user_id);
+    updateExpense.append("receipt_img_url", receipt_img_url);
+    setImageLoading(true);
+
+    if(Object.values(errors).length === 0){
+        setErrors([]);
+
+        if(expLength === 0){
+            const createExpense = await dispatch(expenseActions.createANewExpense(newExpense));
+	...
+        }
+        if(expLength > 0){
+            const updatedExpense = await dispatch(expenseActions.updateAnExpense(updateExpense, expense?.id));
+	...
+        }
+    }
+  };
+```
 
 ## Author
 
