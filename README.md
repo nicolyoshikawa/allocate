@@ -115,6 +115,9 @@ To run the application, navigate into the project folder in two separate termina
 
 ### Friends
 
+https://github.com/nicolyoshikawa/allocate/assets/112415366/1d257bfc-f16b-4803-88de-474d0621b061
+
+
 ### Expenses
 
 
