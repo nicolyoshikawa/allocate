@@ -122,6 +122,8 @@ https://github.com/nicolyoshikawa/allocate/assets/112415366/1d257bfc-f16b-4803-8
 https://github.com/nicolyoshikawa/allocate/assets/112415366/a949fbb3-071a-4c34-820b-406f0fd779ac
 
 
+https://github.com/nicolyoshikawa/allocate/assets/112415366/6c300cf4-883a-4fca-8b12-8aa2c9f5f389
+
 
 ## [Wiki Documents](https://github.com/nicolyoshikawa/allocate/wiki)
 - [API Routes](https://github.com/nicolyoshikawa/allocate/wiki/Backend-Routes)
