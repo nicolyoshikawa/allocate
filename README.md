@@ -95,7 +95,7 @@ To install and run this project locally, start off with your backend server.
     npm start
     ```
 
-3. Now that you have both your Flask backend and React App frontend running, enjoy using Allocate. Cheers!
+3. Now that you have both your Flask backend and React App frontend running, enjoy using Allocate!
 
 ### Operating
 To run the application, navigate into the project folder in two separate terminal windows.
