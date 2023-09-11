@@ -142,27 +142,27 @@ The project is fully functional in its current state, but some other features we
 
 **Add/Edit Expense Component**
 ```javascript
+    useEffect(()=> {
+        dispatch(friendActions.getUserFriends())
+        dispatch(expenseActions.loadAllUserExpenses())
+        dispatch(expenseActions.loadExpenseById(expense?.id))
+        .then((expObj)=>{
+            if(expObj){
+                const friendArr = expObj.expense_group_users.filter(el=> el.id !== user_id);
+                setReceipt_img_url(expObj.receipt_img_url);
+                setDescription(expObj.description);
+                setPrice(expObj.price);
+                setGroup_id(expObj.group_id);
+                setExpense_date(expObj.expense_date);
+                setFriend_id(friendArr[0].id)
+            }
+        })
+    },[dispatch, expense?.id, expense?.receipt_img_url, expense?.description, expense?.price, expense?.group_id, expense?.expense_date, user_id]);
+
 const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
-
-    const newExpense = new FormData();
-    newExpense.append("description", description);
-    newExpense.append("price", price);
-    newExpense.append("expense_date", expense_date);
-    newExpense.append("friend_id", friend_id);
-    newExpense.append("paid_by", user_id);
-    newExpense.append("receipt_img_url", receipt_img_url);
-
-    const updateExpense = new FormData();
-    updateExpense.append("description", description);
-    updateExpense.append("price", price);
-    updateExpense.append("expense_date", expense_date);
-    updateExpense.append("friend_id", friend_id);
-    updateExpense.append("paid_by", user_id);
-    updateExpense.append("receipt_img_url", receipt_img_url);
-    setImageLoading(true);
-
+...
     if(Object.values(errors).length === 0){
         setErrors([]);
 
