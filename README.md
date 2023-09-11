@@ -8,7 +8,7 @@
 
 > [Allocate](https://allocate-py6y.onrender.com/) is a Splitwise clone created by Nicol Yoshikawa.
 >
-> Demonstrating an expert use of the technologies listed below, the team at Pour'd has developed a web application to allow users to explore, share, and review their favorite (or not so favorite) drinks, while connecting with fellow enthusiasts. Pour'd is your passport to drink discovery and community engagement. Join us now!
+> Demonstrating an expert use of the technologies listed below, the team at Allocate has developed a web application to allow users to explore, share, and review their favorite (or not so favorite) drinks, while connecting with fellow enthusiasts. Allocate is your passport to drink discovery and community engagement. Join us now!
 
 ## Technologies Used
 
@@ -84,7 +84,7 @@ To install and run this project locally, start off with your backend server.
 5. Now that you have your backend Flask server running. You need to run the React App in development in a different terminal instance.
 
 #### React
-1. Make sure you have a new terminal instance seperate from your terminal for your backend. Navigate into the pour'd project folder and then into react-app folder.
+1. Make sure you have a new terminal instance seperate from your terminal for your backend. Navigate into the Allocate project folder and then into react-app folder.
     ```bash
     cd react-app
     ```
@@ -95,7 +95,7 @@ To install and run this project locally, start off with your backend server.
     npm start
     ```
 
-3. Now that you have both your Flask backend and React App frontend running, enjoy using Pour'd. Cheers!
+3. Now that you have both your Flask backend and React App frontend running, enjoy using Allocate. Cheers!
 
 ### Operating
 To run the application, navigate into the project folder in two separate terminal windows.
@@ -115,25 +115,20 @@ To run the application, navigate into the project folder in two separate termina
 
 ### Login
 
-![image](https://github.com/nicolyoshikawa/pour-d/assets/78172054/ac0d5485-27b7-440e-a824-28df365977e4)
 
 ### Profile
 
-![ezgif com-gif-maker](https://github.com/nicolyoshikawa/pour-d/assets/112415366/411fb169-c4b6-4530-b77c-d4d6473de871)
 
 ### Drinks
 
-https://github.com/nicolyoshikawa/pour-d/assets/112415366/f89fecdf-d4a3-4b8c-854e-49713ac7fb34
 
 ### Reviews
 
-https://github.com/nicolyoshikawa/pour-d/assets/112415366/3ff2f7db-c294-492e-876d-f9dd486bb05f
 
 ### Friends
 
-https://github.com/nicolyoshikawa/pour-d/assets/112415366/5e72eff5-64e3-4592-a758-d030d5945de2
 
-## [Wiki Documents](https://github.com/nicolyoshikawa/pour-d/wiki)
+## [Wiki Documents](https://github.com/nicolyoshikawa/allocate/wiki)
 - [API Routes](https://github.com/nicolyoshikawa/allocate/wiki/Backend-Routes)
 - [Database Schema](https://github.com/nicolyoshikawa/allocate/wiki/Database-Schema)
 - [Features](https://github.com/nicolyoshikawa/allocate/wiki/Feature-List)
@@ -146,12 +141,16 @@ https://github.com/nicolyoshikawa/pour-d/assets/112415366/5e72eff5-64e3-4592-a75
 ## To-Dos/Future Features
 
 The project is fully functional in its current state, but some other features we would like to implement in the future include:
-- 
+
+- Ability to upload images for drinks and reviews with AWS
+- Fully featured friends system with ability to view other users profiles and send friend requests
+- "Load more" style pagination when viewing all drinks or reviews
 
 ## Technical Implementation Details
 
 ### Code Snippets
 
+**Search box component**
 
 ## Author
 
