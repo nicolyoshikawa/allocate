@@ -115,17 +115,9 @@ To run the application, navigate into the project folder in two separate termina
 
 ### Login
 
-
-### Profile
-
-
-### Drinks
-
-
-### Reviews
-
-
 ### Friends
+
+### Expenses
 
 
 ## [Wiki Documents](https://github.com/nicolyoshikawa/allocate/wiki)
@@ -141,10 +133,8 @@ To run the application, navigate into the project folder in two separate termina
 ## To-Dos/Future Features
 
 The project is fully functional in its current state, but some other features we would like to implement in the future include:
-
-- Ability to upload images for drinks and reviews with AWS
-- Fully featured friends system with ability to view other users profiles and send friend requests
-- "Load more" style pagination when viewing all drinks or reviews
+- Implement Comments feature, so a user can add comments to expenses
+- Implement Groups feature, so a user can create groups with friends
 
 ## Technical Implementation Details
 
