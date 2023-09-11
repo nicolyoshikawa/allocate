@@ -27,10 +27,10 @@ Allocate was built using the following technologies:
 
 ## Table of Contents
 
- - [Installing/Getting Started](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#installation)
-	 - [Initial Configuration](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#initial-configuration)
-- [Screenshots](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#screenshots)
-- [Wiki Documents](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#wiki-documents)
+ - [Installing/Getting Started](https://github.com/nicolyoshikawa/allocate#installation)
+	 - [Initial Configuration](https://github.com/nicolyoshikawa/allocate#initial-configuration)
+- [Screenshots](https://github.com/nicolyoshikawa/allocate#screenshots)
+- [Wiki Documents](https://github.com/nicolyoshikawa/allocate#wiki-documents)
 	- API Routes
  	- Database Schema
  	- Features
@@ -38,12 +38,11 @@ Allocate was built using the following technologies:
  	- React Components
  	- Redux Store Tree
 	- User Stories
-- [To-Dos/Future Features](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#to-dosfuture-features)
-- [Technical Implementation Details](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#technical-implementation-details)
+- [To-Dos/Future Features](https://github.com/nicolyoshikawa/allocate#to-dosfuture-features)
+- [Technical Implementation Details](https://github.com/nicolyoshikawa/allocate#technical-implementation-details)
 	- Challenges
 	- Code Snippets
-- [Authors](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#authors)
-- [Show your support](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#show-your-support)
+- [Author](https://github.com/nicolyoshikawa/allocate#author)
 
 ## Installation
 
@@ -53,7 +52,7 @@ To install and run this project locally, start off with your backend server.
 
 1. Clone this repository
     ```bash
-    git clone https://github.com/nicolyoshikawa/pour-d.git
+    git clone https://github.com/nicolyoshikawa/allocate
     ```
 
 2. Install dependencies
@@ -101,7 +100,7 @@ To install and run this project locally, start off with your backend server.
 ### Operating
 To run the application, navigate into the project folder in two separate terminal windows.
 
-1. Ensure that the database has already been migrated and seeded. If it hasn't been done yet, refer to [Intitial Configuration](https://github.com/nicolyoshikawa/pour-d/blob/main/README.md#initial-configuration)
+1. Ensure that the database has already been migrated and seeded. If it hasn't been done yet, refer to [Intitial Configuration](https://github.com/nicolyoshikawa/allocate#initial-configuration)
 
 2. In one terminal, go into pipenv and run the Flask app
     ```bash
@@ -110,7 +109,7 @@ To run the application, navigate into the project folder in two separate termina
 
 3. In the other terminal, start the React app.
 
-4. Pour'd will open in your browser and you can now enjoy using Pour'd. Cheers!
+4. Allocate will open in your browser and you can now enjoy using Allocate. 
 
 ## Screenshots
 
@@ -135,63 +134,24 @@ https://github.com/nicolyoshikawa/pour-d/assets/112415366/3ff2f7db-c294-492e-876
 https://github.com/nicolyoshikawa/pour-d/assets/112415366/5e72eff5-64e3-4592-a758-d030d5945de2
 
 ## [Wiki Documents](https://github.com/nicolyoshikawa/pour-d/wiki)
-- [API Routes](https://github.com/nicolyoshikawa/pour-d/wiki/Backend-Routes)
-- [Database Schema](https://github.com/nicolyoshikawa/pour-d/wiki/Database-Schema)
-- [Features](https://github.com/nicolyoshikawa/pour-d/wiki/Feature-List)
-- [Frontend Routes](https://github.com/nicolyoshikawa/pour-d/wiki/Frontend-Routes)
-- [React Components](https://github.com/nicolyoshikawa/pour-d/wiki/React-Components)
-- [Redux Store Tree](https://github.com/nicolyoshikawa/pour-d/wiki/Redux-Store-Tree)
-- [User Stories](https://github.com/nicolyoshikawa/pour-d/wiki/User-Stories)
-- [Wireframes](https://github.com/nicolyoshikawa/pour-d/wiki/Wireframes)
+- [API Routes](https://github.com/nicolyoshikawa/allocate/wiki/Backend-Routes)
+- [Database Schema](https://github.com/nicolyoshikawa/allocate/wiki/Database-Schema)
+- [Features](https://github.com/nicolyoshikawa/allocate/wiki/Feature-List)
+- [Frontend Routes](https://github.com/nicolyoshikawa/allocate/wiki/Frontend-Routes)
+- [React Components](https://github.com/nicolyoshikawa/allocate/wiki/React-Components)
+- [Redux Store Tree](https://github.com/nicolyoshikawa/allocate/wiki/Redux-Store-Tree)
+- [User Stories](https://github.com/nicolyoshikawa/allocate/wiki/User-Stories)
 
 
 ## To-Dos/Future Features
 
 The project is fully functional in its current state, but some other features we would like to implement in the future include:
-
-- Ability to upload images for drinks and reviews with AWS
-- Fully featured friends system with ability to view other users profiles and send friend requests
-- "Load more" style pagination when viewing all drinks or reviews
+- 
 
 ## Technical Implementation Details
 
 ### Code Snippets
 
-**Search box component**
-```javascript
-    const dispatch = useDispatch()
-
-    const drinks = useSelector(state => state.drinks) // Load all drinks for search bar to query
-    const [searchInput, setSearchInput] = useState("") // Set current query to user's input
-    let hideDiv // Used for removing border if search results are empty
-
-    useEffect(() => {
-        dispatch(loadAllDrinks())
-    }, [dispatch])
-
-    const onClickHandler = () => {
-        setSearchInput("")
-    }
-
-
-    if (drinks) {
-        // Create array of drinks with name matching current input from user
-        let filterDrinks = Object.values(drinks).filter((drink) => {
-            if (searchInput.length && drink.name.toLowerCase().includes(searchInput.toLowerCase())) {
-                return drink
-            }
-        })
-
-        // Remove border if results are empty
-        if (searchInput.length && filterDrinks.length) {
-            hideDiv = "results"
-        } else {
-            hideDiv = "results-hide"
-        }
-    return (
-	...
-	)}
-```
 
 ## Author
 
