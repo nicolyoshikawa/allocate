@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db, Expense, ExpenseGroupUser, ExpenseGroup
-from app.forms import ExpenseForm
+from app.models import User, db, Expense, ExpenseGroupUser, ExpenseGroup, Comment
+from app.forms import ExpenseForm, CommentForm
 from flask_login import current_user, login_required
 from app.api.aws_util import (
     upload_file_to_s3, get_unique_filename)
@@ -21,22 +21,50 @@ def add_group_user_dict(exp):
     exp_dict["expense_group_users"] = group_user_list
     return exp_dict
 
-# def add_balance_dict(exp):
-#     # exp_group_users = ExpenseGroupUser.query.filter(exp.group_id == ExpenseGroupUser.group_id).all()
-#     balance_dict = {}
-#     paid_amount = exp.price
-#     if exp.paid_by == current_user.id:
-#         friend_owes = (paid_amount/2)
-#     if exp.paid_by != current_user.id:
-#         friend_owes = (paid_amount/2)
-#     # group_user_list = []
-#     # for exp_group_user in exp_group_users:
-#     #     user = User.query.get(exp_group_user.user_id)
-#     #     user_dict = user.to_dict()
-#     #     group_user_list.append(user_dict)
+@expense_routes.route('/<int:id>/comments', methods=["GET"])
+@login_required
+def get_all_comments_for_an_expense(id):
+    expense_exists = Expense.query.get(id)
+    if not expense_exists:
+        return {'errors': ["Expense could not be found"]}, 404
 
-#     balance_dict["friend_owes"] = friend_owes
-#     return balance_dict
+    all_comments = Comment.query.filter(Comment.expense_id == id).all()
+    comment_list = []
+    for comment in all_comments:
+        user = User.query.filter(User.id == comment.user_id).first()
+        commentOwner = user.to_dict()
+        commentDict = comment.to_dict()
+        commentDict["User"] = commentOwner
+        comment_list.append(commentDict)
+    return {"comments": comment_list}
+
+@expense_routes.route('/<int:id>/comments', methods=["POST"])
+@login_required
+def create_a_comment(id):
+    form = CommentForm()
+    expense_id = id
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    expense = Expense.query.get(id)
+    if not expense:
+        return {'errors': ["Expense could not be found"]}, 404
+
+    if form.validate_on_submit():
+        comment = Comment(
+            message= form.data["message"],
+            user_id= current_user.id,
+            expense_id= expense_id
+        )
+
+        db.session.add(comment)
+        db.session.commit()
+
+        commentDict = comment.to_dict()
+        commentOwner = current_user.to_dict()
+        commentDict["User"] = commentOwner
+
+        return commentDict
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 @expense_routes.route('/<int:id>', methods=["GET"])
 @login_required
