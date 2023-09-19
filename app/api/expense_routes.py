@@ -9,8 +9,9 @@ from datetime import date
 
 expense_routes = Blueprint('expenses', __name__)
 
-def add_group_user_dict(exp):
+def add_group_user_dict_and_comments(exp):
     exp_group_users = ExpenseGroupUser.query.filter(exp.group_id == ExpenseGroupUser.group_id).all()
+    exp_comments = Comment.query.filter(exp.id == Comment.expense_id).all()
     exp_dict = exp.to_dict()
     group_user_list = []
     for exp_group_user in exp_group_users:
@@ -18,7 +19,13 @@ def add_group_user_dict(exp):
         user_dict = user.to_dict()
         group_user_list.append(user_dict)
 
+    comments_list = []
+    for comment in exp_comments:
+        comment_dict = comment.to_dict()
+        comments_list.append(comment_dict)
+
     exp_dict["expense_group_users"] = group_user_list
+    exp_dict["comments"] = comments_list
     return exp_dict
 
 @expense_routes.route('/<int:id>/comments', methods=["GET"])
@@ -48,6 +55,10 @@ def create_a_comment(id):
     if not expense:
         return {'errors': ["Expense could not be found"]}, 404
 
+    expense_group_user = ExpenseGroupUser.query.filter(ExpenseGroupUser.group_id == expense.group_id, ExpenseGroupUser.user_id == current_user.id).first()
+    if not expense_group_user:
+        return {'errors': ['Unauthorized']}
+
     if form.validate_on_submit():
         comment = Comment(
             message= form.data["message"],
@@ -76,7 +87,7 @@ def get_a_specific_expense(id):
     if not expense:
         return {'errors': ["You do not have access to this expense"]}, 403
 
-    exp_dict = add_group_user_dict(expense)
+    exp_dict = add_group_user_dict_and_comments(expense)
     return exp_dict
 
 @expense_routes.route('/<int:id>', methods=["PUT"])
@@ -169,7 +180,7 @@ def get_all_expenses():
     all_expenses = Expense.query.join(ExpenseGroupUser, Expense.group_id == ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
     expense_list = []
     for expense in all_expenses:
-        exp_dict = add_group_user_dict(expense)
+        exp_dict = add_group_user_dict_and_comments(expense)
         # exp_dict["balance"] = add_balance_dict(expense)
         expense_list.append(exp_dict)
     return {"expenses": expense_list}

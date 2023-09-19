@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+import { NavLink } from "react-router-dom";
 
 function Info() {
     const [showMenu, setShowMenu] = useState(false);
@@ -30,15 +30,15 @@ function Info() {
       <div className="profile-button">
           <>
             <button onClick={openMenu}>
-                <i class="fa-solid fa-circle-info" style={{ color: "#ffffff" }}></i>
+                <i className="fa-solid fa-circle-info" style={{ color: "#ffffff" }}></i>
             </button>
             <ul className={ulClassName} ref={ulRef}>
                 <>
                     <a href={"https://www.linkedin.com/in/nicol-yoshikawa/"} target="_blank">
-                        <i class="fa-brands fa-linkedin"></i>
+                        <i className="fa-brands fa-linkedin"></i>
                     </a>
                     <a href={"https://github.com/nicolyoshikawa"} target="_blank">
-                        <i class="fa-brands fa-github"></i>
+                        <i className="fa-brands fa-github"></i>
                     </a>
                 </>
             </ul>

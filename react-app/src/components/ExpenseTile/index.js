@@ -11,6 +11,7 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
     const day = dateFormat ? date_values[2] : "";
     const date = new Date(year, month - 1, day);
     const monthName = date.toLocaleString('default', { month: 'short' });
+    const comments_arr = expense.comments;
 
     let paid_by;
     let user_owes;
@@ -23,6 +24,10 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
         if(group_user.id !== expense.paid_by){
             user_owes = group_user.username;
         }
+    }
+    let has_comments = false;
+    if(comments_arr.length > 0){
+        has_comments = true
     }
 
     return (
@@ -42,6 +47,10 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
                     {clickable ? (
                         <div className="description"><Link to={`/expenses/${expense.id}`}> {expense?.description}</Link></div>
                         ) : <div className="description">{expense?.description}</div>
+                    }
+                    {has_comments ? (
+                        <div className="comment"><Link to={`/expenses/${expense.id}`}><i className="fa-solid fa-comment" style={{ color: "#808080" }}></i></Link></div>
+                        ) : <div></div>
                     }
                 </div>
                 <div className="paid-block">

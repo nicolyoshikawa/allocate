@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ExpenseTile from '../ExpenseTile';
 import * as expenseActions from "../../store/expenses";
 import ManageExpenses from '../ManageExpenses';
+import Comments from '../Comments';
 
 function Expense(){
     const { id } = useParams();
@@ -33,6 +34,7 @@ function Expense(){
                             <h2>Expense</h2>
                             <ExpenseTile clickable={false} expense={expense} sessionUser={sessionUser}/>
                             <ManageExpenses expense={expense}/>
+                            <Comments expense={expense}/>
                         </div>
                         ) : (
                             <h1>Expense Not Found</h1>
