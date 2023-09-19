@@ -39,6 +39,11 @@ def seed_friends():
 
     friend16 = Friend(user=user9, friend=user10, status='pending')
 
+    friend17 = Friend(user=user4, friend=user1, status='pending')
+    friend18 = Friend(user=user5, friend=user1, status='pending')
+    friend19 = Friend(user=user7, friend=user1, status='pending')
+    friend20 = Friend(user=user1, friend=user8, status='pending')
+    friend21 = Friend(user=user1, friend=user9, status='pending')
 
     db.session.add(friend1)
     db.session.add(friend2)
@@ -56,6 +61,11 @@ def seed_friends():
     db.session.add(friend14)
     db.session.add(friend15)
     db.session.add(friend16)
+    db.session.add(friend17)
+    db.session.add(friend18)
+    db.session.add(friend19)
+    db.session.add(friend20)
+    db.session.add(friend21)
 
     db.session.commit()
 
