@@ -42,7 +42,6 @@ def get_all_comments_for_an_expense(id):
 @login_required
 def create_a_comment(id):
     form = CommentForm()
-    expense_id = id
     form['csrf_token'].data = request.cookies['csrf_token']
 
     expense = Expense.query.get(id)
@@ -53,7 +52,7 @@ def create_a_comment(id):
         comment = Comment(
             message= form.data["message"],
             user_id= current_user.id,
-            expense_id= expense_id
+            expense_id= id
         )
 
         db.session.add(comment)
