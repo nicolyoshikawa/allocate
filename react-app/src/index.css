@@ -14,7 +14,8 @@ button:hover {
 }
 
 a {
-    color: #808080
+    color: #808080;
+    cursor: pointer;
 }
 button {
     cursor: pointer;
@@ -173,6 +174,7 @@ button {
     padding: 5px;
     color: #808080;
     font-size: 13px;
+    text-align: left;
 }
 
 .month {
@@ -193,12 +195,18 @@ button {
     text-transform: uppercase;
     color: #999;
     font-weight: normal;
+    width: 35px
 }
 .date{
     padding: 5px;
     height: 35px;
     width: 35px;
     /* text-align: left; */
+}
+.receipt-img{
+    height: 50px;
+    width: 50px;
+    padding-right: 7px
 }
 .comment-tile {
     border: 1px solid #cccccc;

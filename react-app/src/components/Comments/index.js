@@ -8,7 +8,7 @@ export default function Comments({expense}) {
     return (
         <div className="comments-container">
             <div className="comment"><i className="fa-solid fa-comment" style={{ color: "#808080" }}></i>NOTES AND COMMENTS</div>
-            {sorted_comments.map(el => (<CommentsTile key={el.id} comments={el} expense={expense}/>))}
+            {sorted_comments?.map(el => (<CommentsTile key={el.id} comments={el} expense={expense}/>))}
             <div className="comment">
                 <AddComment expense={expense}/>
             </div>

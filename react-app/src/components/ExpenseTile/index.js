@@ -26,7 +26,7 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
         }
     }
     let has_comments = false;
-    if(comments_arr.length > 0){
+    if(comments_arr?.length > 0){
         has_comments = true
     }
 
@@ -38,7 +38,7 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
                         <div className="month">{monthName}</div>
                         <div className="day">{day}</div>
                     </div>
-                    <div>{expense?.receipt_img_url ?
+                    <div className="receipt-img">{expense?.receipt_img_url ?
                         <a href={expense?.receipt_img_url} target="_blank">
                             <img src={expense?.receipt_img_url} alt="receipt_img"/>
                         </a>
@@ -49,7 +49,17 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
                         ) : <div className="description">{expense?.description}</div>
                     }
                     {has_comments ? (
-                        <div className="comment"><Link to={`/expenses/${expense.id}`}><i className="fa-solid fa-comment" style={{ color: "#808080" }}></i></Link></div>
+                        clickable ? (
+                            <div className="comment">
+                                <Link to={`/expenses/${expense.id}`}>
+                                    <i className="fa-solid fa-comment" style={{ color: "#808080" }}></i>
+                                </Link>
+                            </div>
+                        ):(
+                            <div className="comment">
+                                <i className="fa-solid fa-comment" style={{ color: "#808080" }}></i>
+                            </div>
+                        )
                         ) : <div></div>
                     }
                 </div>
