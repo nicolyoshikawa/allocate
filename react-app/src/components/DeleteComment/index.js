@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import * as expenseActions from "../../store/expenses";
+import * as commentActions from "../../store/comments";
 
-function DeleteComment({comments}) {
+function DeleteComment({comments, expense}) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
@@ -23,10 +23,9 @@ function DeleteComment({comments}) {
   }, [user.id, comments.user_id]);
 
   const deleteClickHandler = async () => {
-    const expenseDeleted = await dispatch(expenseActions.deleteExpense(comments.id));
+    const commentDeleted = await dispatch(commentActions.deleteComment(comments.id, expense));
 
-    if (expenseDeleted) {
-        history.push("/home");
+    if (commentDeleted) {
         closeModal()
     };
   }

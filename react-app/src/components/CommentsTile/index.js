@@ -41,7 +41,7 @@ export default function CommentsTile({comments, expense}) {
                         <OpenModalButton
                             buttonText="X"
                             onItemClick={closeMenu}
-                            modalComponent={<DeleteComment comments={comments}/>}
+                            modalComponent={<DeleteComment comments={comments} expense={expense}/>}
                         />
                     </div>
                     ) : (
