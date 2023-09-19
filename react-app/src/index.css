@@ -405,3 +405,19 @@ button {
     margin: 6px 0px;
     font-family: Open-Sans, sans-serif;
 }
+
+/* Add comment */
+.comment-form-input-container textarea {
+    padding: 5px;
+    font-size: 14px;
+    margin: 6px 0px;
+    width: 50%;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+.comment-form {
+    background-color: #ff652f;
+    padding-left: 10px;
+    padding-right: 10px
+}

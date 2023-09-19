@@ -49,7 +49,7 @@ function AddComment({expense}) {
 
   return (
     <>
-        <div className="add-expense-form-container">
+        <div className="">
             {hasSubmitted && errors.length > 0 && (
             <div className="login-form-container-errors">
                 <ul>
@@ -60,9 +60,8 @@ function AddComment({expense}) {
             </div>
             )}
             <form onSubmit={handleSubmit} encType="multipart/form-data">
-                <div className="expense-form-input-container">
-                    <input
-                        type='text'
+                <div className="comment-form-input-container">
+                    <textarea
                         onChange={(e) => setMessage(e.target.value)}
                         value={message}
                         placeholder='Add a comment'
@@ -70,7 +69,7 @@ function AddComment({expense}) {
                         required
                     />
                 </div>
-                <button type="submit">Post</button>
+                <button type="submit" className="comment-form">Post</button>
             </form>
         </div>
     </>
