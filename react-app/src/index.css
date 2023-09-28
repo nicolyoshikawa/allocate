@@ -221,6 +221,7 @@ button {
 .comment-left{
     display: block;
 }
+
 .comment-name{
     display: flex;
     padding-right: 5px;
@@ -428,4 +429,26 @@ button {
     background-color: #ff652f;
     padding-left: 10px;
     padding-right: 10px
+}
+
+/* Edit Comment */
+.comment-form-input-container-edit textarea {
+    padding: 5px;
+    font-size: 14px;
+    margin: 6px 0px;
+    width: 100%;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+.comment-left-edit{
+    display: block;
+    text-align: left;
+}
+
+.comment-name-edit {
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    font-weight: bold;
+    font-size: 14px;
 }

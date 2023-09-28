@@ -2,6 +2,7 @@ import OpenModalButton from "../OpenModalButton";
 import { useState } from "react";
 import { useSelector } from 'react-redux';
 import DeleteComment from "../DeleteComment";
+import EditComment from "../EditComment";
 
 export default function CommentsTile({comments, expense}) {
     const {created_at, expense_id, id, message, user_id } = comments;
@@ -38,11 +39,20 @@ export default function CommentsTile({comments, expense}) {
                 </div>
                 {(user.id === comments.user_id) ? (
                     <div className="comment-right">
-                        <OpenModalButton
-                            buttonText="X"
-                            onItemClick={closeMenu}
-                            modalComponent={<DeleteComment comments={comments} expense={expense}/>}
-                        />
+                        <div className="">
+                            <OpenModalButton
+                                buttonText="Edit"
+                                onItemClick={closeMenu}
+                                modalComponent={<EditComment comments={comments} expense={expense}/>}
+                            />
+                        </div>
+                        <div className="">
+                            <OpenModalButton
+                                buttonText="X"
+                                onItemClick={closeMenu}
+                                modalComponent={<DeleteComment comments={comments} expense={expense}/>}
+                            />
+                        </div>
                     </div>
                     ) : (
                         <div></div>
