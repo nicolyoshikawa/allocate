@@ -84,8 +84,8 @@ export const createNewComment = (comment, expense) => async (dispatch) => {
   return newComment;
 };
 
-export const updateAComment = (comment, expense) => async dispatch => {
-  const response = await fetch(`/api/comments/${comment.id}`, {
+export const updateAComment = (comment, commentId, expense) => async dispatch => {
+  const response = await fetch(`/api/comments/${commentId}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(comment)

@@ -46,12 +46,11 @@ function EditComment({comments, expense}) {
     e.preventDefault();
     setHasSubmitted(true);
 
-    const newComment = {message};
+    const editedComment = {message};
 
     if(Object.values(errors).length === 0){
         setErrors([]);
-
-        const createComment = await dispatch(commentActions.createNewComment(newComment, expense));
+        const createComment = await dispatch(commentActions.updateAComment(editedComment, comments.id, expense));
         if(createComment.errors){
             const errors = [];
             errors.push(createComment.errors);
