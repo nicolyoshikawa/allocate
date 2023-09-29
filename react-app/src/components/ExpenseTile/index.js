@@ -11,6 +11,7 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
     const day = dateFormat ? date_values[2] : "";
     const date = new Date(year, month - 1, day);
     const monthName = date.toLocaleString('default', { month: 'short' });
+    const comments_arr = expense.comments;
 
     let paid_by;
     let user_owes;
@@ -24,6 +25,10 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
             user_owes = group_user.username;
         }
     }
+    let has_comments = false;
+    if(comments_arr?.length > 0){
+        has_comments = true
+    }
 
     return (
         <>
@@ -33,7 +38,7 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
                         <div className="month">{monthName}</div>
                         <div className="day">{day}</div>
                     </div>
-                    <div>{expense?.receipt_img_url ?
+                    <div className="receipt-img">{expense?.receipt_img_url ?
                         <a href={expense?.receipt_img_url} target="_blank">
                             <img src={expense?.receipt_img_url} alt="receipt_img"/>
                         </a>
@@ -42,6 +47,20 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
                     {clickable ? (
                         <div className="description"><Link to={`/expenses/${expense.id}`}> {expense?.description}</Link></div>
                         ) : <div className="description">{expense?.description}</div>
+                    }
+                    {has_comments ? (
+                        clickable ? (
+                            <div className="comment">
+                                <Link to={`/expenses/${expense.id}`}>
+                                    <i className="fa-solid fa-comment" style={{ color: "#808080" }}></i>
+                                </Link>
+                            </div>
+                        ):(
+                            <div className="comment">
+                                <i className="fa-solid fa-comment" style={{ color: "#808080" }}></i>
+                            </div>
+                        )
+                        ) : <div></div>
                     }
                 </div>
                 <div className="paid-block">

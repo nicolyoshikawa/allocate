@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db, Expense, ExpenseGroupUser, ExpenseGroup
-from app.forms import ExpenseForm
+from app.models import User, db, Expense, ExpenseGroupUser, ExpenseGroup, Comment
+from app.forms import ExpenseForm, CommentForm
 from flask_login import current_user, login_required
 from app.api.aws_util import (
     upload_file_to_s3, get_unique_filename)
@@ -9,8 +9,9 @@ from datetime import date
 
 expense_routes = Blueprint('expenses', __name__)
 
-def add_group_user_dict(exp):
+def add_group_user_dict_and_comments(exp):
     exp_group_users = ExpenseGroupUser.query.filter(exp.group_id == ExpenseGroupUser.group_id).all()
+    exp_comments = Comment.query.filter(exp.id == Comment.expense_id).all()
     exp_dict = exp.to_dict()
     group_user_list = []
     for exp_group_user in exp_group_users:
@@ -18,25 +19,62 @@ def add_group_user_dict(exp):
         user_dict = user.to_dict()
         group_user_list.append(user_dict)
 
+    comments_list = []
+    for comment in exp_comments:
+        comment_dict = comment.to_dict()
+        comments_list.append(comment_dict)
+
     exp_dict["expense_group_users"] = group_user_list
+    exp_dict["comments"] = comments_list
     return exp_dict
 
-# def add_balance_dict(exp):
-#     # exp_group_users = ExpenseGroupUser.query.filter(exp.group_id == ExpenseGroupUser.group_id).all()
-#     balance_dict = {}
-#     paid_amount = exp.price
-#     if exp.paid_by == current_user.id:
-#         friend_owes = (paid_amount/2)
-#     if exp.paid_by != current_user.id:
-#         friend_owes = (paid_amount/2)
-#     # group_user_list = []
-#     # for exp_group_user in exp_group_users:
-#     #     user = User.query.get(exp_group_user.user_id)
-#     #     user_dict = user.to_dict()
-#     #     group_user_list.append(user_dict)
+@expense_routes.route('/<int:id>/comments', methods=["GET"])
+@login_required
+def get_all_comments_for_an_expense(id):
+    expense_exists = Expense.query.get(id)
+    if not expense_exists:
+        return {'errors': ["Expense could not be found"]}, 404
 
-#     balance_dict["friend_owes"] = friend_owes
-#     return balance_dict
+    all_comments = Comment.query.filter(Comment.expense_id == id).all()
+    comment_list = []
+    for comment in all_comments:
+        user = User.query.filter(User.id == comment.user_id).first()
+        commentOwner = user.to_dict()
+        commentDict = comment.to_dict()
+        commentDict["User"] = commentOwner
+        comment_list.append(commentDict)
+    return {"comments": comment_list}
+
+@expense_routes.route('/<int:id>/comments', methods=["POST"])
+@login_required
+def create_a_comment(id):
+    form = CommentForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    expense = Expense.query.get(id)
+    if not expense:
+        return {'errors': ["Expense could not be found"]}, 404
+
+    expense_group_user = ExpenseGroupUser.query.filter(ExpenseGroupUser.group_id == expense.group_id, ExpenseGroupUser.user_id == current_user.id).first()
+    if not expense_group_user:
+        return {'errors': ['Unauthorized']}
+
+    if form.validate_on_submit():
+        comment = Comment(
+            message= form.data["message"],
+            user_id= current_user.id,
+            expense_id= id
+        )
+
+        db.session.add(comment)
+        db.session.commit()
+
+        commentDict = comment.to_dict()
+        commentOwner = current_user.to_dict()
+        commentDict["User"] = commentOwner
+
+        return commentDict
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 @expense_routes.route('/<int:id>', methods=["GET"])
 @login_required
@@ -49,7 +87,7 @@ def get_a_specific_expense(id):
     if not expense:
         return {'errors': ["You do not have access to this expense"]}, 403
 
-    exp_dict = add_group_user_dict(expense)
+    exp_dict = add_group_user_dict_and_comments(expense)
     return exp_dict
 
 @expense_routes.route('/<int:id>', methods=["PUT"])
@@ -142,7 +180,7 @@ def get_all_expenses():
     all_expenses = Expense.query.join(ExpenseGroupUser, Expense.group_id == ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
     expense_list = []
     for expense in all_expenses:
-        exp_dict = add_group_user_dict(expense)
+        exp_dict = add_group_user_dict_and_comments(expense)
         # exp_dict["balance"] = add_balance_dict(expense)
         expense_list.append(exp_dict)
     return {"expenses": expense_list}

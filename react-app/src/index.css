@@ -14,7 +14,8 @@ button:hover {
 }
 
 a {
-    color: #808080
+    color: #808080;
+    cursor: pointer;
 }
 button {
     cursor: pointer;
@@ -166,6 +167,15 @@ button {
     font-weight: bold;
     /* text-decoration: none; */
 }
+.comment i {
+    padding: 5px;
+}
+.comment {
+    padding: 5px;
+    color: #808080;
+    font-size: 13px;
+    text-align: left;
+}
 
 .month {
     display: flex;
@@ -185,6 +195,7 @@ button {
     text-transform: uppercase;
     color: #999;
     font-weight: normal;
+    width: 35px
 }
 .date{
     padding: 5px;
@@ -192,6 +203,42 @@ button {
     width: 35px;
     /* text-align: left; */
 }
+.receipt-img{
+    height: 50px;
+    width: 50px;
+    padding-right: 7px
+}
+.comment-tile {
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 5px
+}
+.comment-container{
+    display: flex;
+    justify-content: space-between;
+}
+.comment-left{
+    display: block;
+}
+
+.comment-name{
+    display: flex;
+    padding-right: 5px;
+    align-items: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+.comment-message{
+    padding-top: 5px;
+}
+.comment-right button{
+    color: red;
+    float:right;
+    background-color: white;
+    font-size: 14px;
+}
+
 
 /* Manage Expenses */
 .expense-edit{
@@ -366,4 +413,42 @@ button {
     width: 100%;
     margin: 6px 0px;
     font-family: Open-Sans, sans-serif;
+}
+
+/* Add comment */
+.comment-form-input-container textarea {
+    padding: 5px;
+    font-size: 14px;
+    margin: 6px 0px;
+    width: 50%;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+.comment-form {
+    background-color: #ff652f;
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+/* Edit Comment */
+.comment-form-input-container-edit textarea {
+    padding: 5px;
+    font-size: 14px;
+    margin: 6px 0px;
+    width: 100%;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+.comment-left-edit{
+    display: block;
+    text-align: left;
+}
+
+.comment-name-edit {
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    font-weight: bold;
+    font-size: 14px;
 }

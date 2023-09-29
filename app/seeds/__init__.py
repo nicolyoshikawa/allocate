@@ -1,7 +1,7 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .expenses import seed_expenses, undo_expenses
-# from .comments import seed_comments, undo_comments
+from .comments import seed_comments, undo_comments
 from .friends import seed_friends, undo_friends
 from .expenseGroups import seed_groups, undo_groups
 from .expenseGroupUsers import seed_group_users, undo_group_users
@@ -34,10 +34,7 @@ def seed():
         db.session.execute(f"TRUNCATE table {SCHEMA}.friends RESTART IDENTITY CASCADE;")
         db.session.execute(f"TRUNCATE table {SCHEMA}.\"expenseGroupUsers\" RESTART IDENTITY CASCADE;")
         db.session.execute(f"TRUNCATE table {SCHEMA}.expenses RESTART IDENTITY CASCADE;")
-        # db.session.execute(f"TRUNCATE table {SCHEMA}.comments RESTART IDENTITY CASCADE;")
-        # db.session.execute(f"TRUNCATE table {SCHEMA}.friends RESTART IDENTITY CASCADE;")
-        # db.session.execute(f"TRUNCATE table {SCHEMA}.expenseGroups RESTART IDENTITY CASCADE;")
-        # db.session.execute(f"TRUNCATE table {SCHEMA}.expenseGroupUsers RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.comments RESTART IDENTITY CASCADE;")
 
         db.session.commit()
     seed_users()
@@ -46,24 +43,15 @@ def seed():
     seed_group_users()
     # Add other seed functions here
     seed_expenses()
-    # seed_comments()
-    # seed_friends()
-    # seed_groups()
-    # seed_group_users()
+    seed_comments()
 
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
+    undo_comments()
     undo_expenses()
     undo_group_users()
     undo_friends()
     undo_groups()
     undo_users()
-    # undo_groups()
-    # Add other undo functions here
-    # undo_expenses()
-    # undo_comments()
-    # undo_friends()
-    # undo_groups()
-    # undo_group_users()
