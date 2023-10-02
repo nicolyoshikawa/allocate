@@ -12,6 +12,7 @@ function Balance(){
     const sessionUser = useSelector(state => state.session.user);
     const allExpenses = useSelector(state => Object.values(state.expenses));
     const friendsListArr = useSelector(state => state.friends.friends);
+    const groupListArr = useSelector(state => Object.values(state.groups));
 
     if (!sessionUser) {
         history.push("/")
@@ -28,6 +29,7 @@ function Balance(){
     let expences_balance;
     let friendObj;
     let friendGroupArr;
+
     if(path_location[1] === "friends"){
         const friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
         if(friendArr) {
@@ -37,6 +39,16 @@ function Balance(){
 
         if(friendGroupArr) {
             expences_balance = allExpenses.filter(el => friendGroupArr.includes(el.group_id));
+        }
+    } else if(path_location[1] === "groups"){
+        const friendArr = groupListArr?.filter(el=> el.id === Number(path_location[2]));
+        if(friendArr) {
+            friendObj = friendArr[0];
+            friendGroupArr = friendArr[0]?.expenses
+        }
+
+        if(friendGroupArr) {
+            expences_balance = friendGroupArr;
         }
     } else {
         expences_balance = allExpenses
