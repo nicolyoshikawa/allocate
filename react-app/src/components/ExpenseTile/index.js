@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import React from 'react';
 
-const ExpenseTile = ({expense, clickable, sessionUser}) => {
+const ExpenseTile = ({expense, clickable, sessionUser, displayGroup}) => {
+    const allGroups = useSelector(state => Object.values(state.groups));
+    const filteredGroup = allGroups.filter(el => el.id === expense.group_id)
     const amount_split = Number(expense?.price/2).toFixed(2);
     const amount_paid = Number(expense?.price).toFixed(2);
     const dateFormat = (expense?.expense_date)
@@ -25,9 +28,15 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
             user_owes = group_user.username;
         }
     }
+
     let has_comments = false;
     if(comments_arr?.length > 0){
         has_comments = true
+    }
+
+    let has_named_group = false;
+    if(filteredGroup?.length > 0){
+        has_named_group = true
     }
 
     return (
@@ -44,10 +53,20 @@ const ExpenseTile = ({expense, clickable, sessionUser}) => {
                         </a>
                             : <div></div>}
                     </div>
-                    {clickable ? (
-                        <div className="description"><Link to={`/expenses/${expense.id}`}> {expense?.description}</Link></div>
-                        ) : <div className="description">{expense?.description}</div>
-                    }
+                    <div className="description-group">
+                        {clickable ? (
+                            <div className="description"><Link to={`/expenses/${expense.id}`}> {expense?.description}</Link></div>
+                            ) : <div className="description">{expense?.description}</div>
+                        }
+                        {has_named_group && clickable && displayGroup ? (
+                                <div className="expense-tile-group">
+                                    <Link to={`/groups/${filteredGroup[0].id}`}>
+                                        <span>{filteredGroup[0].name}</span>
+                                    </Link>
+                                </div>
+                            ):(<div></div>
+                        )}
+                    </div>
                     {has_comments ? (
                         clickable ? (
                             <div className="comment">
