@@ -15,6 +15,16 @@ def seed_groups():
     group9 = ExpenseGroup()
     group10 = ExpenseGroup()
 
+    group11 = ExpenseGroup(
+        name="House Expenses"
+    )
+    group12 = ExpenseGroup(
+        name="Birthday"
+    )
+    group13 = ExpenseGroup(
+        name="Work Trip"
+    )
+
     db.session.add(group1)
     db.session.add(group2)
     db.session.add(group3)
@@ -25,6 +35,10 @@ def seed_groups():
     db.session.add(group8)
     db.session.add(group9)
     db.session.add(group10)
+
+    db.session.add(group11)
+    db.session.add(group12)
+    db.session.add(group13)
 
     db.session.commit()
 
