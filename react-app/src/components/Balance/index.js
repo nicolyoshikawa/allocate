@@ -36,7 +36,7 @@ function Balance(){
         }
 
         if(friendGroupArr) {
-            expences_balance = allExpenses.filter(el=> el.group_id === friendGroupArr[0]);
+            expences_balance = allExpenses.filter(el => friendGroupArr.includes(el.group_id));
         }
     } else {
         expences_balance = allExpenses

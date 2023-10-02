@@ -4,9 +4,10 @@ import session from './session';
 import expenses from "./expenses";
 import friends from "./friends";
 import comments from "./comments";
+import groups from './groups';
 
 const rootReducer = combineReducers({
-  session, expenses, friends, comments
+  session, expenses, friends, comments, groups
 });
 
 

@@ -32,6 +32,7 @@ function SettleUp({param_id}) {
     const acceptedFriendsArr = friendsListArr.filter(el=> el.friend.status === "friends");
     const sortedFriends = acceptedFriendsArr.sort((a,b) => (a.id) - (b.id))
     const selectedFriend = sortedFriends.filter(el=> el.id === param_id)
+
     if(friend_id === "" && param_id) setFriend_id(param_id);
 
     // const user_id = user.id;
@@ -46,7 +47,7 @@ function SettleUp({param_id}) {
         }
 
         if(friendGroupArr) {
-            expences_balance = allExpenses.filter(el=> el.group_id === friendGroupArr[0]);
+            expences_balance = allExpenses.filter(el=> friendGroupArr.includes(el.group_id));
         }
     } else {
         // expences_balance = allExpenses

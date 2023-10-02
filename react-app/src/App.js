@@ -12,6 +12,7 @@ import NavSideBar from "./components/NavSideBar";
 import Balance from "./components/Balance";
 import FriendDetail from "./components/FriendDetail";
 import PageNotFound from "./components/PageNotFound";
+import GroupExpenses from "./components/GroupExpenses";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,9 @@ function App() {
                   <Route path="/signup">
                     <SignupFormModal />
                   </Route>
+                  <Route path="/groups/:id">
+                    <GroupExpenses />
+                  </Route>
                   <Route>
                     <PageNotFound/>
                   </Route>
@@ -76,6 +80,9 @@ function App() {
           </Route>
           <Route exact path="/">
             <LandingPage/>
+          </Route>
+          <Route path="/groups/:id">
+            <GroupExpenses />
           </Route>
           <Route>
             <PageNotFound/>

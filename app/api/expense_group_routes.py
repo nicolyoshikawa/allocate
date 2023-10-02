@@ -9,7 +9,20 @@ from datetime import date
 
 expense_group_routes = Blueprint('groups', __name__)
 
-def add_group_user_dict_and_comments(exp):
+def add_exp(group):
+    expenses = Expense.query.filter(group.id == Expense.group_id).all()
+    group_dict = group.to_dict()
+
+    expenses_list = []
+    for exp in expenses:
+        exp_dict = exp.to_dict()
+        exp_dict = add_users_comments(exp)
+        expenses_list.append(exp_dict)
+
+    group_dict["expenses"] = expenses_list
+    return group_dict
+
+def add_users_comments(exp):
     exp_group_users = ExpenseGroupUser.query.filter(exp.group_id == ExpenseGroupUser.group_id).all()
     exp_comments = Comment.query.filter(exp.id == Comment.expense_id).all()
     exp_dict = exp.to_dict()
@@ -28,26 +41,12 @@ def add_group_user_dict_and_comments(exp):
     exp_dict["comments"] = comments_list
     return exp_dict
 
-def add_group(exp):
-    expense_group = ExpenseGroup.query.filter(exp.group_id == ExpenseGroup.id).all()
-    exp_dict = exp.to_dict()
-
-    groups_list = []
-    for group in expense_group:
-        group_dict = group.to_dict()
-        groups_list.append(group_dict)
-
-    exp_dict["group"] = groups_list
-    return exp_dict
-
 @expense_group_routes.route('/', methods=["GET"])
 @login_required
-def get_all_expenses():
-    all_expenses = Expense.query.join(ExpenseGroupUser, Expense.group_id == ExpenseGroupUser.group_id).join(ExpenseGroup, ExpenseGroup.id == ExpenseGroupUser.group_id).filter(ExpenseGroup.name != "NULL").all()
+def get_all_groups():
+    all_group_expenses = ExpenseGroup.query.join(ExpenseGroupUser, ExpenseGroup.id == ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id, ExpenseGroup.name != "NULL").all()
     expense_list = []
-    for expense in all_expenses:
-        exp_dict = add_group_user_dict_and_comments(expense)
-        group_dict = add_group(expense)
+    for expense in all_group_expenses:
+        exp_dict = add_exp(expense)
         expense_list.append(exp_dict)
-        expense_list.append(group_dict)
-    return {"expenses": expense_list}
+    return {"groups": expense_list}

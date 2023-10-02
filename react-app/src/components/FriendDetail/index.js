@@ -29,8 +29,7 @@ function FriendDetail(){
     }
 
     let friendExpenses;
-    if(friendGroupArr) friendExpenses = sortedExpenses.filter(el=> el.group_id === friendGroupArr[0]);
-
+    if(friendGroupArr) friendExpenses = sortedExpenses.filter(el=> friendGroupArr.includes(el.group_id));
     if (!sessionUser) {
         history.push("/")
     }
