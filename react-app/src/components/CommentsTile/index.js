@@ -39,14 +39,14 @@ export default function CommentsTile({comments, expense}) {
                 </div>
                 {(user.id === comments.user_id) ? (
                     <div className="comment-right">
-                        <div className="">
+                        <div className="comment-box">
                             <OpenModalButton
                                 buttonText="X"
                                 onItemClick={closeMenu}
                                 modalComponent={<DeleteComment comments={comments} expense={expense}/>}
                             />
                         </div>
-                        <div className="">
+                        <div className="comment-box">
                             <OpenModalButton
                                 buttonText="Edit"
                                 onItemClick={closeMenu}

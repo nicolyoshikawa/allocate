@@ -39,7 +39,7 @@ def seed_friends():
 
     friend16 = Friend(user=user9, friend=user10, status='pending')
 
-    friend17 = Friend(user=user4, friend=user1, status='pending')
+    friend17 = Friend(user=user4, friend=user1, status='friends')
     friend18 = Friend(user=user5, friend=user1, status='pending')
     friend19 = Friend(user=user7, friend=user1, status='pending')
     friend20 = Friend(user=user1, friend=user8, status='pending')

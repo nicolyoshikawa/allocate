@@ -245,6 +245,113 @@ def seed_expenses():
         receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
     )
 
+    bill17 = Expense(
+        group_id = 11,
+        paid_by = 1,
+        description = "paper towels",
+        price = 16.99,
+        expense_date = date(2023, 7, 2),
+        receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+    )
+    bill18 = Expense(
+        group_id = 11,
+        paid_by = 1,
+        description = "coffee",
+        price = 15.0,
+        expense_date = date(2023, 7, 2),
+        receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+    )
+    bill19 = Expense(
+        group_id = 11,
+        paid_by = 2,
+        description = "laundry detergent",
+        price = 21.49,
+        expense_date = date(2023, 9, 2),
+        receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+    )
+    bill20 = Expense(
+        group_id = 11,
+        paid_by = 2,
+        description = "hand soap",
+        price = 27.93,
+        expense_date = date(2023, 9, 2),
+        receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+    )
+
+    bill22 = Expense(
+        group_id = 12,
+        paid_by = 1,
+        description = "cupcakes",
+        price = 50.93,
+        expense_date = date(2023, 5, 11),
+        receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+    )
+    bill23 = Expense(
+        group_id = 12,
+        paid_by = 1,
+        description = "candles",
+        price = 2.19,
+        expense_date = date(2023, 5, 11),
+        receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+    )
+    bill24 = Expense(
+        group_id = 12,
+        paid_by = 3,
+        description = "decoration",
+        price = 32.93,
+        expense_date = date(2023, 5, 11),
+        receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+    )
+    bill25 = Expense(
+        group_id = 12,
+        paid_by = 3,
+        description = "drinks",
+        price = 27.99,
+        expense_date = date(2023, 5, 11),
+        receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+    )
+
+    bill26 = Expense(
+        group_id = 13,
+        paid_by = 1,
+        description = "Uber",
+        price = 23.56,
+        expense_date = date(2023, 8, 9),
+        receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+    )
+    bill27 = Expense(
+        group_id = 13,
+        paid_by = 1,
+        description = "coffee",
+        price = 15.99,
+        expense_date = date(2023, 8, 9),
+        receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+    )
+    bill28 = Expense(
+        group_id = 13,
+        paid_by = 1,
+        description = "snacks",
+        price = 25.99,
+        expense_date = date(2023, 8, 9),
+        receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+    )
+    bill29 = Expense(
+        group_id = 13,
+        paid_by = 1,
+        description = "coffee",
+        price = 15.99,
+        expense_date = date(2023, 8, 10),
+        receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+    )
+    bill30 = Expense(
+        group_id = 13,
+        paid_by = 1,
+        description = "flight",
+        price = 855.89,
+        expense_date = date(2023, 8, 8),
+        receipt_img_url = "https://t4.ftcdn.net/jpg/03/54/86/65/360_F_354866517_R3UOtdkGJrXAZ0e7tMuFM9HmJmL7Smfk.jpg"
+    )
+
     db.session.add(bill1)
     db.session.add(bill2)
     db.session.add(bill3)
@@ -261,6 +368,7 @@ def seed_expenses():
     db.session.add(bill14)
     db.session.add(bill15)
     db.session.add(bill16)
+
     db.session.add(bill21)
     db.session.add(bill31)
     db.session.add(bill41)
@@ -275,6 +383,22 @@ def seed_expenses():
     db.session.add(bill131)
     db.session.add(bill141)
     db.session.add(bill151)
+
+    db.session.add(bill17)
+    db.session.add(bill18)
+    db.session.add(bill19)
+    db.session.add(bill20)
+
+    db.session.add(bill22)
+    db.session.add(bill23)
+    db.session.add(bill24)
+    db.session.add(bill25)
+
+    db.session.add(bill26)
+    db.session.add(bill27)
+    db.session.add(bill28)
+    db.session.add(bill29)
+    db.session.add(bill30)
 
     db.session.commit()
 

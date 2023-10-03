@@ -6,6 +6,7 @@ import CreateExpenseModal from '../CreateExpenseModal';
 import ExpenseTile from '../ExpenseTile';
 import * as expenseActions from "../../store/expenses";
 import ManageFriend from '../ManageFriend';
+import checkmark from "../../assets/checkmark-circle.png"
 
 function FriendDetail(){
     const { id } = useParams();
@@ -29,8 +30,7 @@ function FriendDetail(){
     }
 
     let friendExpenses;
-    if(friendGroupArr) friendExpenses = sortedExpenses.filter(el=> el.group_id === friendGroupArr[0]);
-
+    if(friendGroupArr) friendExpenses = sortedExpenses.filter(el=> friendGroupArr.includes(el.group_id));
     if (!sessionUser) {
         history.push("/")
     }
@@ -69,9 +69,14 @@ function FriendDetail(){
                         <div><ManageFriend friendObj={friendObj} sessionUser={sessionUser}/></div>
                         {!friend_status ? (
                             friendExpenses.length > 0 ? (
-                                friendExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true} sessionUser={sessionUser}/>))
+                                friendExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true} sessionUser={sessionUser} displayGroup={true}/>))
                                 ) : (
-                                    <div className="settled-tab">You and {friendObj.first_name} {friendObj.last_name} are all settled up.</div>
+                                    <>
+                                        <div className='allSettledUp'>
+                                            <img src={checkmark} alt="all_settled_img" />
+                                        </div>
+                                        <div className="settled-tab">You and {friendObj.first_name} {friendObj.last_name} are all settled up.</div>
+                                    </>
                             )
                         ) : (
                             <>

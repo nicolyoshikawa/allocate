@@ -33,7 +33,7 @@ function AllExpenses(){
                                 <h2 className='expense-bar'>All Expenses</h2>
                                 <div className='expense-bar'><CreateExpenseModal/></div>
                             </div>
-                            {sortedExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true} sessionUser={sessionUser}/>))}
+                            {sortedExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true} sessionUser={sessionUser} displayGroup={true}/>))}
                         </div>
                 </div>
             )}
