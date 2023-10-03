@@ -173,6 +173,11 @@ button {
     color:black;
     font-weight: bold;
     /* text-decoration: none; */
+    /* overflow: hidden; */
+}
+.description-group {
+    /* width: 100px; */
+    /* overflow: auto; */
 }
 .comment i {
     padding: 5px;
