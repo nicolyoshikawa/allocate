@@ -1,4 +1,5 @@
 import { RESET_ACTION } from "./expenses";
+import { RESET_ACTION_ON_GROUPS } from "./groups";
 
 // constants
 const SET_USER = "session/SET_USER";
@@ -47,6 +48,7 @@ export const login = (email, password) => async (dispatch) => {
 		const data = await response.json();
 		dispatch(setUser(data));
 		dispatch(RESET_ACTION())
+		dispatch(RESET_ACTION_ON_GROUPS())
 		return null;
 	} else if (response.status < 500) {
 		const data = await response.json();
@@ -85,6 +87,8 @@ export const signUp = (username, email, password, first_name, last_name) => asyn
 		const data = await response.json();
 		dispatch(setUser(data));
 		dispatch(RESET_ACTION());
+		dispatch(RESET_ACTION_ON_GROUPS());
+
 		return null;
 	} else if (response.status < 500) {
 		const data = await response.json();

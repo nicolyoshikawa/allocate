@@ -20,7 +20,7 @@ function AddExpense({expense, param_id}) {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const [friend_id, setFriend_id] = useState("");
-    const [group_id, setGroup_id] = useState("");
+    const [group_id, setGroup_id] = useState(1);
     const [expense_date, setExpense_date] = useState(dateFormat);
     const [errors, setErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -131,7 +131,7 @@ function AddExpense({expense, param_id}) {
     setDescription("");
     setPrice("");
     setFriend_id("");
-    setGroup_id(0);
+    setGroup_id(1);
     setExpense_date(dateFormat);
     setErrors([]);
     setHasSubmitted(false);
@@ -172,16 +172,35 @@ function AddExpense({expense, param_id}) {
                         })}
                     </select>
                 </div>
-                {/* <div>
-                    <label>Group</label>
+                <div>
+                    {/* <label>Group</label>
                     <input
                         type='text'
                         onChange={(e) => setGroup_id(e.target.value)}
                         value={group_id}
                         placeholder='Group'
                         name='group_id'
-                    />
-                </div> */}
+                    /> */}
+                    {/* <select name="friends" id="friend-select" onChange={(e) => setGroup_id(e.target.value)}>
+                        <option value="">-- Choose a Group --</option>
+                        {sortedFriends.map((groupObj) => {
+                            return(
+                                <option
+                                    value={groupObj.id}
+                                    key={groupObj.id}
+                                    required
+                                    selected={
+                                        (groupObj !== null && Number(groupObj) === groupObj.id) ||
+                                        (param_id !== null && Number(param_id) === groupObj.id)
+                                    }
+                                >
+                                {groupObj.first_name} {groupObj.last_name}
+                                </option>
+                            )
+                        })}
+                    </select> */}
+
+                </div>
                 <div className="expense-form-input-container">
                     <input
                         type='text'

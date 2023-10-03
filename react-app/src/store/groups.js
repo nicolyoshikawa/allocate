@@ -1,10 +1,15 @@
 import { RESET_ACTION } from "./expenses";
+const RESET_GROUPS = "expenses/RESET_GROUPS";
 const LOAD_GROUPS = "groups/LOAD_GROUPS";
 
 const group = (groups) => ({
   type: LOAD_GROUPS,
   groups,
 });
+
+export const RESET_ACTION_ON_GROUPS = () => ({
+  type: RESET_GROUPS
+})
 
 export const getGroups = () => async (dispatch) => {
   const res = await fetch("/api/groups/", {
@@ -28,6 +33,8 @@ export default function reducer(state = initialState, action) {
             newState[group.id] = group;
         });
         return newState;
+    case RESET_GROUPS:
+      return initialState;
     default:
       return state;
   }
