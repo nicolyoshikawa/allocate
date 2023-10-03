@@ -31,7 +31,9 @@ function Expense(){
                 <div className="middle">
                     { expense ?
                         (<div>
-                            <h2>Expense</h2>
+                            <div className='expense-bar-container'>
+                                <h2>Expense</h2>
+                            </div>
                             <ExpenseTile clickable={false} expense={expense} sessionUser={sessionUser}/>
                             <ManageExpenses expense={expense}/>
                             <Comments expense={expense}/>
