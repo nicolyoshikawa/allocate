@@ -22,6 +22,7 @@ function AddExpense({expense, param_id}) {
     const [friend_id, setFriend_id] = useState("");
     const [group_id, setGroup_id] = useState("");
     const [group_obj, setGroup_Obj] = useState(1);
+    const [named_group, setNamed_group] = useState([]);
     const [expense_date, setExpense_date] = useState(dateFormat);
     const [errors, setErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -45,14 +46,15 @@ function AddExpense({expense, param_id}) {
         if(group_state_arr?.length > 0){
             for(let i = 0; i < group_state_arr?.length; i++){
                 expense_group_users = group_state_arr[i].expense_group_users
-                if(expense_group_users[0].id === friend_id || expense_group_users[1].id === friend_id ){
+                if(expense_group_users[0].id == friend_id || expense_group_users[1].id == friend_id ){
                     setGroup_Obj(group_state_arr[i])
+                    const group_array = [];
+                    group_array.push(group_obj);
+                    setNamed_group(group_array)
                 }
             }
         }
     },[group_obj, friend_id])
-    const named_group = [group_obj]
-
     const user_id = user.id;
 
     useEffect(()=> {
@@ -193,7 +195,7 @@ function AddExpense({expense, param_id}) {
                 {/* {named_group[0] !== 1 && ( */}
                     <div className="expense-form-input-container">
                         <label>Group: </label>
-                        <select name="friends" id="friend-select" onChange={(e) => setGroup_id(e.target.value)}>
+                        <select name="friends" id="friend-select" onChange={(e) => setGroup_id(e.target.value)}>)
                             <option value="">-- No Group --</option>
                             {named_group[0] !== 1 ? (
                                 named_group.map((groupObj) => {
@@ -203,7 +205,8 @@ function AddExpense({expense, param_id}) {
                                             key={groupObj.id}
                                             required
                                             selected={
-                                                (groupObj !== null && Number(groupObj.name) === groupObj.name)
+                                                // (groupObj !== null && Number(groupObj.name) === groupObj.name) ||
+                                                (group_id !== null && Number(group_id) == groupObj.id)
                                             }
                                         >
                                         {groupObj.name}
