@@ -27,6 +27,7 @@ button {
     color: #fff;
     border: rgba(0, 0, 0, 0.8);
 }
+
 .container {
     display: flex;
     align-items: flex-start;
@@ -57,6 +58,7 @@ button {
     min-height:100vh;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    min-height: auto;
 }
 .expense-bar{
     display: inline-flex;
@@ -68,6 +70,10 @@ button {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #cccccc;
+    /* background-color: #666;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: relative; */
 }
 .side-bar-list {
     padding: 5px;

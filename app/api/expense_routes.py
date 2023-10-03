@@ -225,8 +225,8 @@ def add_an_expense():
             user_friend_expense_group_id = [id[0] for id in user_friend_expense_groups]
             if not user_friend_expense_group_id:
                 return {'errors': ["You do not have a group with this friend"]}, 403
-
-            group_id = user_friend_expense_group_id[0]
+            idx = len(user_friend_expense_group_id) - 1
+            group_id = user_friend_expense_group_id[idx]
         else:
             group_id = form.data["group_id"]
             expense_group_exists = ExpenseGroup.query.filter(ExpenseGroup.id == group_id).all()

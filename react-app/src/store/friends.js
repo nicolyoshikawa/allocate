@@ -1,4 +1,5 @@
 import { RESET_ACTION } from "./expenses";
+import { RESET_ACTION_ON_GROUPS } from "./groups";
 const USER_FRIENDS = "friends/USER_FRIENDS";
 
 const userFriends = (friends) => ({
@@ -53,6 +54,7 @@ export const deleteFriend = (targetId) => async (dispatch) => {
         const data = await res.json();
         dispatch(getUserFriends());
         dispatch(RESET_ACTION());
+        dispatch(RESET_ACTION_ON_GROUPS())
         return data;
     }
 };
