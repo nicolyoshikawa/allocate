@@ -11,6 +11,7 @@ expense_group_routes = Blueprint('groups', __name__)
 
 def add_exp(group):
     expenses = Expense.query.filter(group.id == Expense.group_id).all()
+    exp_group_users = ExpenseGroupUser.query.filter(group.id == ExpenseGroupUser.group_id).all()
     group_dict = group.to_dict()
 
     expenses_list = []
@@ -19,7 +20,14 @@ def add_exp(group):
         exp_dict = add_users_comments(exp)
         expenses_list.append(exp_dict)
 
+    group_user_list = []
+    for exp_group_user in exp_group_users:
+        user = User.query.get(exp_group_user.user_id)
+        user_dict = user.to_dict()
+        group_user_list.append(user_dict)
+
     group_dict["expenses"] = expenses_list
+    group_dict["expense_group_users"] = group_user_list
     return group_dict
 
 def add_users_comments(exp):
@@ -48,5 +56,6 @@ def get_all_groups():
     expense_list = []
     for expense in all_group_expenses:
         exp_dict = add_exp(expense)
+
         expense_list.append(exp_dict)
     return {"groups": expense_list}
