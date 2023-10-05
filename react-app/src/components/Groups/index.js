@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import OpenModalButton from "../OpenModalButton";
-import AddExpense from "../AddExpense";
 import * as groupActions from "../../store/groups";
 import AddGroup from '../AddGroup';
 

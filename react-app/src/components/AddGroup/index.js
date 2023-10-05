@@ -34,7 +34,7 @@ function AddGroup() {
         if(Object.values(errors).length === 0){
             setErrors([]);
 
-            const createGroup = await dispatch(groupActions.getGroups(newGroup));
+            const createGroup = await dispatch(groupActions.createNewGroup(newGroup));
             if(createGroup.errors){
                 const errors = [];
                 errors.push(createGroup.errors);
