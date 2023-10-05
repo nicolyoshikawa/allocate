@@ -21,7 +21,6 @@ function AddExpense({expense, param_id}) {
     const [price, setPrice] = useState("");
     const [friend_id, setFriend_id] = useState("");
     const [group_id, setGroup_id] = useState("");
-    const [group_obj, setGroup_Obj] = useState(1);
     const [named_group, setNamed_group] = useState([]);
     const [expense_date, setExpense_date] = useState(dateFormat);
     const [errors, setErrors] = useState([]);
@@ -44,17 +43,16 @@ function AddExpense({expense, param_id}) {
     useEffect(()=> {
         let expense_group_users;
         if(group_state_arr?.length > 0){
+            const group_array = [];
             for(let i = 0; i < group_state_arr?.length; i++){
                 expense_group_users = group_state_arr[i].expense_group_users
                 if(expense_group_users[0].id == friend_id || expense_group_users[1].id == friend_id ){
-                    setGroup_Obj(group_state_arr[i])
-                    const group_array = [];
-                    group_array.push(group_obj);
-                    setNamed_group(group_array)
+                    group_array.push(group_state_arr[i]);
                 }
             }
+            setNamed_group(group_array)
         }
-    },[group_obj, friend_id])
+    },[friend_id])
     const user_id = user.id;
 
     useEffect(()=> {
@@ -115,7 +113,6 @@ function AddExpense({expense, param_id}) {
 
     if(Object.values(errors).length === 0){
         setErrors([]);
-
         if(expLength === 0){
             const createExpense = await dispatch(expenseActions.createANewExpense(newExpense));
             if(createExpense.errors){
@@ -154,7 +151,6 @@ function AddExpense({expense, param_id}) {
     setExpense_date(dateFormat);
     setErrors([]);
     setHasSubmitted(false);
-    setGroup_Obj(1)
   };
 
   return (
@@ -192,31 +188,24 @@ function AddExpense({expense, param_id}) {
                         })}
                     </select>
                 </div>
-                {/* {named_group[0] !== 1 && ( */}
                     <div className="expense-form-input-container">
                         <label>Group: </label>
-                        <select name="friends" id="friend-select" onChange={(e) => setGroup_id(e.target.value)}>)
+                        <select name="friends" id="friend-select" onChange={(e) => setGroup_id(e.target.value)}>
                             <option value="">-- No Group --</option>
-                            {named_group[0] !== 1 ? (
-                                named_group.map((groupObj) => {
+                                {named_group.map((groupObj) => {
                                     return(
                                         <option
                                             value={groupObj.id}
                                             key={groupObj.id}
                                             required
                                             selected={
-                                                // (groupObj !== null && Number(groupObj.name) === groupObj.name) ||
                                                 (group_id !== null && Number(group_id) == groupObj.id)
                                             }
                                         >
                                         {groupObj.name}
                                         </option>
                                     )
-                                })
-                            ):(
-                                <div></div>
-                            )}
-
+                                })}
                         </select>
                     </div>
                 {/* )} */}

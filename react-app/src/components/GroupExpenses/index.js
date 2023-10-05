@@ -42,7 +42,7 @@ function GroupExpenses(){
                         <div>
                             <div className='expense-bar-container'>
                                 <h2 className='expense-bar'>{group_name}</h2>
-                                {/* <div className='expense-bar'><CreateExpenseModal/></div> */}
+                                <div className='expense-bar'><CreateExpenseModal/></div>
                             </div>
                             {exp_arr?.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true} sessionUser={sessionUser} displayGroup={false}/>))}
                             {exp_arr?.length === 0 ? (

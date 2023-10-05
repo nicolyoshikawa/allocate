@@ -219,14 +219,19 @@ def add_an_expense():
             return {'errors': ["You cannot create an expense to split with yourself"]}, 403
 
         if not form.data["group_id"]:
-            users_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
-            friends_groups = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == friend_id).all()
-            user_friend_expense_groups= set(users_groups).intersection(friends_groups)
+            user_group_ids = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
+            friend_group_ids = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == friend_id).all()
+            user_friend_expense_groups= set(user_group_ids).intersection(friend_group_ids)
             user_friend_expense_group_id = [id[0] for id in user_friend_expense_groups]
+
             if not user_friend_expense_group_id:
                 return {'errors': ["You do not have a group with this friend"]}, 403
-            idx = len(user_friend_expense_group_id) - 1
-            group_id = user_friend_expense_group_id[idx]
+
+            unnamed_group = ExpenseGroup.query.filter( ExpenseGroup.id.in_(user_friend_expense_group_id), ExpenseGroup.name == None).first()
+            if not unnamed_group:
+                return {'errors': ["Group does not exist"]}, 404
+
+            group_id = unnamed_group.id
         else:
             group_id = form.data["group_id"]
             expense_group_exists = ExpenseGroup.query.filter(ExpenseGroup.id == group_id).all()
