@@ -106,12 +106,14 @@ function AddExpense({expense, param_id}) {
     updateExpense.append("price", price);
     updateExpense.append("expense_date", expense_date);
     updateExpense.append("friend_id", friend_id);
-    newExpense.append("group_id", group_id);
+    updateExpense.append("group_id", group_id);
     updateExpense.append("paid_by", user_id);
     updateExpense.append("receipt_img_url", receipt_img_url);
     setImageLoading(true);
 
+    console.log("in the submit", group_id)
     if(Object.values(errors).length === 0){
+        console.log("in the if statement")
         setErrors([]);
         if(expLength === 0){
             const createExpense = await dispatch(expenseActions.createANewExpense(newExpense));
@@ -128,7 +130,9 @@ function AddExpense({expense, param_id}) {
             }
         }
         if(expLength > 0){
+            console.log("before the dispatch", group_id)
             const updatedExpense = await dispatch(expenseActions.updateAnExpense(updateExpense, expense?.id));
+            console.log("after the dispatch")
             if(updatedExpense.errors){
                 const errors = [];
                 errors.push(updatedExpense.errors);
@@ -139,6 +143,7 @@ function AddExpense({expense, param_id}) {
                 closeModal();
             }
         }
+        console.log("after the if statement", group_id)
     }
   };
 
@@ -193,6 +198,7 @@ function AddExpense({expense, param_id}) {
                         <select name="friends" id="friend-select" onChange={(e) => setGroup_id(e.target.value)}>
                             <option value="">-- No Group --</option>
                                 {named_group.map((groupObj) => {
+                                    console.log(group_id)
                                     return(
                                         <option
                                             value={groupObj.id}
@@ -208,7 +214,6 @@ function AddExpense({expense, param_id}) {
                                 })}
                         </select>
                     </div>
-                {/* )} */}
                 <div className="expense-form-input-container">
                     <input
                         type='text'

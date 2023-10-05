@@ -96,7 +96,7 @@ def update_an_expense(id):
     expense = Expense.query.get(id)
     if not expense:
         return {'errors': ["Expense could not be found"]}, 404
-    group_id = expense.group_id
+
     owner = expense.paid_by
     if current_user.id == owner:
         form = ExpenseForm()
@@ -143,12 +143,13 @@ def update_an_expense(id):
             #     expense_group_exists = ExpenseGroup.query.filter(ExpenseGroup.id == group_id).all()
             #     if not expense_group_exists:
             #         return {'errors': ["Group does not exist"]}, 404
+                group_id = expense.group_id
                 users_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == current_user.id, ExpenseGroupUser.group_id == group_id).all()
                 friends_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == friend_id, ExpenseGroupUser.group_id == group_id).all()
                 if not users_group or not friends_group:
                     return {'errors': ["You or your friend are not part of this group"]}, 403
 
-            expense.group_id = group_id
+            expense.group_id = form.data["group_id"]
             expense.expense_date = expense_date
             expense.description = form.data["description"]
             expense.price = form.data["price"]
