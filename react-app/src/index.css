@@ -175,10 +175,6 @@ button {
     /* text-decoration: none; */
     /* overflow: hidden; */
 }
-.description-group {
-    /* width: 100px; */
-    /* overflow: auto; */
-}
 .comment i {
     padding: 5px;
 }
@@ -491,4 +487,22 @@ button {
 .allSettledUp img {
     width: 150px;
     height: 150px
+}
+.groups{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d7d5d5;
+    padding: 5px;
+    border-radius: 4px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.add-group button{
+    background-color: #d7d5d5;
+    color: #808080;
+    padding: 0
+}
+.add-group button:hover {
+    color: rgb(91, 197, 167);
 }

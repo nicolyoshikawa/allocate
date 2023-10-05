@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import OpenModalButton from "../OpenModalButton";
+import AddExpense from "../AddExpense";
 import * as groupActions from "../../store/groups";
+import AddGroup from '../AddGroup';
 
 function Groups(){
     const dispatch = useDispatch();
@@ -9,6 +12,8 @@ function Groups(){
     const [isLoaded, setIsLoaded] = useState(false);
     const groupsState = useSelector(state => Object.values(state.groups));
     const sessionUser = useSelector(state => state.session.user);
+    const [showMenu, setShowMenu] = useState(true);
+    const closeMenu = () => setShowMenu(false);
     if (!sessionUser) {
         history.push("/")
     }
@@ -23,7 +28,16 @@ function Groups(){
         <>
             {isLoaded && sessionUser && (
                 <div>
-                    <div className='side-bar-table'>Groups</div>
+                    <div className='groups'>
+                        <div className=''>Groups</div>
+                        <div className="add-group">
+                        <OpenModalButton
+                            buttonText="+ add"
+                            onItemClick={closeMenu}
+                            modalComponent={<AddGroup />}
+                        />
+                    </div>
+                    </div>
                     {groupsState.map((groupObj) => {
                         return (
                             <div className="table-list" key={groupObj.id}>
