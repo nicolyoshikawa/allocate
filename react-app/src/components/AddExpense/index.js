@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as expenseActions from "../../store/expenses";
 import * as friendActions from "../../store/friends";
+import * as groupActions from "../../store/groups";
 
-function AddExpense({expense, param_id}) {
+function AddExpense({expense, param_id, group_object}) {
     const dispatch = useDispatch();
-    // const history = useHistory();
     const { closeModal } = useModal();
     const today = new Date();
     const year = today.toLocaleString("default", { year: "numeric" });
@@ -37,6 +36,15 @@ function AddExpense({expense, param_id}) {
     }
     if(friend_id === "" && param_id){
         setFriend_id(param_id)
+    }
+    if(group_id === "" && group_object){
+        setGroup_id(group_object.id)
+        let users_in_group = group_object.expense_group_users
+        for(let i = 0; i < users_in_group?.length; i++){
+            if(users_in_group[i].id !== user.id ){
+                setFriend_id(users_in_group[i].id)
+            }
+        }
     }
 
     const group_state_arr = useSelector(state => Object.values(state.groups));
@@ -111,9 +119,7 @@ function AddExpense({expense, param_id}) {
     updateExpense.append("receipt_img_url", receipt_img_url);
     setImageLoading(true);
 
-    console.log("in the submit", group_id)
     if(Object.values(errors).length === 0){
-        console.log("in the if statement")
         setErrors([]);
         if(expLength === 0){
             const createExpense = await dispatch(expenseActions.createANewExpense(newExpense));
@@ -125,14 +131,13 @@ function AddExpense({expense, param_id}) {
                 reset();
                 // history.push(`/expenses/${createExpense.id}`);
                 dispatch(expenseActions.loadAllUserExpenses());
+                dispatch(groupActions.getGroups())
                 setErrors([]);
                 closeModal();
             }
         }
         if(expLength > 0){
-            console.log("before the dispatch", group_id)
             const updatedExpense = await dispatch(expenseActions.updateAnExpense(updateExpense, expense?.id));
-            console.log("after the dispatch")
             if(updatedExpense.errors){
                 const errors = [];
                 errors.push(updatedExpense.errors);
@@ -143,7 +148,6 @@ function AddExpense({expense, param_id}) {
                 closeModal();
             }
         }
-        console.log("after the if statement", group_id)
     }
   };
 
@@ -198,7 +202,6 @@ function AddExpense({expense, param_id}) {
                         <select name="friends" id="friend-select" onChange={(e) => setGroup_id(e.target.value)}>
                             <option value="">-- No Group --</option>
                                 {named_group.map((groupObj) => {
-                                    console.log(group_id)
                                     return(
                                         <option
                                             value={groupObj.id}
@@ -206,6 +209,7 @@ function AddExpense({expense, param_id}) {
                                             required
                                             selected={
                                                 (group_id !== null && Number(group_id) == groupObj.id)
+                                                || (group_object !== null && Number(group_object?.id) == groupObj.id)
                                             }
                                         >
                                         {groupObj.name}

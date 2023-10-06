@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseTile from '../ExpenseTile';
 import * as groupActions from "../../store/groups";
@@ -9,6 +9,7 @@ import checkmark from "../../assets/checkmark-circle.png"
 function GroupExpenses(){
     const dispatch = useDispatch();
     const history = useHistory();
+    const location = useLocation();
     const { id } = useParams();
     const param_id = Number(id);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -42,7 +43,7 @@ function GroupExpenses(){
                         <div>
                             <div className='expense-bar-container'>
                                 <h2 className='expense-bar'>{group_name}</h2>
-                                <div className='expense-bar'><CreateExpenseModal/></div>
+                                <div className='expense-bar'><CreateExpenseModal group_object={filteredGroups[0]}/></div>
                             </div>
                             {exp_arr?.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true} sessionUser={sessionUser} displayGroup={false}/>))}
                             {exp_arr?.length === 0 ? (

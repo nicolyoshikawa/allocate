@@ -37,13 +37,11 @@ function FriendDetail(){
 
     useEffect(()=> {
         if(sessionUser){
-            // dispatch(friendActions.getUserFriends())
-            // .then(()=>setIsLoaded(true))
             dispatch(expenseActions.loadAllUserExpenses())
             .then(()=>setIsLoaded(true))
         }
 
-    },[dispatch, sessionUser]);
+    },[dispatch, sessionUser, friendObj]);
 
     let friend_status;
     if(friendObj?.friend.status === "friends"){
@@ -87,9 +85,9 @@ function FriendDetail(){
             ):(
                 <>
                     <div className="middle">
-                        {/* <div className='expense-bar-container'> */}
+                        <div className='expense-bar-container'>
                             <h1>Friend Not Found</h1>
-                        {/* </div> */}
+                        </div>
                     </div>
                 </>
             )}
