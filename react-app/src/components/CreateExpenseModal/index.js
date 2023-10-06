@@ -3,7 +3,7 @@ import OpenModalButton from "../OpenModalButton";
 import AddExpense from "../AddExpense";
 import SettleUp from "../SettleUp";
 
-function CreateExpenseModal({param_id}) {
+function CreateExpenseModal({param_id, group_object}) {
     const [showMenu, setShowMenu] = useState(true);
     const closeMenu = () => setShowMenu(false);
     return (
@@ -14,7 +14,7 @@ function CreateExpenseModal({param_id}) {
                         <OpenModalButton
                             buttonText="Add an expense"
                             onItemClick={closeMenu}
-                            modalComponent={<AddExpense param_id={param_id}/>}
+                            modalComponent={<AddExpense param_id={param_id} group_object={group_object}/>}
                         />
                     </div>
                     {param_id && (

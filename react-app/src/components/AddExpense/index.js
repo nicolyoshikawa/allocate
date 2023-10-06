@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as expenseActions from "../../store/expenses";
 import * as friendActions from "../../store/friends";
+import * as groupActions from "../../store/groups";
 
-function AddExpense({expense, param_id}) {
+function AddExpense({expense, param_id, group_object}) {
     const dispatch = useDispatch();
-    // const history = useHistory();
     const { closeModal } = useModal();
     const today = new Date();
     const year = today.toLocaleString("default", { year: "numeric" });
@@ -20,7 +19,8 @@ function AddExpense({expense, param_id}) {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const [friend_id, setFriend_id] = useState("");
-    const [group_id, setGroup_id] = useState(1);
+    const [group_id, setGroup_id] = useState("");
+    const [named_group, setNamed_group] = useState([]);
     const [expense_date, setExpense_date] = useState(dateFormat);
     const [errors, setErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -37,7 +37,30 @@ function AddExpense({expense, param_id}) {
     if(friend_id === "" && param_id){
         setFriend_id(param_id)
     }
+    if(group_id === "" && group_object){
+        setGroup_id(group_object.id)
+        let users_in_group = group_object.expense_group_users
+        for(let i = 0; i < users_in_group?.length; i++){
+            if(users_in_group[i].id !== user.id ){
+                setFriend_id(users_in_group[i].id)
+            }
+        }
+    }
 
+    const group_state_arr = useSelector(state => Object.values(state.groups));
+    useEffect(()=> {
+        let expense_group_users;
+        if(group_state_arr?.length > 0){
+            const group_array = [];
+            for(let i = 0; i < group_state_arr?.length; i++){
+                expense_group_users = group_state_arr[i].expense_group_users
+                if(expense_group_users[0].id == friend_id || expense_group_users[1].id == friend_id ){
+                    group_array.push(group_state_arr[i]);
+                }
+            }
+            setNamed_group(group_array)
+        }
+    },[friend_id])
     const user_id = user.id;
 
     useEffect(()=> {
@@ -80,6 +103,7 @@ function AddExpense({expense, param_id}) {
     newExpense.append("price", price);
     newExpense.append("expense_date", expense_date);
     newExpense.append("friend_id", friend_id);
+    newExpense.append("group_id", group_id);
     newExpense.append("paid_by", user_id);
     newExpense.append("receipt_img_url", receipt_img_url);
     // aws uploads can be a bit slow—displaying
@@ -90,13 +114,13 @@ function AddExpense({expense, param_id}) {
     updateExpense.append("price", price);
     updateExpense.append("expense_date", expense_date);
     updateExpense.append("friend_id", friend_id);
+    updateExpense.append("group_id", group_id);
     updateExpense.append("paid_by", user_id);
     updateExpense.append("receipt_img_url", receipt_img_url);
     setImageLoading(true);
 
     if(Object.values(errors).length === 0){
         setErrors([]);
-
         if(expLength === 0){
             const createExpense = await dispatch(expenseActions.createANewExpense(newExpense));
             if(createExpense.errors){
@@ -107,6 +131,7 @@ function AddExpense({expense, param_id}) {
                 reset();
                 // history.push(`/expenses/${createExpense.id}`);
                 dispatch(expenseActions.loadAllUserExpenses());
+                dispatch(groupActions.getGroups())
                 setErrors([]);
                 closeModal();
             }
@@ -131,7 +156,7 @@ function AddExpense({expense, param_id}) {
     setDescription("");
     setPrice("");
     setFriend_id("");
-    setGroup_id(1);
+    setGroup_id("");
     setExpense_date(dateFormat);
     setErrors([]);
     setHasSubmitted(false);
@@ -172,35 +197,27 @@ function AddExpense({expense, param_id}) {
                         })}
                     </select>
                 </div>
-                <div>
-                    {/* <label>Group</label>
-                    <input
-                        type='text'
-                        onChange={(e) => setGroup_id(e.target.value)}
-                        value={group_id}
-                        placeholder='Group'
-                        name='group_id'
-                    /> */}
-                    {/* <select name="friends" id="friend-select" onChange={(e) => setGroup_id(e.target.value)}>
-                        <option value="">-- Choose a Group --</option>
-                        {sortedFriends.map((groupObj) => {
-                            return(
-                                <option
-                                    value={groupObj.id}
-                                    key={groupObj.id}
-                                    required
-                                    selected={
-                                        (groupObj !== null && Number(groupObj) === groupObj.id) ||
-                                        (param_id !== null && Number(param_id) === groupObj.id)
-                                    }
-                                >
-                                {groupObj.first_name} {groupObj.last_name}
-                                </option>
-                            )
-                        })}
-                    </select> */}
-
-                </div>
+                    <div className="expense-form-input-container">
+                        <label>Group: </label>
+                        <select name="friends" id="friend-select" onChange={(e) => setGroup_id(e.target.value)}>
+                            <option value="">-- No Group --</option>
+                                {named_group.map((groupObj) => {
+                                    return(
+                                        <option
+                                            value={groupObj.id}
+                                            key={groupObj.id}
+                                            required
+                                            selected={
+                                                (group_id !== null && Number(group_id) == groupObj.id)
+                                                || (group_object !== null && Number(group_object?.id) == groupObj.id)
+                                            }
+                                        >
+                                        {groupObj.name}
+                                        </option>
+                                    )
+                                })}
+                        </select>
+                    </div>
                 <div className="expense-form-input-container">
                     <input
                         type='text'
