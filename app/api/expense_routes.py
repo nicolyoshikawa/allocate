@@ -179,7 +179,7 @@ def delete_an_expense(id):
 @expense_routes.route('/', methods=["GET"])
 @login_required
 def get_all_expenses():
-    all_expenses = Expense.query.join(ExpenseGroupUser, Expense.group_id == ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
+    all_expenses = Expense.query.join(ExpenseGroupUser, Expense.group_id == ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id, Expense.settle_status == "unsettled").all()
     expense_list = []
     for expense in all_expenses:
         exp_dict = add_group_user_dict_and_comments(expense)

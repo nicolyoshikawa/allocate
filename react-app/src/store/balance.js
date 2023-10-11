@@ -1,5 +1,6 @@
 const RESET_BALANCE = "balances/RESET_BALANCE";
 const TOTAL_BALANCE = "balances/TOTAL_BALANCE";
+const SETTLE_BALANCE = "balances/SETTLE_BALANCE";
 
 export const RESET_ACTION_BALANCE = () => ({
   type: RESET_BALANCE
@@ -9,6 +10,10 @@ export const loadTotalBalance = (balance) => ({
     type: TOTAL_BALANCE,
     balance
 });
+export const settleBalance = (user_id) => ({
+  type: SETTLE_BALANCE,
+  user_id
+});
 
 export const loadAllUserExpenseBalance = () => async (dispatch) => {
   const response = await fetch("/api/expenses/", {
@@ -17,6 +22,18 @@ export const loadAllUserExpenseBalance = () => async (dispatch) => {
   const data = await response.json();
   dispatch(loadTotalBalance(data.balance));
   return response;
+};
+
+export const settle_balance = (id) => async (dispatch) => {
+  const response = await fetch(`/api/balance/${id}`, {
+    method: 'PUT'
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+    // dispatch(deleteAnExpense(id));
+    return res;
+  }
 };
 
 const initialState = {};

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: dd656d6c7b9c
+Revision ID: 6ba8de4294c7
 Revises:
-Create Date: 2023-10-01 17:36:20.861454
+Create Date: 2023-10-11 00:23:21.105435
 
 """
 from alembic import op
@@ -13,7 +13,7 @@ environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = 'dd656d6c7b9c'
+revision = '6ba8de4294c7'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -58,6 +58,7 @@ def upgrade():
     sa.Column('group_id', sa.Integer(), nullable=False),
     sa.Column('paid_by', sa.Integer(), nullable=False),
     sa.Column('description', sa.String(length=255), nullable=False),
+    sa.Column('settle_status', sa.String(length=255), nullable=False),
     sa.Column('price', sa.Float(), nullable=False),
     sa.Column('receipt_img_url', sa.String(length=500), nullable=True),
     sa.Column('expense_date', sa.Date(), nullable=True),
@@ -95,6 +96,7 @@ def upgrade():
         op.execute(f"ALTER TABLE expenses SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE friends SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE comments SET SCHEMA {SCHEMA};")
+
 
 
 def downgrade():

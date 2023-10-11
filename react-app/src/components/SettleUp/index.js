@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as expenseActions from "../../store/expenses";
-import BalanceFunction from "../BalanceFunc";
+import * as balanceActions from "../../store/balance";
 
 function SettleUp({param_id}) {
     const dispatch = useDispatch();
-    // const history = useHistory();
     const location = useLocation();
     const { closeModal } = useModal();
     const path_location = location.pathname.split("/");
@@ -20,14 +19,13 @@ function SettleUp({param_id}) {
 
     const [price, setPrice] = useState(0);
     const [friend_id, setFriend_id] = useState("");
-    // const [group_id, setGroup_id] = useState("");
     const [expense_date, setExpense_date] = useState(dateFormat);
     const [errors, setErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
 
     const user = useSelector(state => state.session.user);
     const friendsListArr = useSelector(state => state.friends.friends);
-    const allExpenses = useSelector(state => Object.values(state.expenses));
+    // const allExpenses = useSelector(state => Object.values(state.expenses));
 
     const acceptedFriendsArr = friendsListArr.filter(el=> el.friend.status === "friends");
     const sortedFriends = acceptedFriendsArr.sort((a,b) => (a.id) - (b.id))
@@ -35,25 +33,17 @@ function SettleUp({param_id}) {
 
     if(friend_id === "" && param_id) setFriend_id(param_id);
 
-    // const user_id = user.id;
     let expences_balance;
-    let friendObj;
-    let friendGroupArr;
+    let balance;
+    let friendArr;
     if(path_location[1] === "friends"){
-        const friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
-        if(friendArr) {
-            friendObj = friendArr[0];
-            friendGroupArr = friendArr[0]?.group_id
-        }
-
-        if(friendGroupArr) {
-            expences_balance = allExpenses.filter(el=> friendGroupArr.includes(el.group_id));
+        friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
+        if(friendArr?.length > 0) {
+            balance = friendArr[0]?.balance
         }
     } else {
-        // expences_balance = allExpenses
         expences_balance = []
     }
-    let balance = BalanceFunction(expences_balance, user);
 
     useEffect(() => {
         const errors = [];
@@ -64,7 +54,6 @@ function SettleUp({param_id}) {
             const fixed = Number(Math.abs(abs_balance)).toFixed(2);
             setPrice(Math.abs(fixed))
         };
-        if(friend_id) setFriend_id(friend_id)
         setErrors(errors);
     }, [price, hasSubmitted, friend_id, balance]);
 
@@ -72,34 +61,39 @@ function SettleUp({param_id}) {
     e.preventDefault();
     setHasSubmitted(true);
 
-    for(let i = 0; i < expences_balance.length; i++){
-        let exp_obj = expences_balance[i];
-        const errors = [];
-        if(user.id !== exp_obj.expense_group_users[0].id && user.id !== exp_obj.expense_group_users[1].id ) {
-            errors.push("You do not have access to delete this expense.")
-        };
+    // for(let i = 0; i < friendArr?.length; i++){
+    //     let exp_obj = friendArr[i];
+    //     const errors = [];
+    //     if(user.id !== exp_obj.expense_group_users[0].id && user.id !== exp_obj.expense_group_users[1].id ) {
+    //         errors.push("You do not have access to delete this expense.")
+    //     };
 
-        setErrors(errors);
+    //     setErrors(errors);
 
-        if(Object.values(errors).length === 0){
-            setErrors([]);
-            await dispatch(expenseActions.deleteExpense(exp_obj.id));
-            // reset();
+    //     if(Object.values(errors).length === 0){
+    //         setErrors([]);
+    //         await dispatch(balanceActions.settle_balance(exp_obj.id));
+    //     }
+    // }
+
+    // const newGroup = {name, friend_id};
+    if(Object.values(errors).length === 0){
+        setErrors([]);
+
+        const clear_balance = await dispatch(balanceActions.settle_balance(friend_id));
+        if(clear_balance){
+            reset();
+            closeModal();
         }
     }
-    // history.push("/home");
-    closeModal()
-
   };
-
-//   const reset = () => {
-//     setPrice("");
-//     setFriend_id("");
-//     // setGroup_id(0);
-//     setExpense_date(dateFormat);
-//     setErrors([]);
-//     setHasSubmitted(false);
-//   };
+  const reset = () => {
+    setPrice(0);
+    setFriend_id("");
+    setExpense_date(dateFormat);
+    setErrors([]);
+    setHasSubmitted(false);
+  };
 
   const keepClickHandler = () => {
     closeModal()
