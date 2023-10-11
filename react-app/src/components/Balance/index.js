@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as expenseActions from "../../store/expenses";
 import ExpenseBalance from '../ExpenseBalance';
 
-function Balance(){
+function Balance({ loggedIn }){
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
@@ -13,6 +13,7 @@ function Balance(){
     const allExpenses = useSelector(state => Object.values(state.expenses));
     const friendsListArr = useSelector(state => state.friends.friends);
     const groupListArr = useSelector(state => Object.values(state.groups));
+    const balance_from_state = useSelector(state => (state.balances.balance));
 
     if (!sessionUser) {
         history.push("/")
@@ -26,37 +27,30 @@ function Balance(){
         }
     },[dispatch, sessionUser]);
 
-    let expences_balance;
-    let friendObj;
-    let friendGroupArr;
+    let balance;
 
     if(path_location[1] === "friends"){
         const friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
-        if(friendArr) {
-            friendObj = friendArr[0];
-            friendGroupArr = friendArr[0]?.group_id
+        if(friendArr?.length > 0) {
+            balance = friendArr[0]?.balance
+        } else {
+            balance = 0
         }
 
-        if(friendGroupArr) {
-            expences_balance = allExpenses.filter(el => friendGroupArr.includes(el.group_id));
-        }
     } else if(path_location[1] === "groups"){
         const friendArr = groupListArr?.filter(el=> el.id === Number(path_location[2]));
-        if(friendArr) {
-            friendObj = friendArr[0];
-            friendGroupArr = friendArr[0]?.expenses
-        }
-
-        if(friendGroupArr) {
-            expences_balance = friendGroupArr;
+        if(friendArr?.length > 0) {
+            balance = friendArr[0]?.balance
+        } else {
+            balance = 0
         }
     } else {
-        expences_balance = allExpenses
+        balance = balance_from_state
     }
 
 	return (
         <>
-            {sessionUser && isLoaded &&(
+            {sessionUser && isLoaded && loggedIn && (
                 <div className="sidebar">
                     <div className='all-expenses-hide'>
                         {" "}All Expenses
@@ -64,7 +58,7 @@ function Balance(){
                     <div className='side-bar-table'>Your Balance</div>
                     <div className="balance-list">
                         <div className="balance">
-                            <ExpenseBalance balanceArr={expences_balance} sessionUser={sessionUser}/>
+                            <ExpenseBalance balance={balance}/>
                         </div>
                     </div>
                 </div>

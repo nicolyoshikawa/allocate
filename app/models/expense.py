@@ -11,6 +11,7 @@ class Expense(db.Model):
     group_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('expenseGroups.id')), nullable=False)
     paid_by = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     description = db.Column(db.String(255), nullable=False)
+    settle_status = db.Column(db.String(255), nullable=False)
     price = db.Column(db.Float(), nullable=False)
     receipt_img_url = db.Column(db.String(500))
     expense_date = db.Column(db.Date())
@@ -27,6 +28,7 @@ class Expense(db.Model):
             'group_id': self.group_id,
             'paid_by': self.paid_by,
             'description': self.description,
+            'settle_status': self.settle_status,
             'price': self.price,
             'expense_date': self.expense_date.isoformat(),
             'receipt_img_url': self.receipt_img_url,

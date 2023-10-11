@@ -7,6 +7,7 @@ import ExpenseTile from '../ExpenseTile';
 import * as expenseActions from "../../store/expenses";
 import ManageFriend from '../ManageFriend';
 import checkmark from "../../assets/checkmark-circle.png"
+import PageNotFound from '../PageNotFound';
 
 function FriendDetail(){
     const { id } = useParams();
@@ -87,6 +88,7 @@ function FriendDetail(){
                     <div className="middle">
                         <div className='expense-bar-container'>
                             <h1>Friend Not Found</h1>
+                            {/* <PageNotFound/> */}
                         </div>
                     </div>
                 </>

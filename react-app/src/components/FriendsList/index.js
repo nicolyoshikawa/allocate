@@ -27,7 +27,7 @@ function FriendsList(){
             {isLoaded && sessionUser && (
                 <div>
                     <div className='side-bar-table'>Friends List</div>
-                    {sortedFriends.map((friendObj) => {
+                    {sortedFriends?.map((friendObj) => {
                         return (
                             <div className="table-list" key={friendObj.id}>
                                 <i className="fa-solid fa-user" style={{ color: "#c7c7c7" }}></i>

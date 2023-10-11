@@ -16,7 +16,7 @@ import GroupExpenses from "./components/GroupExpenses";
 
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.session.user);
+  // const user = useSelector(state => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
@@ -25,11 +25,10 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && user && (
-        <>
+      {isLoaded && (
           <div className="container">
             <div className="sections">
-                <NavSideBar/>
+                <NavSideBar isLoaded={isLoaded} />
                 <Switch>
                   <Route exact path="/expenses/:id">
                     <Expense/>
@@ -55,39 +54,11 @@ function App() {
                   <Route>
                     <PageNotFound/>
                   </Route>
+                  {/* <Balance loggedIn={isLoaded} /> */}
                 </Switch>
-                <Balance/>
+                <Balance loggedIn={isLoaded} />
             </div>
           </div>
-        </>
-      )}
-      {isLoaded && !user && (
-        <Switch>
-          <Route path="/login" >
-            <LoginFormModal />
-          </Route>
-          <Route path="/signup">
-            <SignupFormModal />
-          </Route>
-          <Route exact path="/expenses/:id">
-            <Expense/>
-          </Route>
-          <Route exact path="/home">
-            <Home/>
-          </Route>
-          <Route exact path="/friends/:id">
-            <FriendDetail/>
-          </Route>
-          <Route exact path="/">
-            <LandingPage/>
-          </Route>
-          <Route path="/groups/:id">
-            <GroupExpenses />
-          </Route>
-          <Route>
-            <PageNotFound/>
-          </Route>
-        </Switch>
       )}
     </>
   );

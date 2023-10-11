@@ -27,6 +27,7 @@ function Expense(){
     },[dispatch, id, sessionUser]);
 	return (
         <>
+            {/* {sessionUser && isLoaded && ( */}
             {sessionUser && (
                 <div className="middle">
                     { expense ?
