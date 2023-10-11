@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as expenseActions from "../../store/expenses";
 import ExpenseBalance from '../ExpenseBalance';
 
-function Balance(){
+function Balance({ loggedIn }){
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
@@ -56,7 +56,7 @@ function Balance(){
 
 	return (
         <>
-            {sessionUser && isLoaded &&(
+            {sessionUser && isLoaded && loggedIn && (
                 <div className="sidebar">
                     <div className='all-expenses-hide'>
                         {" "}All Expenses
