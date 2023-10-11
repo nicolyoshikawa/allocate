@@ -5,6 +5,7 @@ from flask_login import current_user, login_required
 from app.api.aws_util import (
     upload_file_to_s3, get_unique_filename)
 from .auth_routes import validation_errors_to_error_messages
+from .balance import calculate_balance
 from datetime import date
 
 expense_group_routes = Blueprint('groups', __name__)
@@ -28,6 +29,8 @@ def add_exp(group):
 
     group_dict["expenses"] = expenses_list
     group_dict["expense_group_users"] = group_user_list
+    balance = calculate_balance([group.id])
+    group_dict["balance"] = balance
     return group_dict
 
 def add_users_comments(exp):

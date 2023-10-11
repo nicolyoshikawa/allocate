@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseTile from '../ExpenseTile';
 import * as expenseActions from "../../store/expenses";
+import * as balanceActions from "../../store/balance";
 import CreateExpenseModal from '../CreateExpenseModal';
 
 function AllExpenses(){
@@ -20,6 +21,7 @@ function AllExpenses(){
     useEffect(()=> {
         if(sessionUser){
             dispatch(expenseActions.loadAllUserExpenses())
+            dispatch(balanceActions.loadAllUserExpenseBalance())
             .then(()=>setIsLoaded(true))
         }
     },[dispatch, sessionUser]);

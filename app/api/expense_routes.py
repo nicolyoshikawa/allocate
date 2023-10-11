@@ -5,6 +5,7 @@ from flask_login import current_user, login_required
 from app.api.aws_util import (
     upload_file_to_s3, get_unique_filename)
 from .auth_routes import validation_errors_to_error_messages
+from .balance import calculate_balance
 from datetime import date
 
 expense_routes = Blueprint('expenses', __name__)
@@ -182,9 +183,12 @@ def get_all_expenses():
     expense_list = []
     for expense in all_expenses:
         exp_dict = add_group_user_dict_and_comments(expense)
-        # exp_dict["balance"] = add_balance_dict(expense)
         expense_list.append(exp_dict)
-    return {"expenses": expense_list}
+
+    current_user_groups_list = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == current_user.id).all()
+    group_id_list = [user.group_id for user in current_user_groups_list]
+    balance = calculate_balance(group_id_list)
+    return {"expenses": expense_list, "balance": balance}
 
 @expense_routes.route('/', methods=["POST"])
 @login_required

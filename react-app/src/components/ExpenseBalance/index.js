@@ -1,9 +1,6 @@
 import React from 'react';
-import BalanceFunction from "../BalanceFunc";
 
-function ExpenseBalance({balanceArr, sessionUser}){
-
-    let balance = BalanceFunction(balanceArr, sessionUser);
+function ExpenseBalance({balance}){
     let abs_balance = Math.abs(balance)
     let num_balance = Number(abs_balance).toFixed(2);
 

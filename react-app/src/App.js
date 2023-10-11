@@ -16,7 +16,7 @@ import GroupExpenses from "./components/GroupExpenses";
 
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.session.user);
+  // const user = useSelector(state => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
@@ -54,8 +54,9 @@ function App() {
                   <Route>
                     <PageNotFound/>
                   </Route>
-                  <Balance loggedIn={isLoaded} />
+                  {/* <Balance loggedIn={isLoaded} /> */}
                 </Switch>
+                <Balance loggedIn={isLoaded} />
             </div>
           </div>
       )}
