@@ -39,7 +39,7 @@ function GroupExpenses(){
 
 	return (
         <>
-            { sessionUser && (
+            { sessionUser && isLoaded && (
                 <>
                     {group_name ? (
                         <>
