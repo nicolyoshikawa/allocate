@@ -25,13 +25,12 @@ export const loadAllUserExpenseBalance = () => async (dispatch) => {
 };
 
 export const settle_balance = (id) => async (dispatch) => {
-  const response = await fetch(`/api/balance/${id}`, {
+
+  const response = await fetch(`/api/balance/${id}/settle`, {
     method: 'PUT'
   });
-
   if (response.ok) {
     const res = await response.json();
-    // dispatch(deleteAnExpense(id));
     return res;
   }
 };

@@ -21,24 +21,15 @@ def calculate_balance(group_id_list):
     balance = total / 2
     return balance
 
-@balance_routes.route('/<int:friendId>', methods=["PUT"])
+@balance_routes.route('/<int:friendId>/settle', methods=["PUT"])
 @login_required
 def settle_balance(friendId):
-    pass
-    # user = User.query.filter_by(id = friendId).first()
-    # if not user:
-    #     return {'errors': ["Friend could not be found"]}, 404
+    userExpenses = Expense.query.join(ExpenseGroupUser, Expense.group_id == ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id, Expense.settle_status == "unsettled").all()
+    friendExpenses = Expense.query.join(ExpenseGroupUser, Expense.group_id == ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == friendId, Expense.settle_status == "unsettled").all()
+    sharedExpenses = set(userExpenses).intersection(friendExpenses)
 
-    # user_dict = user.to_dict()
-    # targetId = user_dict["id"]
-    # expense = Expense.query.get(id)
-    # if not expense:
-    #     return {'errors': ["Expense could not be found"]}, 404
+    for sharedExpense in sharedExpenses:
+        sharedExpense.settle_status = "settled"
+        db.session.commit()
 
-    # expense_group_user = ExpenseGroupUser.query.filter(ExpenseGroupUser.group_id == expense.group_id, ExpenseGroupUser.user_id == current_user.id).first()
-    # if not expense_group_user:
-    #     return {'errors': ['Unauthorized']}
-
-    # db.session.delete(expense)
-    # db.session.commit()
-    # return { "message": ["Expense successfully deleted"]}, 200
+    return { "message": ["Balance successfully settled"]}, 200

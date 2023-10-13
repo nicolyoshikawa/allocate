@@ -61,28 +61,13 @@ function SettleUp({param_id}) {
     e.preventDefault();
     setHasSubmitted(true);
 
-    // for(let i = 0; i < friendArr?.length; i++){
-    //     let exp_obj = friendArr[i];
-    //     const errors = [];
-    //     if(user.id !== exp_obj.expense_group_users[0].id && user.id !== exp_obj.expense_group_users[1].id ) {
-    //         errors.push("You do not have access to delete this expense.")
-    //     };
-
-    //     setErrors(errors);
-
-    //     if(Object.values(errors).length === 0){
-    //         setErrors([]);
-    //         await dispatch(balanceActions.settle_balance(exp_obj.id));
-    //     }
-    // }
-
-    // const newGroup = {name, friend_id};
     if(Object.values(errors).length === 0){
         setErrors([]);
-
         const clear_balance = await dispatch(balanceActions.settle_balance(friend_id));
         if(clear_balance){
+            console.log("here")
             reset();
+            dispatch(expenseActions.loadAllUserExpenses())
             closeModal();
         }
     }
