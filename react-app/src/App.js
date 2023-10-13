@@ -54,9 +54,7 @@ function App() {
                   <Route>
                     <PageNotFound/>
                   </Route>
-                  {/* <Balance loggedIn={isLoaded} /> */}
                 </Switch>
-                {/* <Balance loggedIn={isLoaded} /> */}
             </div>
           </div>
       )}

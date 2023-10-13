@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as expenseActions from "../../store/expenses";
 import ExpenseBalance from '../ExpenseBalance';
 
-function Balance({ loggedIn }){
+function Balance(){
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
@@ -14,11 +14,30 @@ function Balance({ loggedIn }){
     const friendsListArr = useSelector(state => state.friends.friends);
     const groupListArr = useSelector(state => Object.values(state.groups));
     const balance_from_state = useSelector(state => (state.balances.balance));
-
+    const path_location = location.pathname.split("/")
+    let balance = 0;
     if (!sessionUser) {
         history.push("/")
+    } else {
+        if(path_location[1] === "friends"){
+            const friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
+            if(friendArr?.length > 0) {
+                balance = friendArr[0]?.balance
+            } else {
+                balance = 0
+            }
+
+        } else if(path_location[1] === "groups"){
+            const friendArr = groupListArr?.filter(el=> el.id === Number(path_location[2]));
+            if(friendArr?.length > 0) {
+                balance = friendArr[0]?.balance
+            } else {
+                balance = 0
+            }
+        } else {
+            balance = balance_from_state
+        }
     }
-    const path_location = location.pathname.split("/")
 
     useEffect(()=> {
         if(sessionUser){
@@ -27,30 +46,9 @@ function Balance({ loggedIn }){
         }
     },[dispatch, sessionUser]);
 
-    let balance;
-
-    if(path_location[1] === "friends"){
-        const friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
-        if(friendArr?.length > 0) {
-            balance = friendArr[0]?.balance
-        } else {
-            balance = 0
-        }
-
-    } else if(path_location[1] === "groups"){
-        const friendArr = groupListArr?.filter(el=> el.id === Number(path_location[2]));
-        if(friendArr?.length > 0) {
-            balance = friendArr[0]?.balance
-        } else {
-            balance = 0
-        }
-    } else {
-        balance = balance_from_state
-    }
-
 	return (
         <>
-            {sessionUser && isLoaded && loggedIn && (
+            {sessionUser && isLoaded && (
                 <div className="sidebar">
                     <div className='all-expenses-hide'>
                         {" "}All Expenses
@@ -62,6 +60,9 @@ function Balance({ loggedIn }){
                         </div>
                     </div>
                 </div>
+            )}
+            {!sessionUser && (
+                <div></div>
             )}
         </>
 	);

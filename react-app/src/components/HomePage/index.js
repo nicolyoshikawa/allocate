@@ -1,6 +1,7 @@
 import AllExpenses from "../AllExpenses";
 import { useSelector } from "react-redux";
 import { useHistory} from "react-router-dom";
+import Balance from "../Balance";
 
 export default function Home() {
     const user = useSelector(state => state.session.user);
@@ -11,8 +12,11 @@ export default function Home() {
     }
 
     return user && (
-        <div className="middle">
-            <AllExpenses/>
-        </div>
+        <>
+            <div className="middle">
+                <AllExpenses/>
+            </div>
+            <Balance/>
+        </>
     )
 }

@@ -6,8 +6,8 @@ import CreateExpenseModal from '../CreateExpenseModal';
 import ExpenseTile from '../ExpenseTile';
 import * as expenseActions from "../../store/expenses";
 import ManageFriend from '../ManageFriend';
-import checkmark from "../../assets/checkmark-circle.png"
-import PageNotFound from '../PageNotFound';
+import checkmark from "../../assets/checkmark-circle.png";
+import Balance from '../Balance';
 
 function FriendDetail(){
     const { id } = useParams();
@@ -53,45 +53,50 @@ function FriendDetail(){
 
 	return (
         <>
-            {sessionUser && friendObj ? (
+            {isLoaded && (
                 <>
-                    <div className="middle">
-                        <div className='expense-bar-container'>
-                            <h2 className='expense-bar'>{friendObj.first_name} {friendObj.last_name}</h2>
-                            <div>{friend_status}</div>
-                            {!friend_status ? (
-                                <>
-                                    <div className='expense-bar'><CreateExpenseModal param_id={param_id}/></div>
-                                </>
-                            ) : <div></div>}
-                        </div>
-                        <div><ManageFriend friendObj={friendObj} sessionUser={sessionUser}/></div>
-                        {!friend_status ? (
-                            friendExpenses.length > 0 ? (
-                                friendExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true} sessionUser={sessionUser} displayGroup={true}/>))
-                                ) : (
+                {sessionUser && friendObj ? (
+                    <>
+                        <div className="middle">
+                            <div className='expense-bar-container'>
+                                <h2 className='expense-bar'>{friendObj.first_name} {friendObj.last_name}</h2>
+                                <div>{friend_status}</div>
+                                {!friend_status ? (
                                     <>
-                                        <div className='allSettledUp'>
-                                            <img src={checkmark} alt="all_settled_img" />
-                                        </div>
-                                        <div className="settled-tab">You and {friendObj.first_name} {friendObj.last_name} are all settled up.</div>
+                                        <div className='expense-bar'><CreateExpenseModal param_id={param_id}/></div>
                                     </>
-                            )
-                        ) : (
-                            <>
-                            </>
-                        )}
-                    </div>
-                </>
-            ):(
-                <>
-                    <div className="middle">
-                        <div className='expense-bar-container'>
-                            <h1></h1>
-                            {/* <h1>Friend Not Found</h1> */}
-                            {/* <PageNotFound/> */}
+                                ) : <div></div>}
+                            </div>
+                            <div><ManageFriend friendObj={friendObj} sessionUser={sessionUser}/></div>
+                            {!friend_status ? (
+                                friendExpenses.length > 0 ? (
+                                    friendExpenses.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true} sessionUser={sessionUser} displayGroup={true}/>))
+                                    ) : (
+                                        <>
+                                            <div className='allSettledUp'>
+                                                <img src={checkmark} alt="all_settled_img" />
+                                            </div>
+                                            <div className="settled-tab">You and {friendObj.first_name} {friendObj.last_name} are all settled up.</div>
+                                        </>
+                                )
+                            ) : (
+                                <>
+                                </>
+                            )}
                         </div>
-                    </div>
+                        <Balance/>
+                    </>
+
+                ):(
+                    <>
+                        <div className="middle">
+                            <div className='expense-bar-container'>
+                                <h1>Friend Not Found</h1>
+                            </div>
+                        </div>
+                        <Balance/>
+                    </>
+                )}
                 </>
             )}
         </>
