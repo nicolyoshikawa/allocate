@@ -114,7 +114,6 @@ def update_an_expense(id):
 
                 receipt_img_url.filename = get_unique_filename(receipt_img_url.filename)
                 upload = upload_file_to_s3(receipt_img_url)
-                # print(upload)
                 if "url" not in upload:
                 # if the dictionary doesn't have a url key
                 # it means that there was an error when we tried to upload
@@ -205,7 +204,7 @@ def add_an_expense():
         else:
             receipt_img_url.filename = get_unique_filename(receipt_img_url.filename)
             upload = upload_file_to_s3(receipt_img_url)
-            # print(upload)
+
             if "url" not in upload:
             # if the dictionary doesn't have a url key
             # it means that there was an error when we tried to upload
@@ -246,12 +245,12 @@ def add_an_expense():
             friends_group = ExpenseGroupUser.query.filter(ExpenseGroupUser.user_id == friend_id, ExpenseGroupUser.group_id == group_id).all()
             if not users_group or not friends_group:
                 return {'errors': ["You or your friend are not part of this group"]}, 403
-
         new_expense = Expense(
             group_id=group_id,
             paid_by=current_user.id,
             description=form.data["description"],
             price=form.data["price"],
+            settle_status="unsettled",
             receipt_img_url=receipt_image,
             expense_date=expense_date
         )

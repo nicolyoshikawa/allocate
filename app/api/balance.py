@@ -10,7 +10,7 @@ def calculate_balance(group_id_list):
     total = 0
 
     for group_id in group_id_list:
-        all_expenses_in_group_list = Expense.query.filter(Expense.group_id == group_id).all()
+        all_expenses_in_group_list = Expense.query.filter(Expense.group_id == group_id, Expense.settle_status == "unsettled").all()
 
         for exp in all_expenses_in_group_list:
             if exp.paid_by == current_user.id:
