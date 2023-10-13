@@ -87,7 +87,8 @@ function FriendDetail(){
                 <>
                     <div className="middle">
                         <div className='expense-bar-container'>
-                            <h1>Friend Not Found</h1>
+                            <h1></h1>
+                            {/* <h1>Friend Not Found</h1> */}
                             {/* <PageNotFound/> */}
                         </div>
                     </div>

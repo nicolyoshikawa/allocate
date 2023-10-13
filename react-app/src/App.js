@@ -56,7 +56,7 @@ function App() {
                   </Route>
                   {/* <Balance loggedIn={isLoaded} /> */}
                 </Switch>
-                <Balance loggedIn={isLoaded} />
+                {/* <Balance loggedIn={isLoaded} /> */}
             </div>
           </div>
       )}
