@@ -5,16 +5,19 @@ import * as expenseActions from "../../store/expenses";
 import ExpenseBalance from '../ExpenseBalance';
 
 function Balance(){
+    console.log("starting balance");
+    console.log(new Date())
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
     const [isLoaded, setIsLoaded] = useState(false);
     const sessionUser = useSelector(state => state.session.user);
-    const allExpenses = useSelector(state => Object.values(state.expenses));
     const friendsListArr = useSelector(state => state.friends.friends);
     const groupListArr = useSelector(state => Object.values(state.groups));
     const balance_from_state = useSelector(state => (state.balances.balance));
     const path_location = location.pathname.split("/")
+    console.log("grabbed from states");
+    console.log(new Date())
     let balance = 0;
     if (!sessionUser) {
         history.push("/")
@@ -38,6 +41,9 @@ function Balance(){
             balance = balance_from_state
         }
     }
+
+    console.log("calculated balance")
+    console.log(new Date())
 
     useEffect(()=> {
         if(sessionUser){
