@@ -28,7 +28,8 @@ function AllExpenses(){
 
 	return (
         <>
-            {isLoaded && sessionUser && (
+            {/* {isLoaded && sessionUser && ( */}
+            {sessionUser && (
                 <div>
                         <div>
                             <div className='expense-bar-container'>
