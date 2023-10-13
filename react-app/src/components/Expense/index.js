@@ -5,6 +5,7 @@ import ExpenseTile from '../ExpenseTile';
 import * as expenseActions from "../../store/expenses";
 import ManageExpenses from '../ManageExpenses';
 import Comments from '../Comments';
+import Balance from '../Balance';
 
 function Expense(){
     const { id } = useParams();
@@ -29,21 +30,32 @@ function Expense(){
         <>
             {/* {sessionUser && isLoaded && ( */}
             {sessionUser && (
-                <div className="middle">
+                <>
                     { expense ?
-                        (<div>
-                            <div className='expense-bar-container'>
-                                <h2>Expense</h2>
-                            </div>
-                            <ExpenseTile clickable={false} expense={expense} sessionUser={sessionUser}/>
-                            <ManageExpenses expense={expense}/>
-                            <Comments expense={expense}/>
-                        </div>
+                        (
+                            <>
+                                <div className="middle">
+                                    <div className='expense-bar-container'>
+                                        <h2>Expense</h2>
+                                    </div>
+                                    <ExpenseTile clickable={false} expense={expense} sessionUser={sessionUser}/>
+                                    <ManageExpenses expense={expense}/>
+                                    <Comments expense={expense}/>
+                                </div>
+                                <Balance/>
+                            </>
                         ) : (
-                            <h1>Expense Not Found</h1>
+                            <>
+                                <div className="middle">
+                                    <div className='expense-bar-container'>
+                                        <h1>Expense Not Found</h1>
+                                    </div>
+                                </div>
+                                <Balance/>
+                            </>
                         )
                     }
-                </div>
+                </>
             )}
         </>
 	);
