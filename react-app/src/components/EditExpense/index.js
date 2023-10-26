@@ -5,7 +5,7 @@ import * as expenseActions from "../../store/expenses";
 import * as friendActions from "../../store/friends";
 import * as groupActions from "../../store/groups";
 
-function AddExpense({expense, param_id, group_object}) {
+function EditExpense({expense, param_id, group_object}) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const today = new Date();
@@ -63,6 +63,23 @@ function AddExpense({expense, param_id, group_object}) {
     },[friend_id])
     const user_id = user.id;
 
+    useEffect(()=> {
+        dispatch(friendActions.getUserFriends())
+        dispatch(expenseActions.loadAllUserExpenses())
+        dispatch(expenseActions.loadExpenseById(expense?.id))
+        .then((expObj)=>{
+            if(expObj){
+                const friendArr = expObj.expense_group_users.filter(el=> el.id !== user_id);
+                setReceipt_img_url(expObj.receipt_img_url);
+                setDescription(expObj.description);
+                setPrice(expObj.price);
+                setGroup_id(expObj.group_id);
+                setExpense_date(expObj.expense_date);
+                setFriend_id(friendArr[0].id)
+            }
+        })
+    },[dispatch, expense?.id, expense?.receipt_img_url, expense?.description, expense?.price, expense?.group_id, expense?.expense_date, user_id]);
+
     useEffect(() => {
         const errors = [];
         if(description && description.length > 500) errors.push("Your description needs to be less than 500 characters");
@@ -81,32 +98,28 @@ function AddExpense({expense, param_id, group_object}) {
     e.preventDefault();
     setHasSubmitted(true);
 
-    const newExpense = new FormData();
-    newExpense.append("description", description);
-    newExpense.append("price", price);
-    newExpense.append("expense_date", expense_date);
-    newExpense.append("friend_id", friend_id);
-    newExpense.append("group_id", group_id);
-    newExpense.append("paid_by", user_id);
-    newExpense.append("receipt_img_url", receipt_img_url);
-    // aws uploads can be a bit slow—displaying
-    // some sort of loading message is a good idea
+    const updateExpense = new FormData();
+    // updateExpense.append("id", expense?.id);
+    updateExpense.append("description", description);
+    updateExpense.append("price", price);
+    updateExpense.append("expense_date", expense_date);
+    updateExpense.append("friend_id", friend_id);
+    updateExpense.append("group_id", group_id);
+    updateExpense.append("paid_by", user_id);
+    updateExpense.append("receipt_img_url", receipt_img_url);
     setImageLoading(true);
 
     if(Object.values(errors).length === 0){
         setErrors([]);
-        if(expLength === 0){
-            const createExpense = await dispatch(expenseActions.createANewExpense(newExpense));
-            if(createExpense.errors){
+        if(expLength > 0){
+            const updatedExpense = await dispatch(expenseActions.updateAnExpense(updateExpense, expense?.id));
+            if(updatedExpense.errors){
                 const errors = [];
-                errors.push(createExpense.errors);
+                errors.push(updatedExpense.errors);
                 setErrors(errors);
             } else {
                 reset();
-                // history.push(`/expenses/${createExpense.id}`);
-                dispatch(expenseActions.loadAllUserExpenses());
-                dispatch(groupActions.getGroups())
-                setErrors([]);
+                dispatch(expenseActions.loadExpenseById(updatedExpense.id));
                 closeModal();
             }
         }
@@ -127,7 +140,7 @@ function AddExpense({expense, param_id, group_object}) {
   return (
     <>
         <div className="add-expense-form-container">
-            <h1>Add An Expense</h1>
+            <h1>Edit Expense</h1>
             {hasSubmitted && errors.length > 0 && (
             <div className="login-form-container-errors">
                 <ul>
@@ -225,4 +238,4 @@ function AddExpense({expense, param_id, group_object}) {
   );
 }
 
-export default AddExpense;
+export default EditExpense;

@@ -25,11 +25,6 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {/* <div className="container"> */}
-          {/* <div className="sections"> */}
-            {/* <NavSideBar isLoaded={isLoaded} /> */}
-          {/* </div> */}
-      {/* </div> */}
       {isLoaded && (
         <>
           <div className="container">
@@ -65,8 +60,6 @@ function App() {
           </div>
         </>
       )}
-      {/* </div> */}
-      {/* </div> */}
     </>
   );
 }
