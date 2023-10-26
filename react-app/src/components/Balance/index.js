@@ -10,9 +10,10 @@ function Balance(){
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
-    const [isLoaded, setIsLoaded] = useState(false);
+    // const [isLoaded, setIsLoaded] = useState(false);
     const sessionUser = useSelector(state => state.session.user);
     const friendsListArr = useSelector(state => state.friends.friends);
+    const friendsExpListArr = useSelector(state => state.friends.expenses);
     const groupListArr = useSelector(state => Object.values(state.groups));
     const balance_from_state = useSelector(state => (state.balances.balance));
     const path_location = location.pathname.split("/")
@@ -25,7 +26,7 @@ function Balance(){
         if(path_location[1] === "friends"){
             const friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
             if(friendArr?.length > 0) {
-                balance = friendArr[0]?.balance
+                balance = friendsExpListArr.balance
             } else {
                 balance = 0
             }
@@ -45,16 +46,17 @@ function Balance(){
     console.log("calculated balance")
     console.log(new Date())
 
-    useEffect(()=> {
-        if(sessionUser){
-            dispatch(expenseActions.loadAllUserExpenses())
-            .then(()=>setIsLoaded(true))
-        }
-    },[dispatch, sessionUser]);
+    // useEffect(()=> {
+    //     if(sessionUser){
+    //         dispatch(expenseActions.loadAllUserExpenses())
+    //         .then(()=>setIsLoaded(true))
+    //     }
+    // },[dispatch, sessionUser]);
 
 	return (
         <>
-            {sessionUser && isLoaded && (
+            {/* {sessionUser && isLoaded && ( */}
+            {sessionUser && (
                 <div className="sidebar">
                     <div className='all-expenses-hide'>
                         {" "}All Expenses
@@ -68,7 +70,11 @@ function Balance(){
                 </div>
             )}
             {!sessionUser && (
-                <div></div>
+                <div className="sidebar">
+                <div className='all-expenses-hide'>
+                    {" "}All Expenses
+                </div>
+                </div>
             )}
         </>
 	);

@@ -1,6 +1,8 @@
 from flask import Blueprint
 from flask_login import login_required, current_user
 from app.models import Friend, db, User, ExpenseGroup, ExpenseGroupUser, Expense
+from .expense_routes import add_group_user_dict_and_comments
+from .balance import calculate_balance
 
 friend_routes = Blueprint("friends", __name__)
 
@@ -76,24 +78,6 @@ def accept_friend(targetId):
     db.session.commit()
     return {"message": "Request accepted"}
 
-# @friend_routes.route("/reject/<int:targetId>", methods=["DELETE"])
-# @login_required
-# def reject_friend(targetId):
-#     """
-#     A logged-in user can reject a friend request.
-#     """
-#     request = Friend.query.filter_by(sender_id=targetId,
-#                                      receiver_id=current_user.id,
-#                                      status="pending").first()
-
-#     # Check if the friendship request exists
-#     if not request:
-#         return {'errors': ["Friend request could not be found"]}, 404
-
-#     db.session.delete(request)
-#     db.session.commit()
-#     return {"message": "Request rejected"}
-
 @friend_routes.route("/remove/<int:targetId>", methods=["DELETE"])
 @login_required
 def delete_friend(targetId):
@@ -127,3 +111,45 @@ def delete_friend(targetId):
     db.session.commit()
 
     return {"message": "Friend/friend request removed"}
+
+@friend_routes.route("/<int:friendId>", methods=["GET"])
+@login_required
+def get_friend_exps(friendId):
+
+    friendship = Friend.query.filter(
+        (Friend.sender_id == current_user.id) & (Friend.receiver_id == friendId)  &
+        (Friend.status == "friends")
+        |
+        (Friend.sender_id == friendId) & (Friend.receiver_id == current_user.id) &
+        (Friend.status == "friends")
+        ).first()
+
+    # Check if the friendship exists
+    if not friendship:
+        return {'errors': ["Friend could not be found"]}, 404
+
+    user_group_ids = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == current_user.id).all()
+    friend_group_ids = ExpenseGroupUser.query.with_entities(ExpenseGroupUser.group_id).filter(ExpenseGroupUser.user_id == friendId).all()
+    user_friend_expense_groups= set(user_group_ids).intersection(friend_group_ids)
+    user_friend_expense_group_id = [id[0] for id in user_friend_expense_groups]
+
+    all_expenses = []
+    # group_users_dict
+    for group_id in user_friend_expense_group_id:
+        expenses_per_group = Expense.query.filter(Expense.group_id == group_id, Expense.settle_status == "unsettled").all()
+        all_expenses = expenses_per_group
+
+        exp_group_users = ExpenseGroupUser.query.filter(group_id == ExpenseGroupUser.group_id).all()
+        group_users_dict = []
+        for exp_group_user in exp_group_users:
+            user = User.query.get(exp_group_user.user_id)
+            user_dict = user.to_dict()
+            group_users_dict.append(user_dict)
+
+    expense_list = []
+    for expense in all_expenses:
+        exp_dict = add_group_user_dict_and_comments(expense)
+        expense_list.append(exp_dict)
+
+    balance = calculate_balance(user_friend_expense_group_id)
+    return {"expenses": expense_list, "balance": balance, "users": group_users_dict, "friend_status": friendship.to_dict()}

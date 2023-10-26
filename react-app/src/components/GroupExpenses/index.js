@@ -29,6 +29,7 @@ function GroupExpenses(){
             exp_arr = allGroups[i].expenses
         }
     }
+    const filteredExps = exp_arr?.filter(el => el.settle_status === "unsettled")
 
     useEffect(()=> {
         if(sessionUser){
@@ -48,8 +49,8 @@ function GroupExpenses(){
                                     <h2 className='expense-bar'>{group_name}</h2>
                                     <div className='expense-bar'><CreateExpenseModal group_object={filteredGroups[0]}/></div>
                                 </div>
-                                {exp_arr?.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true} sessionUser={sessionUser} displayGroup={false}/>))}
-                                {exp_arr?.length === 0 ? (
+                                {filteredExps?.map(el => (<ExpenseTile key={el.id} expense={el} clickable={true} sessionUser={sessionUser} displayGroup={false}/>))}
+                                {filteredExps?.length === 0 ? (
                                     <>
                                         <div className='allSettledUp'>
                                             <img src={checkmark} alt="all_settled_img" />

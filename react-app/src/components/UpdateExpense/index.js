@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import { useParams } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
-import AddExpense from "../AddExpense";
+import EditExpense from "../EditExpense";
 
 function UpdateExpense(){
     const [showMenu, setShowMenu] = useState(true);
@@ -14,7 +14,7 @@ function UpdateExpense(){
                     <OpenModalButton
                         buttonText="Edit expense"
                         onItemClick={closeMenu}
-                        modalComponent={<AddExpense expense={expense}/>}
+                        modalComponent={<EditExpense expense={expense}/>}
                     />
                     <OpenModalButton
                             buttonText="Settle up"

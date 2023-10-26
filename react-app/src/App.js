@@ -25,16 +25,11 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      <div className="container">
-          <div className="sections">
-            <NavSideBar isLoaded={isLoaded} />
-          {/* </div> */}
-      {/* </div> */}
       {isLoaded && (
         <>
-          {/* <div className="container"> */}
-            {/* <div className="sections"> */}
-                {/* <NavSideBar isLoaded={isLoaded} /> */}
+          <div className="container">
+            <div className="sections">
+                <NavSideBar isLoaded={isLoaded} />
                 <Switch>
                   <Route exact path="/expenses/:id">
                     <Expense/>
@@ -61,12 +56,10 @@ function App() {
                     <PageNotFound/>
                   </Route>
                 </Switch>
-            {/* </div> */}
-          {/* </div> */}
+            </div>
+          </div>
         </>
       )}
-      </div>
-      </div>
     </>
   );
 }
