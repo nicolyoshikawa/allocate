@@ -19,13 +19,14 @@ const ManageFriend = ({friendObj, sessionUser}) => {
       history.push("/")
   }
 
-  useEffect(() => {
-    dispatch(friendActions.getUserFriends());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(friendActions.getUserFriends());
+  // }, [dispatch]);
 
   const handleAccept = async (e, targetId) => {
     e.preventDefault();
     dispatch(friendActions.acceptFriendRequest(targetId));
+    dispatch(friendActions.getUserFriends());
   };
 
   return (

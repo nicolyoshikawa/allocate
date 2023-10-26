@@ -37,13 +37,15 @@ function FriendDetail(){
     }
 
     useEffect(()=> {
+        console.log("calling loadExpensesByFriendId")
         if(sessionUser){
             dispatch(expenseActions.loadAllUserExpenses())
             dispatch(friendActions.loadExpensesByFriendId(param_id))
             .then(()=>setIsLoaded(true))
         }
+        console.log("finished loadExpensesByFriendId")
 
-    },[dispatch, sessionUser, param_id, friendObj]);
+    },[dispatch, sessionUser, param_id]);
 
     let friend_status;
     if(friendObj?.friend.status === "friends"){
