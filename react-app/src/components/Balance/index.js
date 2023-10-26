@@ -40,6 +40,8 @@ function Balance(){
             }
         }  else if(path_location[1] === "home"){
             balance = balance_from_state
+        }   else if(path_location[1] === "expenses"){
+            balance = balance_from_state
         } else {
             balance = 0
         }
