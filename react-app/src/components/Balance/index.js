@@ -5,8 +5,8 @@ import * as expenseActions from "../../store/expenses";
 import ExpenseBalance from '../ExpenseBalance';
 
 function Balance(){
-    console.log("starting balance");
-    console.log(new Date())
+    // console.log("starting balance");
+    // console.log(new Date())
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
@@ -17,15 +17,15 @@ function Balance(){
     const groupListArr = useSelector(state => Object.values(state.groups));
     const balance_from_state = useSelector(state => (state.balances.balance));
     const path_location = location.pathname.split("/")
-    console.log("grabbed from states");
-    console.log(new Date())
+    // console.log("grabbed from states");
+    // console.log(new Date())
     let balance = 0;
     if (!sessionUser) {
         history.push("/")
     } else {
         if(path_location[1] === "friends"){
             const friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
-            if(friendArr?.length > 0) {
+            if(friendArr && friendArr[0].balance !== 0) {
                 balance = friendsExpListArr.balance
             } else {
                 balance = 0
@@ -33,18 +33,22 @@ function Balance(){
 
         } else if(path_location[1] === "groups"){
             const friendArr = groupListArr?.filter(el=> el.id === Number(path_location[2]));
-            if(friendArr?.length > 0) {
-                balance = friendArr[0]?.balance
+            if(friendArr[0].balance) {
+                balance = friendArr[0].balance
             } else {
                 balance = 0
             }
-        } else {
+        }  else if(path_location[1] === "home"){
             balance = balance_from_state
+        }   else if(path_location[1] === "expenses"){
+            balance = balance_from_state
+        } else {
+            balance = 0
         }
     }
 
-    console.log("calculated balance")
-    console.log(new Date())
+    // console.log("calculated balance")
+    // console.log(new Date())
 
     // useEffect(()=> {
     //     if(sessionUser){
