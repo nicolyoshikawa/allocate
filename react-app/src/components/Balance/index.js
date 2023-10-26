@@ -33,7 +33,7 @@ function Balance(){
 
         } else if(path_location[1] === "groups"){
             const friendArr = groupListArr?.filter(el=> el.id === Number(path_location[2]));
-            if(friendArr[0].balance) {
+            if(friendArr && friendArr[0].balance) {
                 balance = friendArr[0].balance
             } else {
                 balance = 0

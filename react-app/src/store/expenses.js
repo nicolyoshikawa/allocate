@@ -4,6 +4,7 @@ const EXPENSE_BY_ID = "expenses/EXPENSE_BY_ID";
 const CREATE_AN_EXPENSE = "expenses/CREATE_AN_EXPENSE";
 const UPDATE_AN_EXPENSE = "expenses/UPDATE_AN_EXPENSE";
 const DELETE_AN_EXPENSE = "expenses/DELETE_AN_EXPENSE";
+// const TOTAL_BALANCE = "balances/TOTAL_BALANCE";
 
 export const RESET_ACTION = () => ({
   type: RESET_EXPENSES
@@ -33,6 +34,10 @@ export const deleteAnExpense = (expenseId) => ({
   type: DELETE_AN_EXPENSE,
   expenseId
 });
+// export const loadTotalBalance = (balance) => ({
+//   type: TOTAL_BALANCE,
+//   balance
+// });
 
 export const loadAllUserExpenses = () => async (dispatch) => {
   const response = await fetch("/api/expenses/", {
@@ -40,6 +45,7 @@ export const loadAllUserExpenses = () => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(loadExpenses(data.expenses));
+  // dispatch(loadTotalBalance(data.balance));
   return response;
 };
 
