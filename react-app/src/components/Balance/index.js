@@ -13,6 +13,7 @@ function Balance(){
     // const [isLoaded, setIsLoaded] = useState(false);
     const sessionUser = useSelector(state => state.session.user);
     const friendsListArr = useSelector(state => state.friends.friends);
+    const friendsExpListArr = useSelector(state => state.friends.expenses);
     const groupListArr = useSelector(state => Object.values(state.groups));
     const balance_from_state = useSelector(state => (state.balances.balance));
     const path_location = location.pathname.split("/")
@@ -25,7 +26,7 @@ function Balance(){
         if(path_location[1] === "friends"){
             const friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
             if(friendArr?.length > 0) {
-                balance = friendArr[0]?.balance
+                balance = friendsExpListArr.balance
             } else {
                 balance = 0
             }

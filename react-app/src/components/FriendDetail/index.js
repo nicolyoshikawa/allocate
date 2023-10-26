@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-// import * as friendActions from "../../store/friends";
+import * as friendActions from "../../store/friends";
 import CreateExpenseModal from '../CreateExpenseModal';
 import ExpenseTile from '../ExpenseTile';
 import * as expenseActions from "../../store/expenses";
@@ -39,10 +39,11 @@ function FriendDetail(){
     useEffect(()=> {
         if(sessionUser){
             dispatch(expenseActions.loadAllUserExpenses())
+            dispatch(friendActions.loadExpensesByFriendId(param_id))
             .then(()=>setIsLoaded(true))
         }
 
-    },[dispatch, sessionUser, friendObj]);
+    },[dispatch, sessionUser, param_id, friendObj]);
 
     let friend_status;
     if(friendObj?.friend.status === "friends"){
