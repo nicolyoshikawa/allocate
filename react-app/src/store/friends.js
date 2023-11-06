@@ -46,6 +46,7 @@ export const acceptFriendRequest = (targetId) => async (dispatch) => {
     if (res.ok) {
       const data = await res.json();
       dispatch(getUserFriends());
+      dispatch(loadExpensesByFriendId());
       return data;
     }
   };
@@ -71,6 +72,8 @@ export const loadExpensesByFriendId = (id) => async (dispatch) => {
   const data = await response.json();
   if (response.ok) {
     dispatch(friendExpenses(data));
+  } else {
+    return null
   }
 
   return data
