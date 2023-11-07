@@ -108,7 +108,7 @@ const expensesReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_EXPENSES:
       let load_new_expenses = {};
-        action.expenses.forEach((expense) => {
+        action.expenses?.forEach((expense) => {
           load_new_expenses[expense.id] = expense;
         });
         return load_new_expenses;

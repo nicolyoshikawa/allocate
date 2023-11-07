@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import * as friendActions from "../../store/friends";
 import CreateExpenseModal from '../CreateExpenseModal';
 import ExpenseTile from '../ExpenseTile';
 import * as expenseActions from "../../store/expenses";
+import * as friendActions from "../../store/friends";
+import * as groupActions from "../../store/groups";
 import ManageFriend from '../ManageFriend';
 import checkmark from "../../assets/checkmark-circle.png";
 import Balance from '../Balance';
@@ -39,6 +40,7 @@ function FriendDetail(){
     useEffect(()=> {
         // console.log("calling loadExpensesByFriendId")
         // if(sessionUser){
+            // dispatch(groupActions.getGroups())
             dispatch(expenseActions.loadAllUserExpenses())
             dispatch(friendActions.loadExpensesByFriendId(param_id))
             .then(()=>setIsLoaded(true))

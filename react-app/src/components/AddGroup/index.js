@@ -42,6 +42,7 @@ function AddGroup() {
             } else {
                 reset();
                 dispatch(groupActions.getGroups());
+                dispatch(friendActions.getUserFriends());
                 closeModal();
             }
         }
