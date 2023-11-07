@@ -4,6 +4,7 @@ import { useModal } from "../../context/Modal";
 import * as expenseActions from "../../store/expenses";
 import * as friendActions from "../../store/friends";
 import * as groupActions from "../../store/groups";
+import * as balanceActions from "../../store/balance";
 
 function EditExpense({expense, param_id, group_object}) {
     const dispatch = useDispatch();
@@ -120,6 +121,7 @@ function EditExpense({expense, param_id, group_object}) {
             } else {
                 reset();
                 dispatch(expenseActions.loadExpenseById(updatedExpense.id));
+                dispatch(balanceActions.loadAllUserExpenseBalance());
                 closeModal();
             }
         }

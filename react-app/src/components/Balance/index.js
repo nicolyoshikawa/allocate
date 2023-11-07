@@ -50,7 +50,7 @@ function Balance(){
 
     useEffect(()=> {
         if(sessionUser){
-            dispatch(balanceActions.loadAllUserExpenseBalance())
+            // dispatch(balanceActions.loadAllUserExpenseBalance())
             // .then(()=>setIsLoaded(true))
         }
     },[dispatch, sessionUser]);

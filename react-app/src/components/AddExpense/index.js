@@ -107,7 +107,7 @@ function AddExpense({expense, param_id, group_object}) {
                 dispatch(expenseActions.loadAllUserExpenses());
                 dispatch(groupActions.getGroups())
                 dispatch(friendActions.loadExpensesByFriendId(friend_id))
-                dispatch(balanceActions.loadAllUserExpenseBalance())
+                // dispatch(balanceActions.loadAllUserExpenseBalance())
                 setErrors([]);
                 closeModal();
             }

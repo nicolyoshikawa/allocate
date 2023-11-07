@@ -1,10 +1,12 @@
+import {loadTotalBalance } from "./balance.js";
+
 const RESET_EXPENSES = "expenses/RESET_EXPENSES";
 const LOAD_EXPENSES = "expenses/LOAD_EXPENSES";
 const EXPENSE_BY_ID = "expenses/EXPENSE_BY_ID";
 const CREATE_AN_EXPENSE = "expenses/CREATE_AN_EXPENSE";
 const UPDATE_AN_EXPENSE = "expenses/UPDATE_AN_EXPENSE";
 const DELETE_AN_EXPENSE = "expenses/DELETE_AN_EXPENSE";
-// const TOTAL_BALANCE = "balances/TOTAL_BALANCE";
+// const TOTAL_BALANCE = "expenses/TOTAL_BALANCE";
 
 export const RESET_ACTION = () => ({
   type: RESET_EXPENSES
@@ -45,6 +47,7 @@ export const loadAllUserExpenses = () => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(loadExpenses(data.expenses));
+  dispatch(loadTotalBalance(data.balance));
   return response;
 };
 

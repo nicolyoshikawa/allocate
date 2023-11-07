@@ -1,4 +1,5 @@
 import { RESET_ACTION } from "./expenses";
+// import {loadTotalBalance } from "./balance.js";
 const RESET_GROUPS = "expenses/RESET_GROUPS";
 const LOAD_GROUPS = "groups/LOAD_GROUPS";
 const CREATE_GROUP = "groups/CREATE_GROUP";
@@ -24,6 +25,7 @@ export const getGroups = () => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     dispatch(load_group(data.groups));
+    // dispatch(loadTotalBalance())
     return data;
   }
 
