@@ -68,12 +68,8 @@ function SettleUp({param_id}) {
         setErrors([]);
         const clear_balance = await dispatch(balanceActions.settle_balance(friend_id));
         if(clear_balance){
-            // console.log("cleared balance");
             reset();
             dispatch(expenseActions.loadAllUserExpenses())
-            // dispatch(expenseActions.loadAllUserExpenses());
-            // dispatch(groupActions.getGroups())
-            // dispatch(friendActions.loadExpensesByFriendId(friend_id))
             closeModal();
         }
     }

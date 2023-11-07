@@ -70,9 +70,7 @@ export const loadExpensesByFriendId = (id) => async (dispatch) => {
     method: "GET"
   });
   const data = await response.json();
-  // console.log("loadExpensesByFriendId " + id, data)
   if (response.ok) {
-    // console.log("loadExpensesByFriendId was ok")
     dispatch(friendExpenses(data));
   } else {
     return null
