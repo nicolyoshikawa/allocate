@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as expenseActions from "../../store/expenses";
 import * as balanceActions from "../../store/balance";
+import * as friendActions from "../../store/friends";
+import * as groupActions from "../../store/groups";
 
 function SettleUp({param_id}) {
     const dispatch = useDispatch();
     const location = useLocation();
     const { closeModal } = useModal();
+    const history = useHistory();
     const path_location = location.pathname.split("/");
 
     const today = new Date();
@@ -65,8 +68,12 @@ function SettleUp({param_id}) {
         setErrors([]);
         const clear_balance = await dispatch(balanceActions.settle_balance(friend_id));
         if(clear_balance){
+            // console.log("cleared balance");
             reset();
-            // dispatch(expenseActions.loadAllUserExpenses())
+            dispatch(expenseActions.loadAllUserExpenses())
+            // dispatch(expenseActions.loadAllUserExpenses());
+            // dispatch(groupActions.getGroups())
+            // dispatch(friendActions.loadExpensesByFriendId(friend_id))
             closeModal();
         }
     }

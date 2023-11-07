@@ -37,13 +37,13 @@ function FriendDetail(){
     }
 
     useEffect(()=> {
-        console.log("calling loadExpensesByFriendId")
-        if(sessionUser){
+        // console.log("calling loadExpensesByFriendId")
+        // if(sessionUser){
             dispatch(expenseActions.loadAllUserExpenses())
             dispatch(friendActions.loadExpensesByFriendId(param_id))
             .then(()=>setIsLoaded(true))
-        }
-        console.log("finished loadExpensesByFriendId")
+        // }
+        // console.log("finished loadExpensesByFriendId")
 
     },[dispatch, sessionUser, param_id]);
 
@@ -87,7 +87,7 @@ function FriendDetail(){
                                 </>
                             )}
                         </div>
-                        <Balance/>
+                        {/* <Balance/> */}
                     </>
 
                 ):(
@@ -97,7 +97,7 @@ function FriendDetail(){
                                 <h1>Friend Not Found</h1>
                             </div>
                         </div>
-                        <Balance/>
+                        {/* <Balance/> */}
                     </>
                 )}
                 </>

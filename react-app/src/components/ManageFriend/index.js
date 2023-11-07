@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import DeleteFriend from "../DeleteFriend";
 import * as friendActions from "../../store/friends";
-
+import * as groupActions from "../../store/groups";
 // import "./FriendsPage.css";
 
 const ManageFriend = ({friendObj, sessionUser}) => {
@@ -27,6 +27,7 @@ const ManageFriend = ({friendObj, sessionUser}) => {
     e.preventDefault();
     dispatch(friendActions.acceptFriendRequest(targetId));
     dispatch(friendActions.getUserFriends());
+    dispatch(groupActions.getGroups());
   };
 
   return (

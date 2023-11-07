@@ -1,3 +1,6 @@
+import { loadAllUserExpenses } from "./expenses";
+import { loadExpensesByFriendId } from "./friends";
+
 const RESET_BALANCE = "balances/RESET_BALANCE";
 const TOTAL_BALANCE = "balances/TOTAL_BALANCE";
 const SETTLE_BALANCE = "balances/SETTLE_BALANCE";
@@ -31,6 +34,8 @@ export const settle_balance = (id) => async (dispatch) => {
   });
   if (response.ok) {
     const res = await response.json();
+    dispatch(loadExpensesByFriendId(id))
+    dispatch(loadAllUserExpenses())
     return res;
   }
 };
