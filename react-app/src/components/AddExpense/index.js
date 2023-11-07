@@ -103,7 +103,6 @@ function AddExpense({expense, param_id, group_object}) {
                 setErrors(errors);
             } else {
                 reset();
-                // history.push(`/expenses/${createExpense.id}`);
                 dispatch(expenseActions.loadAllUserExpenses());
                 dispatch(groupActions.getGroups())
                 dispatch(friendActions.loadExpensesByFriendId(friend_id))
