@@ -28,6 +28,8 @@ function SettleUp({param_id}) {
 
     const user = useSelector(state => state.session.user);
     const friendsListArr = useSelector(state => state.friends.friends);
+    const expenses = useSelector(state => state.friends.expenses);
+    const balance = expenses.balance
     // const allExpenses = useSelector(state => Object.values(state.expenses));
 
     const acceptedFriendsArr = friendsListArr.filter(el=> el.friend.status === "friends");
@@ -36,17 +38,17 @@ function SettleUp({param_id}) {
 
     if(friend_id === "" && param_id) setFriend_id(param_id);
 
-    let expences_balance;
-    let balance;
-    let friendArr;
-    if(path_location[1] === "friends"){
-        friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
-        if(friendArr?.length > 0) {
-            balance = friendArr[0]?.balance
-        }
-    } else {
-        expences_balance = []
-    }
+    // let expences_balance;
+    // let balance;
+    // let friendArr;
+    // if(path_location[1] === "friends"){
+    //     friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
+    //     if(friendArr?.length > 0) {
+    //         balance = friendArr[0]?.balance
+    //     }
+    // } else {
+    //     expences_balance = []
+    // }
 
     useEffect(() => {
         const errors = [];
