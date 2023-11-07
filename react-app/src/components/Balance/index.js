@@ -63,7 +63,7 @@ function Balance(){
                     <div className='all-expenses-hide'>
                         {" "}All Expenses
                     </div>
-                    <div className='side-bar-table'>Your Total Balance</div>
+                    <div className='side-bar-table'>Your Overall Balance</div>
                     <div className="balance-list">
                         <div className="balance">
                             {/* <ExpenseBalance balance={balance_from_state}/> */}
