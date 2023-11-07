@@ -61,7 +61,7 @@ function GroupExpenses(){
                                     <></>
                                 )}
                             </div>
-                            {/* <Balance/> */}
+                            <Balance/>
                         </>
                     ):(
                         <>
@@ -70,7 +70,7 @@ function GroupExpenses(){
                                     <h1>Group Not Found</h1>
                                 </div>
                             </div>
-                            {/* <Balance/> */}
+                            <Balance/>
                         </>
                     )}
                 </>

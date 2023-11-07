@@ -1,13 +1,13 @@
 import { loadAllUserExpenses } from "./expenses";
 import { loadExpensesByFriendId } from "./friends";
 
-const RESET_BALANCE = "balances/RESET_BALANCE";
+// const RESET_BALANCE = "balances/RESET_BALANCE";
 const TOTAL_BALANCE = "balances/TOTAL_BALANCE";
 const SETTLE_BALANCE = "balances/SETTLE_BALANCE";
 
-export const RESET_ACTION_BALANCE = () => ({
-  type: RESET_BALANCE
-})
+// export const RESET_ACTION_BALANCE = () => ({
+//   type: RESET_BALANCE
+// })
 
 export const loadTotalBalance = (balance) => ({
     type: TOTAL_BALANCE,
@@ -48,8 +48,8 @@ const balanceReducer = (state = initialState, action) => {
     case TOTAL_BALANCE:
         newState = { ...state, balance: action.balance };
         return newState;
-    case RESET_BALANCE:
-      return initialState;
+    // case RESET_BALANCE:
+    //   return initialState;
     default:
       return newState;
   }
