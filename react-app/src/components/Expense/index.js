@@ -42,7 +42,7 @@ function Expense(){
                                     <ManageExpenses expense={expense}/>
                                     <Comments expense={expense}/>
                                 </div>
-                                <Balance/>
+                                {/* <Balance/> */}
                             </>
                         ) : (
                             <>
@@ -51,7 +51,7 @@ function Expense(){
                                         <h1>Expense Not Found</h1>
                                     </div>
                                 </div>
-                                <Balance/>
+                                {/* <Balance/> */}
                             </>
                         )
                     }

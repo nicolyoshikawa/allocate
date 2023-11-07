@@ -52,6 +52,11 @@ function AddGroup() {
     setFriend_id("");
   };
 
+    // useEffect(() => {
+    //     const errors = [];
+    //     setErrors(errors);
+    // }, [hasSubmitted]);
+
   return (
     <>
         <div className="add-expense-form-container">

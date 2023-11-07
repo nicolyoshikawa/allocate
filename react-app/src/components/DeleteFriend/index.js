@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as friendActions from "../../store/friends";
+import * as groupActions from "../../store/groups";
 
 function DeleteFriend({friendObjId, deleteword, friendObj}) {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function DeleteFriend({friendObjId, deleteword, friendObj}) {
       const friendDeleted = await dispatch(friendActions.deleteFriend(friendObjId));
       if (friendDeleted) {
           history.push("/home");
+          dispatch(groupActions.getGroups());
           closeModal()
       };
     }

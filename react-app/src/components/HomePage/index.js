@@ -16,7 +16,7 @@ export default function Home() {
             <div className="middle">
                 <AllExpenses/>
             </div>
-            <Balance/>
+            {/* <Balance/> */}
         </>
     )
 }

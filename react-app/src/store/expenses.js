@@ -44,6 +44,7 @@ export const loadAllUserExpenses = () => async (dispatch) => {
     method: "GET"
   });
   const data = await response.json();
+  // console.log("loadAllUserExpenses", data)
   dispatch(loadExpenses(data.expenses));
   // dispatch(loadTotalBalance(data.balance));
   return response;
@@ -106,10 +107,11 @@ const expensesReducer = (state = initialState, action) => {
   let newState = {...state}
   switch (action.type) {
     case LOAD_EXPENSES:
+      let load_new_expenses = {};
         action.expenses.forEach((expense) => {
-          newState[expense.id] = expense;
+          load_new_expenses[expense.id] = expense;
         });
-        return newState;
+        return load_new_expenses;
     case EXPENSE_BY_ID:
       newState[action.expense.id] = action.expense;
       return newState;
