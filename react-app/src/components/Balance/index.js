@@ -24,17 +24,17 @@ function Balance(){
         history.push("/")
     } else {
         if(path_location[1] === "friends"){
-            console.log("inside friends")
+            // console.log("inside friends")
             const friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
-            console.log("friendArr is", friendArr)
-            console.log("friendsExpListArr",friendsExpListArr)
+            // console.log("friendArr is", friendArr)
+            // console.log("friendsExpListArr",friendsExpListArr)
             if(friendArr && friendArr[0].balance !== 0) {
                 balance = friendsExpListArr.balance
 
-                console.log("inside the if", balance)
+                // console.log("inside the if", balance)
             } else {
                 balance = 0
-                console.log("inside the else", balance)
+                // console.log("inside the else", balance)
             }
 
         } else if(path_location[1] === "groups"){
