@@ -21,7 +21,7 @@ function AllExpenses(){
     useEffect(()=> {
         if(sessionUser){
             dispatch(expenseActions.loadAllUserExpenses())
-            dispatch(balanceActions.loadAllUserExpenseBalance())
+            // dispatch(balanceActions.loadAllUserExpenseBalance())
             .then(()=>setIsLoaded(true))
         }
     },[dispatch, sessionUser]);

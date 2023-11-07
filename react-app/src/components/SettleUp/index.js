@@ -72,7 +72,7 @@ function SettleUp({param_id}) {
         if(clear_balance){
             reset();
             dispatch(expenseActions.loadAllUserExpenses());
-            dispatch(balanceActions.loadAllUserExpenseBalance());
+            // dispatch(balanceActions.loadAllUserExpenseBalance());
             closeModal();
         }
     }

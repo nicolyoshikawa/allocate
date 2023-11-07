@@ -3,6 +3,7 @@ import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseTile from '../ExpenseTile';
 import * as groupActions from "../../store/groups";
+import * as balanceActions from "../../store/balance";
 import CreateExpenseModal from '../CreateExpenseModal';
 import Balance from "../Balance";
 import checkmark from "../../assets/checkmark-circle.png"
@@ -16,6 +17,7 @@ function GroupExpenses(){
     const [isLoaded, setIsLoaded] = useState(false);
     const sessionUser = useSelector(state => state.session.user);
     const allGroups = useSelector(state => Object.values(state.groups));
+    const balance_state = useSelector(state => state.balances);
     const filteredGroups = allGroups.filter(el => el.id === param_id)
     if (!sessionUser) {
         history.push("/")
@@ -35,6 +37,9 @@ function GroupExpenses(){
         if(sessionUser){
             dispatch(groupActions.getGroups())
             .then(()=>setIsLoaded(true))
+            if(Object.keys(balance_state).length === 0){
+                dispatch(balanceActions.loadAllUserExpenseBalance());
+            }
         }
     },[dispatch, sessionUser]);
 

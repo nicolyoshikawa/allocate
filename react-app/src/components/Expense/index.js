@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ExpenseTile from '../ExpenseTile';
 import * as expenseActions from "../../store/expenses";
+import * as balanceActions from "../../store/balance";
 import ManageExpenses from '../ManageExpenses';
 import Comments from '../Comments';
 import Balance from '../Balance';
@@ -13,6 +14,7 @@ function Expense(){
     const history = useHistory();
     const [isLoaded, setIsLoaded] = useState(false);
     const expenseObj = useSelector(state => state.expenses);
+    const balance_state = useSelector(state => state.balances);
     const sessionUser = useSelector(state => state.session.user);
     const expense = expenseObj[id];
 
@@ -24,6 +26,9 @@ function Expense(){
         if(sessionUser){
             dispatch(expenseActions.loadExpenseById(id))
             .then(()=>setIsLoaded(true))
+            if(Object.keys(balance_state).length === 0){
+                dispatch(balanceActions.loadAllUserExpenseBalance());
+            }
         }
     },[dispatch, id, sessionUser]);
 	return (
