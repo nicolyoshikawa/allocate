@@ -5,8 +5,7 @@ import * as expenseActions from "../../store/expenses";
 import ExpenseBalance from '../ExpenseBalance';
 
 function Balance(){
-    // console.log("starting balance");
-    // console.log(new Date())
+
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
@@ -17,24 +16,17 @@ function Balance(){
     const groupListArr = useSelector(state => Object.values(state.groups));
     const balance_from_state = useSelector(state => (state.balances.balance));
     const path_location = location.pathname.split("/")
-    // console.log("grabbed from states");
-    // console.log(new Date())
+
     let balance = 0;
     if (!sessionUser) {
         history.push("/")
     } else {
         if(path_location[1] === "friends"){
-            // console.log("inside friends")
             const friendArr = friendsListArr?.filter(el=> el.id === Number(path_location[2]));
-            // console.log("friendArr is", friendArr)
-            // console.log("friendsExpListArr",friendsExpListArr)
             if(friendArr && friendArr[0].balance !== 0) {
                 balance = friendsExpListArr.balance
-
-                // console.log("inside the if", balance)
             } else {
                 balance = 0
-                // console.log("inside the else", balance)
             }
 
         } else if(path_location[1] === "groups"){
@@ -52,9 +44,6 @@ function Balance(){
             balance = 0
         }
     }
-
-    // console.log("calculated balance")
-    // console.log(new Date())
 
     // useEffect(()=> {
     //     if(sessionUser){

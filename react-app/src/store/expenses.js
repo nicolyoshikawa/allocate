@@ -44,9 +44,7 @@ export const loadAllUserExpenses = () => async (dispatch) => {
     method: "GET"
   });
   const data = await response.json();
-  // console.log("loadAllUserExpenses", data)
   dispatch(loadExpenses(data.expenses));
-  // dispatch(loadTotalBalance(data.balance));
   return response;
 };
 
