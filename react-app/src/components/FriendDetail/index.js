@@ -83,7 +83,7 @@ function FriendDetail(){
                                 </>
                             )}
                         </div>
-                        {/* <Balance/> */}
+                        <Balance/>
                     </>
 
                 ):(
@@ -93,7 +93,7 @@ function FriendDetail(){
                                 <h1>Friend Not Found</h1>
                             </div>
                         </div>
-                        {/* <Balance/> */}
+                        <Balance/>
                     </>
                 )}
                 </>

@@ -352,6 +352,9 @@ button {
 }
 .balance {
     display: inline-block;
+    /* color: rgb(91, 197, 167); */
+    color: #808080;
+    font-weight: bold;
 }
 .all-expenses-hide{
     padding: 5px;
