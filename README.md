@@ -145,42 +145,27 @@ The project is fully functional in its current state, but some other features we
 
 ### Code Snippets
 
-**Add/Edit Expense Component**
+**Settle Balance**
 ```javascript
-    useEffect(()=> {
-        dispatch(friendActions.getUserFriends())
-        dispatch(expenseActions.loadAllUserExpenses())
-        dispatch(expenseActions.loadExpenseById(expense?.id))
-        .then((expObj)=>{
-            if(expObj){
-                const friendArr = expObj.expense_group_users.filter(el=> el.id !== user_id);
-                setReceipt_img_url(expObj.receipt_img_url);
-                setDescription(expObj.description);
-                setPrice(expObj.price);
-                setGroup_id(expObj.group_id);
-                setExpense_date(expObj.expense_date);
-                setFriend_id(friendArr[0].id)
-            }
-        })
-    },[dispatch, expense?.id, expense?.receipt_img_url, expense?.description, expense?.price, expense?.group_id, expense?.expense_date, user_id]);
+@balance_routes.route('/<int:friendId>/settle', methods=["PUT"])
+@login_required
+def settle_balance(friendId):
+    userExpenses = Expense.query.join(ExpenseGroupUser,
+                                      Expense.group_id == ExpenseGroupUser.group_id).filter(
+                                        ExpenseGroupUser.user_id == current_user.id,
+                                        Expense.settle_status == "unsettled").all()
 
-const handleSubmit = async (e) => {
-    e.preventDefault();
-    setHasSubmitted(true);
-   ...
-    if(Object.values(errors).length === 0){
-        setErrors([]);
+    friendExpenses = Expense.query.join(ExpenseGroupUser,
+                                        Expense.group_id == ExpenseGroupUser.group_id).filter(
+                                            ExpenseGroupUser.user_id == friendId,
+                                            Expense.settle_status == "unsettled").all()
+    sharedExpenses = set(userExpenses).intersection(friendExpenses)
 
-        if(expLength === 0){
-            const createExpense = await dispatch(expenseActions.createANewExpense(newExpense));
-	...
-        }
-        if(expLength > 0){
-            const updatedExpense = await dispatch(expenseActions.updateAnExpense(updateExpense, expense?.id));
-	...
-        }
-    }
-  };
+    for sharedExpense in sharedExpenses:
+        sharedExpense.settle_status = "settled"
+        db.session.commit()
+
+    return { "message": ["Balance successfully settled"]}, 200
 ```
 
 ## Author
